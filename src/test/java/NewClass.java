@@ -14,7 +14,6 @@ public class NewClass {
 
     public static void main(String[] args) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
         } catch (Exception e) {
         }
     }
