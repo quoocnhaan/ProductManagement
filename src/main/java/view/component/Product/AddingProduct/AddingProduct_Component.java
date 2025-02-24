@@ -1,24 +1,28 @@
 package view.component.Product.AddingProduct;
 
+import controller.DAO.BrandDAO;
+import controller.DAO.ProductDAO;
+import controller.DAOImp.BrandDAOImp;
+import controller.DAOImp.ProductDAOImp;
 import controller.Functional.Functional;
-import controller.Session.SharedData;
-import java.awt.BorderLayout;
-import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import model.Brand;
+import model.Product;
 import org.hibernate.Session;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import util.HibernateUtil;
 
 public class AddingProduct_Component extends javax.swing.JPanel {
@@ -54,9 +58,6 @@ public class AddingProduct_Component extends javax.swing.JPanel {
         name = new javax.swing.JTextField();
         gender = new javax.swing.JComboBox<>();
         type = new javax.swing.JComboBox<>();
-        jPanel1 = new javax.swing.JPanel();
-        chooseDepartmentBtn = new javax.swing.JButton();
-        brand = new javax.swing.JTextField();
         denyBtn = new javax.swing.JButton();
         confirmBtn = new javax.swing.JButton();
         status = new javax.swing.JComboBox<>();
@@ -67,12 +68,11 @@ public class AddingProduct_Component extends javax.swing.JPanel {
         price = new javax.swing.JTextField();
         discount = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        amount = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         description = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
+        brand = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1120, 420));
@@ -84,11 +84,11 @@ public class AddingProduct_Component extends javax.swing.JPanel {
 
         title0.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         title0.setForeground(new java.awt.Color(152, 137, 232));
-        title0.setText("Add New Item");
+        title0.setText("Add New Product");
 
         label1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         label1.setForeground(new java.awt.Color(0, 0, 0));
-        label1.setText("ITEM NAME");
+        label1.setText("PRODUCT NAME");
 
         label7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
@@ -140,44 +140,6 @@ public class AddingProduct_Component extends javax.swing.JPanel {
         type.setForeground(new java.awt.Color(0, 0, 0));
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10ML", "20ML", "30ML", "FULL" }));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-
-        chooseDepartmentBtn.setBackground(new java.awt.Color(152, 137, 232));
-        chooseDepartmentBtn.setForeground(new java.awt.Color(255, 255, 255));
-        chooseDepartmentBtn.setText("...");
-        chooseDepartmentBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        chooseDepartmentBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseDepartmentBtnActionPerformed(evt);
-            }
-        });
-
-        brand.setBackground(new java.awt.Color(255, 255, 255));
-        brand.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        brand.setForeground(new java.awt.Color(0, 0, 0));
-        brand.setText("Enter product brand");
-        brand.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(brand, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chooseDepartmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chooseDepartmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(brand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
         denyBtn.setBackground(new java.awt.Color(255, 255, 255));
         denyBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         denyBtn.setForeground(new java.awt.Color(255, 0, 51));
@@ -213,7 +175,7 @@ public class AddingProduct_Component extends javax.swing.JPanel {
 
         label8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         label8.setForeground(new java.awt.Color(0, 0, 0));
-        label8.setText("ITEM CODE");
+        label8.setText("PRODUCT CODE");
 
         label9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         label9.setForeground(new java.awt.Color(0, 0, 0));
@@ -221,7 +183,7 @@ public class AddingProduct_Component extends javax.swing.JPanel {
 
         label10.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         label10.setForeground(new java.awt.Color(0, 0, 0));
-        label10.setText("DISCOUNT");
+        label10.setText("DISCOUNT (%)");
 
         price.setBackground(new java.awt.Color(255, 255, 255));
         price.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -232,22 +194,12 @@ public class AddingProduct_Component extends javax.swing.JPanel {
         discount.setBackground(new java.awt.Color(255, 255, 255));
         discount.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         discount.setForeground(new java.awt.Color(0, 0, 0));
-        discount.setText("5%");
+        discount.setText("5");
         discount.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("FINAL PRICE");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("QUANTITY");
-
-        amount.setBackground(new java.awt.Color(255, 255, 255));
-        amount.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        amount.setForeground(new java.awt.Color(0, 0, 0));
-        amount.setText("1");
-        amount.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -263,6 +215,10 @@ public class AddingProduct_Component extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("100000");
         jLabel5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
+
+        brand.setBackground(new java.awt.Color(255, 255, 255));
+        brand.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        brand.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -285,36 +241,32 @@ public class AddingProduct_Component extends javax.swing.JPanel {
                         .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(112, 112, 112)
-                                .addComponent(label1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(117, 117, 117)
-                                .addComponent(label8))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(146, 146, 146)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(label6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(label6))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(label9)
-                                        .addGap(3, 3, 3))))
+                                        .addGap(112, 112, 112)
+                                        .addComponent(label1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(117, 117, 117)
+                                        .addComponent(label8))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(label10)
-                                    .addComponent(jLabel3))
-                                .addGap(3, 3, 3)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label9, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(label10, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(code)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(name)
+                            .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                             .addComponent(price)
                             .addComponent(discount)
-                            .addComponent(amount)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(brand, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(label14)
                     .addComponent(label3)
@@ -344,13 +296,9 @@ public class AddingProduct_Component extends javax.swing.JPanel {
                                 .addGap(32, 32, 32)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel2)
-                                    .addComponent(jLabel5))
-                                .addGap(34, 34, 34)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(amount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel5)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
@@ -361,13 +309,14 @@ public class AddingProduct_Component extends javax.swing.JPanel {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(label8)
                                             .addComponent(code, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(32, 32, 32)
-                                                .addComponent(label6))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(32, 32, 32)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(label6)
+                                            .addComponent(brand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(label16)))
+                                        .addGap(32, 32, 32))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -376,24 +325,19 @@ public class AddingProduct_Component extends javax.swing.JPanel {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(label14))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(label16))))
-                                .addGap(32, 32, 32)
+                                        .addGap(67, 67, 67)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(label9, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel4)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel4)
+                                            .addComponent(label9))
                                         .addGap(32, 32, 32)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(label10)
                                             .addComponent(discount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(label7)
@@ -401,20 +345,9 @@ public class AddingProduct_Component extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(confirmBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(denyBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
+                .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void chooseDepartmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseDepartmentBtnActionPerformed
-//        JDialog popup = new JDialog(SwingUtilities.getWindowAncestor(this), "Chọn phòng ban", Dialog.ModalityType.APPLICATION_MODAL);
-//        popup.getContentPane().setLayout(new BorderLayout());
-//        popup.getContentPane().add(new ManageSelectDepartment_Component());
-//        popup.setSize(500, 600);
-//        popup.setLocationRelativeTo(null);
-//        popup.setVisible(true);
-//
-//        this.departmentName.setText(SharedData.getInstance().getCurDepartment());
-    }//GEN-LAST:event_chooseDepartmentBtnActionPerformed
 
     private void chooseImgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseImgBtnActionPerformed
         JFileChooser fileChooser = new JFileChooser();
@@ -434,99 +367,61 @@ public class AddingProduct_Component extends javax.swing.JPanel {
     }//GEN-LAST:event_chooseImgBtnActionPerformed
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
-//        int option = JOptionPane.showConfirmDialog(this, "Bạn có muốn lưu thông tin?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-//        if (option == JOptionPane.YES_OPTION) {
-//
-//            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-//
-//                DepartmentDAO departmentDAO = new DepartmentDAOImp(session);
-//                EmployeeDAO employeeDAO = new EmployeeDAOImp(session);
-//                ContactDAO contactDAO = new ContactDAOImp(session);
-//                ContractDAO contractDAO = new ContractDAOImp(session);
-//                JobDAO jobDAO = new JobDAOImp(session);
-//                RoleDAO roleDAO = new RoleDAOImp(session);
-//                AttendanceInformationDAO attendanceInformationDAO = new AttendanceInformationDAOImp(session);
-//
-//                String employeeName = name.getText();
-//                String employeeId = id.getText();
-//
-//                Date birthDate = dateOfBirth.getDate();
-//                Date startDateValue = startDate.getDate();
-//
-//                if (birthDate == null || startDateValue == null) {
-//                    throw new Exception();
-//                }
-//
-//                boolean employeeGender = ((String) gender.getSelectedItem()).equalsIgnoreCase("Nam");
-//                int employeeSeniority = (int) differenceInDays;
-//                String emailValue = email.getText();
-//                String phoneValue = phone.getText();
-//                String placeOfBirthValue = (String) placeOfBirth.getSelectedItem();
-//                ImageIcon img = (ImageIcon) this.img.getIcon();
-//                byte[] imgByte = Functional.convertIconToByteArray(img);
-//                String titleName = (String) title.getSelectedItem();
-//                String attendanceIdValue = attendanceId.getText();
-//                String departmentNameValue = departmentName.getText();
-//                Role role = roleDAO.getByName(titleName);
-//                String professionValue = (String) profession.getSelectedItem();
-//                Department department = departmentDAO.getByName(departmentNameValue);
-//
-//                if (employee == null) {
-//
-//                    Contact contact = new Contact(emailValue, phoneValue, placeOfBirthValue);
-//
-//                    double allowance = (role.getId() == 1) ? 5000000 : 500000;
-//
-//                    RoleDetail roleDetail = new RoleDetail(role, null, allowance, true);
-//                    AttendanceInformation attendanceInformation = new AttendanceInformation(attendanceIdValue, null, LocalTime.of(9, 0), LocalTime.of(18, 0), true);
-//
-//                    Employee employee = new Employee(employeeName, attendanceInformation, department, roleDetail, employeeId, imgByte, birthDate, employeeGender, employeeSeniority, null, contact, true);
-//
-//                    Job job = new Job(startDateValue, professionValue, (String) type.getSelectedItem());
-//
-//                    List<Contract> contracts = new ArrayList<>();
-//                    Contract contract = new Contract("contract123", employee, job);
-//                    contracts.add(contract);
-//
-//                    contactDAO.add(contact);
-//                    jobDAO.add(job);
-//                    employeeDAO.add(employee);
-//                    contractDAO.add(contract);
-//                    attendanceInformationDAO.add(attendanceInformation);
-//
-//                    JOptionPane.showMessageDialog(this, "Thêm nhân viên mới thành công !");
-//
-//                } else {
-//                    employee.setDepartment(department);
-//
-//                    employee.getContact().setPersonalEmail(emailValue);
-//                    employee.getContact().setPersonalPhone(phoneValue);
-//                    employee.getContact().setPermanentAddress(placeOfBirthValue);
-//                    employee.getAttendanceInformation().setAttendanceId(attendanceIdValue);
-//
-//                    employee.getRoleDetail().setRole(role);
-//
-//                    employee.setName(employeeName);
-//                    employee.setImage(imgByte);
-//                    employee.setDateOfBirth(birthDate);
-//                    employee.setGender(employeeGender);
-//                    employee.setSenority(employeeSeniority);
-//
-//                    employee.getContracts().get(0).getJob().setStartDate(startDateValue);
-//                    employee.getContracts().get(0).getJob().setProfession(professionValue);
-//                    employee.getContracts().get(0).getJob().setType((String) type.getSelectedItem());
-//
-//                    employeeDAO.update(employee);
-//                    JOptionPane.showMessageDialog(this, "Cập nhật thông tin thành công !");
-//                }
-//                close();
+        int option = JOptionPane.showConfirmDialog(this, "Do you want to save ?", "Confirm", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+                ProductDAO productDAO = new ProductDAOImp(session);
+                BrandDAO brandDAO = new BrandDAOImp(session);
+
+                String productName = name.getText();
+                if (productName.equals("Enter product name")) {
+                    JOptionPane.showMessageDialog(this, "Please enter Product Name !");
+                    return;
+                }
+
+                String productCode = code.getText();
+                if (productCode.equals("Enter product code")) {
+                    JOptionPane.showMessageDialog(this, "Please enter Product Code !");
+                    return;
+                }
+                String brandString = this.brand.getSelectedItem().toString();
+                if (brandString.isBlank()) {
+                    JOptionPane.showMessageDialog(this, "Please enter Product Brand !");
+                    return;
+                }
+
+                Brand brand = brandDAO.getByName(brandString);
+                if (brand == null) {
+                    brand = new Brand(brandString, true);
+                    brandDAO.add(brand);
+                }
+
+                double price = Double.parseDouble(this.price.getText());
+
+                double discount = Double.parseDouble(this.discount.getText());
+
+                int type = this.type.getSelectedIndex() + 1;
+                int gender = this.type.getSelectedIndex() + 1;
+                int productStatus = status.getSelectedIndex() + 1;
+                String description = this.description.getText();
+
+                ImageIcon newImg = (ImageIcon) img.getIcon();
+                byte[] imgByte = Functional.convertIconToByteArray(newImg);
+
+                Product product = new Product(productName, productCode, brand, gender, imgByte, price, description, 0, productStatus, type, true);
+
+                productDAO.add(product);
+
+                close();
+
 //                ManageEmployeeInfo_Component.getInstance().updateData();
 //                EmployeeInfo_Component.getInstance().getManagerInfo_Component().updateTotal(employeeDAO.getAll().size());
-//            } catch (Exception e) {
-//                System.out.println(e);
-//                JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin hợp lệ !");
-//            }
-//        }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Invalid Input !");
+            }
+        }
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void denyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_denyBtnActionPerformed
@@ -543,9 +438,7 @@ public class AddingProduct_Component extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField amount;
-    private javax.swing.JTextField brand;
-    private javax.swing.JButton chooseDepartmentBtn;
+    private javax.swing.JComboBox<String> brand;
     private javax.swing.JButton chooseImgBtn;
     private javax.swing.JTextField code;
     private javax.swing.JButton confirmBtn;
@@ -555,10 +448,8 @@ public class AddingProduct_Component extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> gender;
     private javax.swing.JLabel img;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label10;
@@ -577,13 +468,17 @@ public class AddingProduct_Component extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void initData() {
-//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-//            EmployeeDAO employeeDAO = new EmployeeDAOImp(session);
-//            int size = employeeDAO.getAll().size();
-//            String id = generateID(size);
-//            this.id.setText(id);
-//        } catch (Exception e) {
-//        }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            ProductDAO productDAO = new ProductDAOImp(session);
+            BrandDAO brandDAO = new BrandDAOImp(session);
+
+            List<Brand> items = brandDAO.getAll();
+            
+            for (Brand item : items) {
+                brand.addItem(item.getName());
+            }
+        } catch (Exception e) {
+        }
     }
 //
 //    private void initData(  ) {
@@ -619,25 +514,7 @@ public class AddingProduct_Component extends javax.swing.JPanel {
 //    }
 
     private void customComponents() {
-//        Date currentDate = new Date();
-//        startDate.setMaxSelectableDate(currentDate);
-//
-//        startDate.addPropertyChangeListener("date", (evt) -> {
-//            Date selectedDate = startDate.getDate();
-//            if (selectedDate != null) {
-//
-//                long differenceInMillis = currentDate.getTime() - selectedDate.getTime();
-//
-//                differenceInDays = differenceInMillis / (24 * 60 * 60 * 1000);
-//
-//                if (differenceInDays >= 30) {
-//                    long differenceInMonths = differenceInDays / 30;
-//                    this.senority.setText(differenceInMonths + " tháng");
-//                } else {
-//                    this.senority.setText(differenceInDays + " ngày");
-//                }
-//            }
-//        });
+        customJComboBox();
     }
 
     private void close() {
@@ -667,7 +544,6 @@ public class AddingProduct_Component extends javax.swing.JPanel {
                 }
             }
         });
-
         textField.setForeground(java.awt.Color.GRAY);
     }
 
@@ -676,8 +552,6 @@ public class AddingProduct_Component extends javax.swing.JPanel {
         setPlaceholder(code);
         setPlaceholder(price);
         setPlaceholder(discount);
-        setPlaceholder(amount);
-        setPlaceholder(brand);
     }
 
     private void removeFocus() {
@@ -693,6 +567,63 @@ public class AddingProduct_Component extends javax.swing.JPanel {
 
             @Override
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+    }
+
+    private void customJComboBox() {
+        brand.setMaximumRowCount(7);
+        brand.setEditable(true);
+        AutoCompleteDecorator.decorate(brand);
+
+        brand.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    brand.getParent().requestFocusInWindow();
+                }
+            }
+        });
+
+        JTextField editor = (JTextField) brand.getEditor().getEditorComponent();
+
+        editor.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                checkForMatchingResult();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                checkForMatchingResult();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkForMatchingResult();
+            }
+
+            private void checkForMatchingResult() {
+                String input = editor.getText();
+                boolean matchFound = false;
+
+                if (input.isBlank()) {
+                    brand.hidePopup();
+                    return;
+                }
+
+                for (int i = 0; i < brand.getItemCount(); i++) {
+                    if (brand.getItemAt(i).toString().toLowerCase().startsWith(input.toLowerCase())) {
+                        matchFound = true;
+                        break;
+                    }
+                }
+
+                if (matchFound) {
+                    brand.showPopup();
+                } else {
+                    brand.hidePopup();
+                }
             }
         });
     }

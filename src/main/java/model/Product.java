@@ -13,7 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,8 +32,9 @@ public class Product {
     @Column(nullable = false)
     private String code;
 
-    @Column(nullable = false)
-    private String brand;
+    @OneToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
 
     @Column(nullable = false)
     private int gender;
@@ -59,7 +62,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String code, String brand, int gender, byte[] img, double price, String description, int amount, int productStatus, int type, boolean status) {
+    public Product(String name, String code, Brand brand, int gender, byte[] img, double price, String description, int amount, int productStatus, int type, boolean status) {
         this.name = name;
         this.code = code;
         this.brand = brand;
@@ -127,6 +130,38 @@ public class Product {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public int getProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(int productStatus) {
+        this.productStatus = productStatus;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public boolean isStatus() {

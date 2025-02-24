@@ -64,6 +64,7 @@ Contributor(s):
         <mapping class="model.BillsDetail"/>
         <mapping class="model.Bills"/>
         <mapping class="model.NavigationItem"/>
+        <mapping class="model.Brand"/>
 
     </session-factory>
 </hibernate-configuration>

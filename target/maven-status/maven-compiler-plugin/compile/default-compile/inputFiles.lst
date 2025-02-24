@@ -1,6 +1,7 @@
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\BillsDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\BillsDetailDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\BillsPerDayDAO.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\BrandDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\CustomerDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\GoodsReceiptDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\GoodsReceiptDetailDAO.java
@@ -12,6 +13,7 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\Produ
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\BillsDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\BillsDetailDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\BillsPerDayDAOImp.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\BrandDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\CustomerDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\GoodsReceiptDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\GoodsReceiptDetailDAOImp.java
@@ -25,6 +27,7 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\Session\S
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\Bills.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\BillsDetail.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\BillsPerDay.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\Brand.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\Customer.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\GoodsReceipt.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\GoodsReceiptDetail.java
@@ -39,12 +42,16 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Navig
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Navigation\NewJFrame.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\AddingProduct\AddingProduct_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\AddingProduct\NewJFrame.java
-C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\AddingProduct\SelectBrand_Component\Btn.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Feature\ProductName_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Feature\SubFeature_Component.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Header\AddingBtn.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Header\Header_Component.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Header\HeaderName.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Header\NewJFrame.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\NewJFrame.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Product_Component\Product_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Product_Component\ProductList_Component.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\ProductPage_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Title\ProductNameTitle_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Title\SubTitle_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Title\Title_Component.java
