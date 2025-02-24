@@ -32,7 +32,7 @@ public class AddingBtn extends javax.swing.JPanel {
         setBackground(new java.awt.Color(245, 246, 250));
 
         addBtn.setBackground(new java.awt.Color(152, 137, 232));
-        addBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        addBtn.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         addBtn.setForeground(new java.awt.Color(255, 255, 255));
         addBtn.setText("Add Item");
         addBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

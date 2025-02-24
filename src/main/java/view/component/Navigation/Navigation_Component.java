@@ -87,7 +87,7 @@ public class Navigation_Component extends javax.swing.JPanel {
 
         icon.setSize(25, 25);
 
-        name.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        name.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         name.setForeground(new java.awt.Color(0, 0, 0));
         name.setText("Product");
 
