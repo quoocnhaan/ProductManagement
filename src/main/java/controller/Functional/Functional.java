@@ -4,6 +4,7 @@
  */
 package controller.Functional;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -77,6 +78,13 @@ public class Functional {
             System.out.println("Byte array rỗng hoặc null.");
         }
         return null;  // Trả về null nếu không thể chuyển đổi
+    }
+
+    public static Color adjustColorBrightness(Color color, float factor) {
+        int r = Math.min(255, (int) (color.getRed() * factor));
+        int g = Math.min(255, (int) (color.getGreen() * factor));
+        int b = Math.min(255, (int) (color.getBlue() * factor));
+        return new Color(r, g, b);
     }
 
 }

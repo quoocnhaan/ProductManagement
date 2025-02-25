@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class FilterItem extends javax.swing.JPanel {
 
-    /**
-     * Creates new form FilterItem
-     */
+    private Content content;
+    private Title title;
+
     public FilterItem(String titleName, List<String> contents) {
         initComponents();
         setLayout(new BorderLayout(0, 0));
@@ -46,8 +46,15 @@ public class FilterItem extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addComponents(String titleName, List<String> contents) {
-        add(new Title(titleName), BorderLayout.NORTH);
-        add(new Content(contents), BorderLayout.CENTER);
+        title = new Title(titleName, this);
+        content = new Content(contents, this);
+
+        add(title, BorderLayout.NORTH);
+        add(content, BorderLayout.CENTER);
+    }
+
+    public void clear() {
+        content.clear();
     }
 
 

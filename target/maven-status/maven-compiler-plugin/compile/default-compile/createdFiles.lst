@@ -3,8 +3,10 @@ view\component\Filter\Title.class
 view\component\SearchSuggestion\SearchSuggestion_Component$3.class
 model\GoodsReceiptDetail.class
 view\component\SearchSuggestion\NewJFrame.class
+view\component\Btn\RoundedButton$1.class
 view\component\Product\AddingProduct\AddingProduct_Component$7.class
 view\component\Product\Header\AddingBtn.class
+view\component\Filter\Title$1.class
 view\component\Product\AddingProduct\NewJFrame.class
 controller\DAOImp\BillsPerDayDAOImp.class
 controller\DAO\GoodsReceiptDetailDAO.class
@@ -15,9 +17,11 @@ controller\DAOImp\InventoryDetailDAOImp.class
 view\component\Product\AddingProduct\AddingProduct_Component$1.class
 view\component\Btn\RoundedToggleButton.class
 model\InventoryDetail.class
+view\component\Filter\Filter_Component$1.class
 view\component\Product\Title\ProductNameTitle_Component.class
 view\component\SearchSuggestion\PanelSearch$2.class
 model\BillsDetail.class
+view\component\Btn\NewJFrame.class
 view\component\Filter\Filter_Component.class
 controller\DAO\NavigationItemDAO.class
 view\component\Product\Header\NewJFrame$1.class
@@ -30,6 +34,7 @@ view\component\Product\AddingProduct\AddingProduct_Component$2.class
 controller\DAO\BrandDAO.class
 controller\DAOImp\BrandDAOImp.class
 view\component\Product\Header\AddingBtn$1.class
+view\component\Filter\FilterItem_Container.class
 controller\DAOImp\InventoryDAOImp.class
 view\component\Navigation\NewJFrame.class
 view\component\Navigation\NewClass.class
@@ -53,6 +58,7 @@ model\Product.class
 view\component\Navigation\Navigation.class
 view\component\SearchSuggestion\PanelSearch.class
 controller\DAO\BillsDAO.class
+view\component\Btn\RoundedButton.class
 view\component\SearchSuggestion\DataSearch.class
 model\Customer.class
 controller\DAO\GoodsReceiptDAO.class
@@ -65,6 +71,7 @@ view\component\SearchSuggestion\SearchSuggestion_Component$2.class
 controller\DAO\ProductDAO.class
 controller\DAOImp\GoodsReceiptDAOImp.class
 view\component\Product\Title\SubTitle_Component.class
+view\component\Btn\NewJFrame$1.class
 view\component\CustomComponent\CustomScrollBarUI.class
 view\component\Filter\Content.class
 view\component\Filter\NewJFrame$1.class

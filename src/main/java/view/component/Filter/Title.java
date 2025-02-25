@@ -9,6 +9,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,13 +21,15 @@ import javax.swing.JLabel;
  */
 public class Title extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Title
-     */
-    public Title(String titleName) {
+    private JButton clearButton;
+    private FilterItem parent;
+
+    public Title(String titleName, FilterItem parent) {
         initComponents();
+        this.parent = parent;
         setLayout(new BorderLayout());
         addComponents(titleName);
+        addEvents();
     }
 
     /**
@@ -56,7 +60,7 @@ public class Title extends javax.swing.JPanel {
         hostLabel.setFont(new Font(SharedData.fontName, Font.BOLD, 22));  // Set custom font for bold style
 
         // Clear button with underline using HTML
-        JButton clearButton = new JButton("<html><u>Clear</u></html>");
+        clearButton = new JButton("<html><u>Clear</u></html>");
         clearButton.setForeground(Color.GRAY); // Set text color to gray
         clearButton.setBorderPainted(false);  // Remove any painted border
         clearButton.setFocusPainted(false); // Disable focus painted border
@@ -71,6 +75,15 @@ public class Title extends javax.swing.JPanel {
 
         // Add padding to the main panel
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    }
+
+    private void addEvents() {
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.clear();
+            }
+        });
     }
 
 

@@ -4,8 +4,11 @@
  */
 package view.component.Filter;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.util.List;
+import javax.swing.JToggleButton;
 import org.jdesktop.swingx.WrapLayout;
 import view.component.Btn.RoundedToggleButton;
 
@@ -15,11 +18,11 @@ import view.component.Btn.RoundedToggleButton;
  */
 public class Content extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Content
-     */
-    public Content(List<String> contents) {
+    private FilterItem parent;
+    
+    public Content(List<String> contents, FilterItem parent) {
         initComponents();
+        this.parent = parent;
         setLayout(new WrapLayout(FlowLayout.LEFT, 10, 10));
         addComponents(contents);
     }
@@ -51,6 +54,17 @@ public class Content extends javax.swing.JPanel {
         for (String language : contents) {
             RoundedToggleButton button = new RoundedToggleButton(language);
             add(button);
+        }
+    }
+
+    void clear() {
+        Component[] components = getComponents();
+        for (Component component : components) {
+            if (component instanceof JToggleButton) {
+                JToggleButton toggleButton = (JToggleButton) component;
+                toggleButton.setSelected(false);
+                toggleButton.setBackground(new Color(243, 244, 245));
+            }
         }
     }
 

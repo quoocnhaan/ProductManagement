@@ -29,7 +29,7 @@ public class RoundedToggleButton extends JToggleButton {
         setBackground(new Color(243, 244, 245));  // Default color
         setOpaque(false);  // Make sure we paint everything ourselves
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));  // Add padding to the text
-        setFont(new Font(SharedData.fontName, Font.PLAIN, 14));
+        setFont (new Font(SharedData.fontName, Font.PLAIN, 14));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         adjustButtonSize();  // Adjust size based on text
     }

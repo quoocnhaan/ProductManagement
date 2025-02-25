@@ -4,11 +4,20 @@
  */
 package view.component.Filter;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.List;
-import org.jdesktop.swingx.WrapLayout;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import view.component.Btn.RoundedButton;
+import view.component.CustomComponent.CustomScrollBarUI;
 
 /**
  *
@@ -16,15 +25,12 @@ import org.jdesktop.swingx.WrapLayout;
  */
 public class Filter_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Filter_Component
-     */
+    private FilterItem_Container filterItem_Container;
+
     public Filter_Component() {
         initComponents();
-        setLayout(new GridLayout(0, 1, 10, 10));
-
+        setLayout(new BorderLayout());
         addComponents();
-
     }
 
     /**
@@ -36,13 +42,11 @@ public class Filter_Component extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 255, 255));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -51,20 +55,43 @@ public class Filter_Component extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addComponents() {
-        String[] strings = {
-            "English", "German", "Polish", "Italian", "French", "Spanish",
-            "Sign", "Russian", "Portuguese", "Swedish", "Norwegian", "Hungarian",
-            "Finnish", "Danish", "Czech", "Ukrainian", "Dutch", "Korean",
-            "Turkish", "Hebrew", "thang lon thanh thai"
-        };
-        List<String> contents = new ArrayList<>();
-        for (int i = 0; i < strings.length; i++) {
-            contents.add(strings[i]);
-        }
 
-        for (int i = 1; i <= 5; i++) {
-            add(new FilterItem("Products", contents));
-        }
+        filterItem_Container = new FilterItem_Container();
+
+        JScrollPane scrollPane = new JScrollPane(filterItem_Container);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBorder(null);
+
+        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+
+        verticalScrollBar.setUI(new CustomScrollBarUI());
+
+        // Set scroll bar width to something smaller
+        verticalScrollBar.setPreferredSize(new Dimension(8, Integer.MAX_VALUE));
+
+        JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        footer.setBackground(Color.WHITE);
+
+        RoundedButton clear = new RoundedButton("Clear all", false);
+        RoundedButton apply = new RoundedButton("Apply", true);
+
+        clear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<FilterItem> list = filterItem_Container.getAll();
+                for (FilterItem filterItem : list) {
+                    filterItem.clear();
+                }
+            }
+        });
+
+        footer.add(clear);
+        footer.add(apply);
+
+        add(scrollPane, BorderLayout.CENTER);
+        add(footer, BorderLayout.SOUTH);
+
     }
 
 

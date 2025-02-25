@@ -6,10 +6,6 @@ package view.component.Filter;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import view.component.CustomComponent.CustomScrollBarUI;
@@ -26,21 +22,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new BorderLayout());
-
-
-        JScrollPane scrollPane = new JScrollPane(new Filter_Component());
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBorder(null);
-
-        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
-
-        verticalScrollBar.setUI(new CustomScrollBarUI());
-
-        // Set scroll bar width to something smaller
-        verticalScrollBar.setPreferredSize(new Dimension(8, Integer.MAX_VALUE));
-        
-        add(scrollPane);
+        add(new Filter_Component());
     }
 
     /**
