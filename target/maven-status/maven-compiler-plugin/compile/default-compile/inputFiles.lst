@@ -39,7 +39,9 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\util\HibernateUtil.j
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Btn\NewJFrame.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Btn\RoundedButton.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Btn\RoundedToggleButton.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\CustomComponent\CustomCheckboxExample.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\CustomComponent\CustomScrollBarUI.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\CustomComponent\RoundedLabel.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Filter\Content.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Filter\Filter_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Filter\FilterItem.java
@@ -52,6 +54,7 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Navig
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Navigation\NewJFrame.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\AddingProduct\AddingProduct_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\AddingProduct\NewJFrame.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Feature\CheckBox_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Feature\ProductName_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Feature\SubFeature_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Header\AddingBtn.java

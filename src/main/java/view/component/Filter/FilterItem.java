@@ -56,8 +56,6 @@ public class FilterItem extends javax.swing.JPanel {
     public void clear() {
         content.clear();
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

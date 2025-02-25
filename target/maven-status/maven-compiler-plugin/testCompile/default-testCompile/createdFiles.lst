@@ -20,9 +20,11 @@ newpackage\DataSearch.class
 newpackage\Main$2.class
 newpackage\PanelSearch.class
 UpdateDatabase.class
+TestRoundLabel.class
 CustomPaginationWithProducts$3.class
 CustomPaginationWithProducts$Product.class
 newpackage\Main$4.class
+NewJFrame.class
 LanguageHeader.class
 newpackage\MyTextField.class
 Filter\LanguageSelection$CustomScrollBarUI.class
@@ -31,3 +33,4 @@ newpackage\Main$1.class
 newpackage\Search_Item$1.class
 CustomPaginationWithProducts.class
 Filter\LanguageSelection$2.class
+NewJFrame$1.class

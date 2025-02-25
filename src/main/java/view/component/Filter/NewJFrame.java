@@ -5,10 +5,6 @@
 package view.component.Filter;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import view.component.CustomComponent.CustomScrollBarUI;
 
 /**
  *

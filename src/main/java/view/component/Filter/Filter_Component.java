@@ -6,12 +6,12 @@ package view.component.Filter;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -65,7 +65,38 @@ public class Filter_Component extends javax.swing.JPanel {
 
         JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
 
-        verticalScrollBar.setUI(new CustomScrollBarUI());
+        CustomScrollBarUI customScrollBarUI = new CustomScrollBarUI();
+        verticalScrollBar.setUI(customScrollBarUI);
+
+        verticalScrollBar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                customScrollBarUI.setHovered(true);  // Set hover to true
+                verticalScrollBar.repaint();  // Repaint to update color
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                customScrollBarUI.setHovered(false);  // Set hover to false
+                verticalScrollBar.repaint();  // Repaint to update color
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {  // Check if it's a left click
+                    customScrollBarUI.setClicked(true);  // Set clicked to true
+                    verticalScrollBar.repaint();  // Repaint to update color
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {  // Check if it's a left click
+                    customScrollBarUI.setClicked(false);  // Set clicked to false
+                    verticalScrollBar.repaint();  // Repaint to update color
+                }
+            }
+        });
 
         // Set scroll bar width to something smaller
         verticalScrollBar.setPreferredSize(new Dimension(8, Integer.MAX_VALUE));
@@ -91,7 +122,6 @@ public class Filter_Component extends javax.swing.JPanel {
 
         add(scrollPane, BorderLayout.CENTER);
         add(footer, BorderLayout.SOUTH);
-
     }
 
 

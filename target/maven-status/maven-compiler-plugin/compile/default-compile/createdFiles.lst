@@ -5,12 +5,14 @@ model\GoodsReceiptDetail.class
 view\component\SearchSuggestion\NewJFrame.class
 view\component\Btn\RoundedButton$1.class
 view\component\Product\AddingProduct\AddingProduct_Component$7.class
+view\component\Product\Feature\CheckBox_Component.class
 view\component\Product\Header\AddingBtn.class
 view\component\Filter\Title$1.class
 view\component\Product\AddingProduct\NewJFrame.class
 controller\DAOImp\BillsPerDayDAOImp.class
 controller\DAO\GoodsReceiptDetailDAO.class
 view\component\SearchSuggestion\Search_Item$1.class
+view\component\CustomComponent\CustomCheckboxExample$CustomCheckBoxIcon.class
 view\component\Product\NewJFrame.class
 model\NavigationItem.class
 controller\DAOImp\InventoryDetailDAOImp.class
@@ -37,6 +39,7 @@ view\component\Product\Header\AddingBtn$1.class
 view\component\Filter\FilterItem_Container.class
 controller\DAOImp\InventoryDAOImp.class
 view\component\Navigation\NewJFrame.class
+view\component\CustomComponent\CustomCheckboxExample.class
 view\component\Navigation\NewClass.class
 model\Bills.class
 view\component\Product\AddingProduct\AddingProduct_Component$3.class
@@ -46,6 +49,7 @@ controller\DAO\CustomerDAO.class
 view\component\SearchSuggestion\PanelSearch$1.class
 view\component\Navigation\Navigation_Component.class
 controller\DAO\BillsDetailDAO.class
+view\component\Filter\Filter_Component$2.class
 view\component\Product\AddingProduct\NewJFrame$1.class
 view\component\Filter\FilterItem.class
 controller\DAOImp\ProductDAOImp.class
@@ -100,6 +104,7 @@ view\component\Product\Feature\SubFeature_Component.class
 controller\DAO\BillsPerDayDAO.class
 util\HibernateUtil.class
 view\component\SearchSuggestion\SearchSuggestion_Component.class
+view\component\CustomComponent\RoundedLabel.class
 view\component\Product\AddingProduct\AddingProduct_Component.class
 view\component\Navigation\Navigation_Component$1.class
 view\component\Product\Header\NewJFrame.class

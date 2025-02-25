@@ -63,7 +63,7 @@ public class RoundedButton extends JButton {
         FontMetrics fontMetrics = getFontMetrics(getFont());
         int textWidth = fontMetrics.stringWidth(getText());
         int buttonWidth = textWidth > 40 ? textWidth : 40;  // Adding padding to button width (40px extra)
-        setPreferredSize(new Dimension(buttonWidth + 30, 30));
+        setPreferredSize(new Dimension(buttonWidth + 40, 40));
     }
 
     @Override
