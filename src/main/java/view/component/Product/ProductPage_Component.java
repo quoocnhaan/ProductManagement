@@ -14,9 +14,9 @@ import view.component.Product.Title.Title_Component;
  */
 public class ProductPage_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ProductPage_Component
-     */
+    private Title_Component title_Component;
+    private ProductList_Component productList_Component;
+
     public ProductPage_Component() {
         initComponents();
         setLayout(new BorderLayout());
@@ -36,7 +36,7 @@ public class ProductPage_Component extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 1152, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -45,11 +45,15 @@ public class ProductPage_Component extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addComponents() {
-        add(new Title_Component(), BorderLayout.NORTH);
-        add(new ProductList_Component(), BorderLayout.CENTER);
+        title_Component = new Title_Component(this);
+        productList_Component = new ProductList_Component();
+        add(title_Component, BorderLayout.NORTH);
+        add(productList_Component, BorderLayout.CENTER);
     }
 
-
+    public void changeStatusCheckbox(boolean b) {
+        productList_Component.changeStatusCheckbox(b);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

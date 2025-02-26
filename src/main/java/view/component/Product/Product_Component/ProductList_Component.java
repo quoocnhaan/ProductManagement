@@ -4,7 +4,10 @@
  */
 package view.component.Product.Product_Component;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -12,9 +15,8 @@ import java.awt.FlowLayout;
  */
 public class ProductList_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ProductList_Component
-     */
+    List<Product_Component> list;
+
     public ProductList_Component() {
         initComponents();
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
@@ -45,11 +47,19 @@ public class ProductList_Component extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addComponents() {
+        list = new ArrayList<>();
         for (int i = 1; i <= 6; i++) {
-            add(new Product_Component());
+            Product_Component product_Component = new Product_Component();
+            add(product_Component);
+            list.add(product_Component);
         }
     }
 
+    public void changeStatusCheckbox(boolean isChecked) {
+        for (Product_Component product_Component : list) {
+            product_Component.changeStatusCheckbox(isChecked);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

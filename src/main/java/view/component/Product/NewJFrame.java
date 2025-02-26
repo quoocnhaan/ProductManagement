@@ -7,7 +7,6 @@ package view.component.Product;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.border.Border;
-import view.component.Product.Feature.ProductName_Component;
 import view.component.Product.Header.Header_Component;
 import view.component.Product.Product_Component.ProductList_Component;
 import view.component.Product.Title.Title_Component;
@@ -42,11 +41,11 @@ public class NewJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1020, Short.MAX_VALUE)
+            .addGap(0, 1250, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 612, Short.MAX_VALUE)
+            .addGap(0, 777, Short.MAX_VALUE)
         );
 
         pack();

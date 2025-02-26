@@ -5,6 +5,10 @@
 package view.component.Product.Title;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import view.component.CustomComponent.CustomCheckbox;
+import view.component.Product.ProductPage_Component;
 
 /**
  *
@@ -12,13 +16,15 @@ import java.awt.FlowLayout;
  */
 public class Title_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Title_Component
-     */
-    public Title_Component() {
+    private ProductPage_Component parent;
+    private CustomCheckbox customCheckbox;
+
+    public Title_Component(ProductPage_Component parent) {
         initComponents();
-        setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        this.parent = parent;
+        setLayout(new FlowLayout(FlowLayout.LEFT, 15, 0));
         addComponents();
+        addEvents();
     }
 
     /**
@@ -30,7 +36,7 @@ public class Title_Component extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(245, 246, 250));
+        setBackground(new java.awt.Color(248, 250, 251));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -45,10 +51,25 @@ public class Title_Component extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addComponents() {
+        customCheckbox = new CustomCheckbox(false);
+        add(customCheckbox);
         add(new ProductNameTitle_Component());
         for (int i = 1; i <= 6; i++) {
             add(new SubTitle_Component());
         }
+    }
+
+    private void addEvents() {
+        customCheckbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (customCheckbox.isSelected()) {
+                    parent.changeStatusCheckbox(true);
+                } else {
+                    parent.changeStatusCheckbox(false);
+                }
+            }
+        });
     }
 
 

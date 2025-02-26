@@ -4,7 +4,11 @@
  */
 package view.component.Btn;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Insets;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -18,11 +22,15 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new FlowLayout());
+        ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
+
+//        for (int i = 0; i < 5; i++) {
+//            NonBorderIconButton btn = new NonBorderIconButton("Edit", icon);
+//            add(btn);
+//        }
+
         for (int i = 0; i < 5; i++) {
-            add(new RoundedButton("helo", true));
-        }
-        for (int i = 0; i < 5; i++) {
-            add(new RoundedButton("helo", false));
+            add(new RoundedButton("hello", true));
         }
     }
 

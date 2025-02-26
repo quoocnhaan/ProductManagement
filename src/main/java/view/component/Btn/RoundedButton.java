@@ -66,19 +66,90 @@ public class RoundedButton extends JButton {
         setPreferredSize(new Dimension(buttonWidth + 40, 40));
     }
 
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        Graphics2D g2 = (Graphics2D) g.create();
+//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//        // Use the current background color
+//        g2.setColor(getBackground());
+//
+//        // Paint the rounded button with radius 20
+//        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+//
+//        // Draw the text after background to avoid text being painted over
+//        super.paintComponent(g2);
+//        g2.dispose();
+//    }
+//
+//    @Override
+//    protected void paintBorder(Graphics g) {
+//        Graphics2D g2 = (Graphics2D) g.create();
+//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//        // Border color (gray by default)
+//        g2.setColor(Color.white);
+//
+//        // Draw the rounded border
+//        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
+//
+//        g2.dispose();
+//    }
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        Graphics2D g2 = (Graphics2D) g.create();
+//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//        // Set the button to be fully transparent
+//        g2.setComposite(AlphaComposite.Clear);
+//        g2.fillRect(0, 0, getWidth(), getHeight());
+//        g2.setComposite(AlphaComposite.SrcOver); // Reset composite to draw over it
+//
+//        // Use the current background color
+//        g2.setColor(getBackground());
+//
+//        // Paint the rounded button
+//        g2.fillRoundRect(1, 1, getWidth() - 2, getHeight() - 2, 30, 30);  // Leave a 1-pixel gap on all sides
+//
+//        // Draw the text
+//        super.paintComponent(g);
+//
+//        g2.dispose();
+//    }
+//
+//    @Override
+//    protected void paintBorder(Graphics g) {
+//        Graphics2D g2 = (Graphics2D) g.create();
+//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//        // Set the border color
+//        g2.setColor(Color.WHITE);
+//
+//        // Draw the rounded border
+//        g2.drawRoundRect(1, 1, getWidth() - 2, getHeight() - 2, 30, 30);  // Leave a 1-pixel gap on all sides
+//
+//        g2.dispose();
+//    }
+
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Use the current background color
+        // Clear the button area to ensure transparency
+        g2.setComposite(AlphaComposite.Clear);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+        g2.setComposite(AlphaComposite.SrcOver);  // Reset composite to paint over
+
+        // Set the button background color
         g2.setColor(getBackground());
 
-        // Paint the rounded button with radius 20
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+        // Fill rounded rectangle, slightly shifted
+        g2.fillRoundRect(1, 0, getWidth() - 2, getHeight() - 1, 30, 30);
 
-        // Draw the text after background to avoid text being painted over
-        super.paintComponent(g2);
+        // Draw the text after the background
+        super.paintComponent(g);
+
         g2.dispose();
     }
 
@@ -87,12 +158,13 @@ public class RoundedButton extends JButton {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Border color (gray by default)
-        g2.setColor(Color.white);
+        // Set the border color (white in this case)
+        g2.setColor(Color.WHITE);
 
-        // Draw the rounded border
-        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
+        // Draw the border with a slight shift to avoid overlap in the top-left corner
+        g2.drawRoundRect(1, 0, getWidth() - 2, getHeight() - 1, 30, 30);
 
         g2.dispose();
     }
+
 }

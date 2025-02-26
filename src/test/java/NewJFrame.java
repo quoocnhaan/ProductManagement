@@ -1,11 +1,13 @@
 
+import view.component.Product.Feature.ProductName_Component;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author PC
@@ -17,8 +19,14 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
-        setLayout(new BorderLayout());
-        add(new TestRoundLabel());
+        setLayout(new FlowLayout());
+        RoundedLabel l = new RoundedLabel("hello");
+        RoundedTextField l1 = new RoundedTextField();
+        l.setPreferredSize(new Dimension(120, 40));
+        add(l);
+        l1.setPreferredSize(new Dimension(150,50));
+        add(l1);
+
     }
 
     /**

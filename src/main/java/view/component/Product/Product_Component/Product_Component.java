@@ -7,10 +7,17 @@ package view.component.Product.Product_Component;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import view.component.Product.Feature.ProductName_Component;
+import javax.swing.ImageIcon;
+import view.component.Btn.NonBorderIconButton;
+import view.component.CustomComponent.CustomCheckbox;
 import view.component.Product.Feature.SubFeature_Component;
+import view.component.Product.Feature.ProductName_Component;
 
 /**
  *
@@ -18,13 +25,13 @@ import view.component.Product.Feature.SubFeature_Component;
  */
 public class Product_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Product_Component
-     */
+    private CustomCheckbox customCheckbox;
+
     public Product_Component() {
         initComponents();
-        setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        setLayout(new FlowLayout(FlowLayout.LEFT, 15, 0));
         addComponents();
+        addEvents();
     }
 
     /**
@@ -39,6 +46,9 @@ public class Product_Component extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 formMouseEntered(evt);
             }
@@ -64,26 +74,45 @@ public class Product_Component extends javax.swing.JPanel {
     }//GEN-LAST:event_formMouseEntered
 
     private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
-        changeColor(false);
+        if (customCheckbox.isSelected()) {
+            changeColor(true);
+        } else {
+            changeColor(false);
+        }
+
     }//GEN-LAST:event_formMouseExited
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        customCheckbox.setSelected(!customCheckbox.isSelected());
+    }//GEN-LAST:event_formMouseClicked
 
     private void addComponents() {
 
+        customCheckbox = new CustomCheckbox(true);
+
+        add(customCheckbox);
+
+        //ProductName_Component productName = new ProductName_Component();
         ProductName_Component productName = new ProductName_Component();
+
         productName.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent evt) {
-                formMouseEntered(evt);
+                changeColor(true);
             }
 
             @Override
             public void mouseExited(MouseEvent evt) {
-                formMouseExited(evt);
+                if (customCheckbox.isSelected()) {
+                    changeColor(true);
+                } else {
+                    changeColor(false);
+                }
             }
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                childMouseClicked(evt);  // Print when ProductName_Component is clicked
+                customCheckbox.setSelected(!customCheckbox.isSelected());
             }
         });
         add(productName);
@@ -94,25 +123,48 @@ public class Product_Component extends javax.swing.JPanel {
             subFeature.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent evt) {
-                    formMouseEntered(evt);
+                    changeColor(true);
                 }
 
                 @Override
                 public void mouseExited(MouseEvent evt) {
-                    formMouseExited(evt);
+                    if (customCheckbox.isSelected()) {
+                        changeColor(true);
+                    } else {
+                        changeColor(false);
+                    }
                 }
 
                 @Override
                 public void mouseClicked(MouseEvent evt) {
-                    childMouseClicked(evt);
+                    customCheckbox.setSelected(!customCheckbox.isSelected());
                 }
             });
+
             add(subFeature);
         }
+
+        ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
+        add(new NonBorderIconButton("Edit", icon));
     }
 
     public void changeColor(boolean isInside) {
-        Color newColor = isInside ? new Color(233, 228, 244) : Color.WHITE;
+        Color newColor = isInside ? new Color(247, 249, 250) : Color.WHITE;
+
+        // Change the background of the Product_Component
+        setBackground(newColor);
+
+        // Iterate over all child components and change their background
+        Component[] components = getComponents();
+        for (Component component : components) {
+            component.setBackground(newColor);
+        }
+        // Repaint the panel to ensure the new background is applied
+        repaint();
+    }
+
+    public void changeColor() {
+        Color newColor = new Color(247, 249, 250);
 
         // Change the background of the Product_Component
         setBackground(newColor);
@@ -129,6 +181,38 @@ public class Product_Component extends javax.swing.JPanel {
     private void childMouseClicked(MouseEvent evt) {
         System.out.println("Child component clicked: " + evt.getSource().getClass().getSimpleName());
     }
+
+    public void changeStatusCheckbox(boolean isCheck) {
+        customCheckbox.setSelected(isCheck);
+    }
+
+    private void addEvents() {
+        customCheckbox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    formMouseEntered();
+                } else {
+                    formMouseExited();
+                }
+            }
+        });
+    }
+
+    private void formMouseEntered() {
+        changeColor(true);
+    }
+
+    private void formMouseExited() {
+        changeColor(false);
+    }
+
+    private void handlePanelClick(MouseEvent e) {
+        // Handle click logic here, regardless of slight mouse movement
+        System.out.println("Panel clicked!");
+        customCheckbox.setSelected(!customCheckbox.isSelected());
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
