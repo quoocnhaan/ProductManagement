@@ -4,6 +4,7 @@
  */
 package view.component.CustomComponent;
 
+import controller.Session.SharedData;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -34,7 +35,7 @@ public class CustomCheckBoxIcon implements Icon {
 
         // Draw background when checked
         if (isSelected) {
-            g2.setColor(new Color(0, 128, 0));  // Green background
+            g2.setColor(SharedData.mainColor);  // Green background
             g2.fillRoundRect(x + 1, y + 1, getIconWidth() - 2, getIconHeight() - 2, 10, 10);
 
             // Draw the smaller checkmark

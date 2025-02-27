@@ -21,7 +21,7 @@ import javax.swing.JToggleButton;
  * @author PC
  */
 public class RoundedToggleButton extends JToggleButton {
-
+    
     public RoundedToggleButton(String text) {
         super(text);
         setContentAreaFilled(false);  // Remove default background painting
@@ -29,19 +29,18 @@ public class RoundedToggleButton extends JToggleButton {
         setBackground(new Color(243, 244, 245));  // Default color
         setOpaque(false);  // Make sure we paint everything ourselves
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));  // Add padding to the text
-        setFont (new Font(SharedData.fontName, Font.PLAIN, 14));
+        setFont(new Font(SharedData.fontName, Font.PLAIN, 14));
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         adjustButtonSize();  // Adjust size based on text
     }
-
+    
     private void adjustButtonSize() {
         FontMetrics fontMetrics = getFontMetrics(getFont());
         int textWidth = fontMetrics.stringWidth(getText());
         int buttonWidth = textWidth > 40 ? textWidth : 40;  // Adding padding to button width (40px extra)
-        setPreferredSize(new Dimension(buttonWidth + 30, 30));
-
+        setPreferredSize(new Dimension(buttonWidth + 30, 30));  
     }
-
+    
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -49,7 +48,7 @@ public class RoundedToggleButton extends JToggleButton {
 
         // Change color based on the selection state
         if (isSelected()) {
-            g2.setColor(Color.ORANGE);  // Orange when selected
+            g2.setColor(new Color(50, 94, 90));  // Orange when selected
             setForeground(Color.WHITE);
         } else {
             g2.setColor(new Color(243, 244, 245));  // Default background
@@ -63,18 +62,18 @@ public class RoundedToggleButton extends JToggleButton {
         super.paintComponent(g2);
         g2.dispose();
     }
-
-    @Override
-    protected void paintBorder(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // Border color (gray by default)
-        g2.setColor(new Color(243, 244, 245));
-
-        // Draw the rounded border
-        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
-
-        g2.dispose();
-    }
+    
+//    @Override
+//    protected void paintBorder(Graphics g) {
+//        Graphics2D g2 = (Graphics2D) g.create();
+//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//        // Border color (gray by default)
+//        g2.setColor(new Color(243, 244, 245));
+//
+//        // Draw the rounded border
+//        g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 30, 30);
+//        
+//        g2.dispose();
+//    }
 }

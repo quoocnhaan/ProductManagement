@@ -1,4 +1,5 @@
 
+import controller.Session.SharedData;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,7 +27,7 @@ public class CustomPaginationWithProducts extends JFrame {
 
         // Initialize products (for demo purposes)
         products = new ArrayList<>();
-        for (int i = 1; i <= 70; i++) {
+        for (int i = 1; i <= 50; i++) {
             products.add(new Product("Product " + i, i * 10));
         }
 
@@ -89,7 +90,7 @@ public class CustomPaginationWithProducts extends JFrame {
             }
         };
         button.setPreferredSize(new Dimension(40, 40));
-        button.setFont(new Font("Arial", Font.PLAIN, 18));
+        button.setFont(new Font("Roboto", Font.PLAIN, 18));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);  // Disable default button background
         button.setOpaque(false);
@@ -99,7 +100,6 @@ public class CustomPaginationWithProducts extends JFrame {
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         return button;
     }
-
 
     // Update pagination controls and product display
     private void updatePaginationControls() {
@@ -125,7 +125,7 @@ public class CustomPaginationWithProducts extends JFrame {
             final int page = i;
             JButton pageButton = createPageButton(String.valueOf(i));
             if (i == currentPage) {
-                pageButton.setBackground(new Color(255, 165, 0)); // Orange color
+                pageButton.setBackground(SharedData.mainColor); // Orange color
                 pageButton.setForeground(Color.WHITE);
             } else {
                 pageButton.setBackground(Color.WHITE);

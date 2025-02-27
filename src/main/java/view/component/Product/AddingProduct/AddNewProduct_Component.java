@@ -182,6 +182,9 @@ public class AddNewProduct_Component extends javax.swing.JPanel {
         status.setForeground(new java.awt.Color(102, 102, 102));
         status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "In stock", "Out of stock", "In transit" }));
 
+        cancelBtn.setBackground(new java.awt.Color(255, 255, 255));
+        cancelBtn.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        cancelBtn.setForeground(new java.awt.Color(51, 51, 51));
         cancelBtn.setText("Cancel");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,6 +192,9 @@ public class AddNewProduct_Component extends javax.swing.JPanel {
             }
         });
 
+        confirmBtn.setBackground(new java.awt.Color(0, 51, 255));
+        confirmBtn.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        confirmBtn.setForeground(new java.awt.Color(255, 255, 255));
         confirmBtn.setText("Save");
         confirmBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,9 +223,9 @@ public class AddNewProduct_Component extends javax.swing.JPanel {
                         .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(contentPanelLayout.createSequentialGroup()
-                                .addComponent(cancelBtn)
+                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(confirmBtn))
+                                .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, contentPanelLayout.createSequentialGroup()
                                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,10 +298,10 @@ public class AddNewProduct_Component extends javax.swing.JPanel {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelBtn)
-                    .addComponent(confirmBtn))
+                    .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54))
         );
 

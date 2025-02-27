@@ -17,8 +17,8 @@ import java.awt.Color;
  */
 public class SharedData {
 
-    public static String fontName = "SansSerif";
-    public static Color mainColor = Color.ORANGE;
+    public static String fontName = "Roboto";
+    public static Color mainColor = new Color(50, 94, 90);
     public static Color btnDefaultColor = new Color(243, 244, 245);
 
 }

@@ -4,6 +4,9 @@
  */
 package view.component.Product.Product_Component;
 
+import controller.DAO.BrandDAO;
+import controller.DAOImp.BrandDAOImp;
+import controller.Functional.Functional;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -13,7 +16,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
+import model.Product;
+import org.hibernate.Session;
+import util.HibernateUtil;
 import view.component.Btn.NonBorderIconButton;
 import view.component.CustomComponent.CustomCheckbox;
 import view.component.Product.Feature.SubFeature_Component;
@@ -26,11 +34,12 @@ import view.component.Product.Feature.ProductName_Component;
 public class Product_Component extends javax.swing.JPanel {
 
     private CustomCheckbox customCheckbox;
+    private NonBorderIconButton editBtn;
 
-    public Product_Component() {
+    public Product_Component(Product product) {
         initComponents();
         setLayout(new FlowLayout(FlowLayout.LEFT, 15, 0));
-        addComponents();
+        addComponents(product);
         addEvents();
     }
 
@@ -79,21 +88,19 @@ public class Product_Component extends javax.swing.JPanel {
         } else {
             changeColor(false);
         }
-
     }//GEN-LAST:event_formMouseExited
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         customCheckbox.setSelected(!customCheckbox.isSelected());
     }//GEN-LAST:event_formMouseClicked
 
-    private void addComponents() {
+    private void addComponents(Product product) {
 
         customCheckbox = new CustomCheckbox(true);
 
         add(customCheckbox);
 
-        //ProductName_Component productName = new ProductName_Component();
-        ProductName_Component productName = new ProductName_Component();
+        ProductName_Component productName = new ProductName_Component(product.getName(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
 
         productName.addMouseListener(new MouseAdapter() {
             @Override
@@ -117,8 +124,18 @@ public class Product_Component extends javax.swing.JPanel {
         });
         add(productName);
 
-        for (int i = 1; i <= 6; i++) {
-            SubFeature_Component subFeature = new SubFeature_Component();
+        List<String> features = new ArrayList<>();
+        //"Brand", "Quantity", "Sale Price", "Discount", "Type", "Gender"
+
+        features.add(product.getBrand().getName());
+        features.add(product.getAmount() + "");
+        features.add(product.getPrice() + "");
+        features.add("0");
+        features.add("10ml");
+        features.add("Man");
+
+        for (int i = 0; i < features.size(); i++) {
+            SubFeature_Component subFeature = new SubFeature_Component(features.get(i));
 
             subFeature.addMouseListener(new MouseAdapter() {
                 @Override
@@ -145,7 +162,8 @@ public class Product_Component extends javax.swing.JPanel {
         }
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
-        add(new NonBorderIconButton("Edit", icon));
+        editBtn = new NonBorderIconButton("Edit", icon, false);
+        add(editBtn);
     }
 
     public void changeColor(boolean isInside) {
@@ -197,6 +215,14 @@ public class Product_Component extends javax.swing.JPanel {
                 }
             }
         });
+
+        editBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Button clicked! Do something...");
+            }
+        });
+
     }
 
     private void formMouseEntered() {
@@ -213,6 +239,9 @@ public class Product_Component extends javax.swing.JPanel {
         customCheckbox.setSelected(!customCheckbox.isSelected());
     }
 
+    public void changeStatusEditBtn(boolean b) {
+        editBtn.setEnabled(b);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

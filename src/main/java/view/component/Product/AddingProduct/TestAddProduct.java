@@ -17,6 +17,8 @@ import controller.DAO.ProductDAO;
 import controller.DAOImp.BrandDAOImp;
 import controller.DAOImp.ProductDAOImp;
 import controller.Functional.Functional;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -26,6 +28,7 @@ import java.io.File;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -59,6 +62,7 @@ public class TestAddProduct extends javax.swing.JPanel {
         customComponents();
         setting();
         removeFocus();
+
     }
 
     /**
@@ -69,7 +73,7 @@ public class TestAddProduct extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-        
+
         contentPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -106,86 +110,86 @@ public class TestAddProduct extends javax.swing.JPanel {
         type = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         gender = new javax.swing.JComboBox<>();
-        
+
         setBackground(new java.awt.Color(250, 250, 250));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
-        
+
         contentPanel.setBackground(new java.awt.Color(255, 255, 255));
         contentPanel.setPreferredSize(new java.awt.Dimension(748, 598));
-        
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("General Information");
-        
+
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Product Name");
-        
+
         name.setBackground(new java.awt.Color(255, 255, 255));
         name.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         name.setForeground(new java.awt.Color(102, 102, 102));
         name.setText("Enter Product Name");
-        
+
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Product Code");
-        
+
         code.setBackground(new java.awt.Color(255, 255, 255));
         code.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         code.setForeground(new java.awt.Color(102, 102, 102));
         code.setText("Enter Product Code");
-        
+
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Sale Price");
-        
+
         price.setBackground(new java.awt.Color(255, 255, 255));
         price.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         price.setForeground(new java.awt.Color(102, 102, 102));
         price.setText("100000 VND");
-        
+
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Discount %");
-        
+
         discount.setBackground(new java.awt.Color(255, 255, 255));
         discount.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         discount.setForeground(new java.awt.Color(102, 102, 102));
         discount.setText("0");
-        
+
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Final Price");
-        
+
         label12.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         label12.setForeground(new java.awt.Color(0, 0, 0));
         label12.setText("Quantity");
-        
+
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Brand");
-        
+
         quantity.setBackground(new java.awt.Color(255, 255, 255));
         quantity.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         quantity.setForeground(new java.awt.Color(102, 102, 102));
         quantity.setText("1");
-        
+
         brand.setBackground(new java.awt.Color(255, 255, 255));
         brand.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         brand.setForeground(new java.awt.Color(102, 102, 102));
-        
+
         label13.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         label13.setForeground(new java.awt.Color(0, 0, 0));
         label13.setText("Status");
-        
+
         jLabel11.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Description");
-        
+
         description.setBackground(new java.awt.Color(255, 255, 255));
         description.setColumns(20);
         description.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
@@ -193,31 +197,31 @@ public class TestAddProduct extends javax.swing.JPanel {
         description.setRows(5);
         jScrollPane1.setViewportView(description);
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
-        
+
         status.setBackground(new java.awt.Color(255, 255, 255));
         status.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         status.setForeground(new java.awt.Color(102, 102, 102));
         status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"In stock", "Out of stock", "In transit"}));
-        
+
         cancelBtn.setText("Cancel");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
             }
         });
-        
+
         confirmBtn.setText("Save");
         confirmBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmBtnActionPerformed(evt);
             }
         });
-        
+
         finalPrice.setBackground(new java.awt.Color(51, 51, 51));
         finalPrice.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         finalPrice.setForeground(new java.awt.Color(102, 102, 102));
         finalPrice.setText("");
-        
+
         javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
         contentPanel.setLayout(contentPanelLayout);
         contentPanelLayout.setHorizontalGroup(
@@ -234,9 +238,9 @@ public class TestAddProduct extends javax.swing.JPanel {
                                                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(contentPanelLayout.createSequentialGroup()
-                                                                .addComponent(cancelBtn)
+                                                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(confirmBtn))
+                                                                .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, contentPanelLayout.createSequentialGroup()
                                                                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -315,17 +319,17 @@ public class TestAddProduct extends javax.swing.JPanel {
                                         .addComponent(confirmBtn))
                                 .addGap(54, 54, 54))
         );
-        
+
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Create a New Product");
-        
+
         imagePanel.setBackground(new java.awt.Color(255, 255, 255));
-        
+
         jLabel12.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Product Image");
-        
+
         img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfume4.png"))); // NOI18N
 
         uploadBtn.setBackground(new java.awt.Color(0, 0, 255));
@@ -337,11 +341,11 @@ public class TestAddProduct extends javax.swing.JPanel {
                 uploadBtnActionPerformed(evt);
             }
         });
-        
+
         jLabel14.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(102, 102, 102));
         jLabel14.setText("jLabel14");
-        
+
         javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
         imagePanel.setLayout(imagePanelLayout);
         imagePanelLayout.setHorizontalGroup(
@@ -372,31 +376,31 @@ public class TestAddProduct extends javax.swing.JPanel {
                                 .addComponent(uploadBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(34, Short.MAX_VALUE))
         );
-        
+
         categoryPanel.setBackground(new java.awt.Color(255, 255, 255));
-        
+
         jLabel15.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Category");
-        
+
         jLabel16.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Type");
-        
+
         type.setBackground(new java.awt.Color(255, 255, 255));
         type.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         type.setForeground(new java.awt.Color(102, 102, 102));
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"10ml", "20ml", "30ml", "Full"}));
-        
+
         jLabel9.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Gender");
-        
+
         gender.setBackground(new java.awt.Color(255, 255, 255));
         gender.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         gender.setForeground(new java.awt.Color(102, 102, 102));
         gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Men", "Women", "Unisex"}));
-        
+
         javax.swing.GroupLayout categoryPanelLayout = new javax.swing.GroupLayout(categoryPanel);
         categoryPanel.setLayout(categoryPanelLayout);
         categoryPanelLayout.setHorizontalGroup(
@@ -426,7 +430,7 @@ public class TestAddProduct extends javax.swing.JPanel {
                                 .addComponent(gender, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(41, Short.MAX_VALUE))
         );
-        
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -461,37 +465,37 @@ public class TestAddProduct extends javax.swing.JPanel {
 
     private void uploadBtnActionPerformed(java.awt.event.ActionEvent evt) {
         JFileChooser fileChooser = new JFileChooser();
-        
+
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "bmp"));
-        
+
         int returnValue = fileChooser.showOpenDialog(this);
-        
+
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            
+
             ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
-            
+
             img.setIcon(Functional.scaleImg(img, imageIcon));
         }
     }
-    
+
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        
+
         int option = JOptionPane.showConfirmDialog(this, "Do you want to save ?", "Confirm", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
-            
+
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                
+
                 ProductDAO productDAO = new ProductDAOImp(session);
                 BrandDAO brandDAO = new BrandDAOImp(session);
-                
+
                 String productName = name.getText();
                 if (productName.equals("Enter product name")) {
                     JOptionPane.showMessageDialog(this, "Please enter Product Name !");
                     return;
                 }
-                
+
                 String productCode = code.getText();
                 if (productCode.equals("Enter product code")) {
                     JOptionPane.showMessageDialog(this, "Please enter Product Code !");
@@ -502,29 +506,29 @@ public class TestAddProduct extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Please enter Product Brand !");
                     return;
                 }
-                
+
                 Brand brand = brandDAO.getByName(brandString);
                 if (brand == null) {
                     brand = new Brand(brandString, true);
                     brandDAO.add(brand);
                 }
-                
+
                 double price = Double.parseDouble(this.price.getText());
-                
+
                 double discount = Double.parseDouble(this.discount.getText());
-                
+
                 int type = this.type.getSelectedIndex() + 1;
                 int gender = this.type.getSelectedIndex() + 1;
                 int productStatus = status.getSelectedIndex() + 1;
                 String description = this.description.getText();
-                
+
                 ImageIcon newImg = (ImageIcon) img.getIcon();
                 byte[] imgByte = Functional.convertIconToByteArray(newImg);
-                
+
                 Product product = new Product(productName, productCode, brand, gender, imgByte, price, description, 0, productStatus, type, true);
-                
+
                 productDAO.add(product);
-                
+
                 close();
 
 //                ManageEmployeeInfo_Component.getInstance().updateData();
@@ -534,26 +538,26 @@ public class TestAddProduct extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {
         int option = JOptionPane.showConfirmDialog(this, "Do you want to cancel?", "Confirm", JOptionPane.YES_NO_OPTION);
-        
+
         if (option == JOptionPane.YES_OPTION) {
             close();
         }
     }
-    
+
     private void formMouseClicked(java.awt.event.MouseEvent evt) {
         this.requestFocusInWindow();
     }
-    
+
     private void initData() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             ProductDAO productDAO = new ProductDAOImp(session);
             BrandDAO brandDAO = new BrandDAOImp(session);
-            
+
             List<Brand> items = brandDAO.getAll();
-            
+
             for (Brand item : items) {
                 brand.addItem(item.getName());
             }
@@ -562,21 +566,23 @@ public class TestAddProduct extends javax.swing.JPanel {
         String text = "<html>Please upload an image with a resolution of 180x180 or close to it for the best image quality.</html>";
         jLabel14.setText(text);
     }
-    
+
     private void customComponents() {
         customJComboBox();
+        adjustButtonSize(confirmBtn);
+        adjustButtonSize(cancelBtn);
     }
-    
+
     private void close() {
         Window parentWindow = SwingUtilities.getWindowAncestor(this);
         if (parentWindow != null) {
             parentWindow.dispose();
         }
     }
-    
+
     private void setPlaceholder(final JTextField textField) {
         String placeholder = textField.getText();
-        
+
         textField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -585,7 +591,7 @@ public class TestAddProduct extends javax.swing.JPanel {
                     textField.setForeground(java.awt.Color.BLACK);
                 }
             }
-            
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
@@ -596,7 +602,7 @@ public class TestAddProduct extends javax.swing.JPanel {
         });
         textField.setForeground(java.awt.Color.GRAY);
     }
-    
+
     private void setting() {
         setPlaceholder(name);
         setPlaceholder(code);
@@ -604,29 +610,29 @@ public class TestAddProduct extends javax.swing.JPanel {
         setPlaceholder(discount);
         setPlaceholder(quantity);
     }
-    
+
     private void removeFocus() {
         this.addAncestorListener(new javax.swing.event.AncestorListener() {
             @Override
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 formMouseClicked(null);
             }
-            
+
             @Override
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
-            
+
             @Override
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
     }
-    
+
     private void customJComboBox() {
         brand.setMaximumRowCount(7);
         brand.setEditable(true);
         AutoCompleteDecorator.decorate(brand);
-        
+
         brand.getEditor().getEditorComponent().addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -635,41 +641,41 @@ public class TestAddProduct extends javax.swing.JPanel {
                 }
             }
         });
-        
+
         JTextField editor = (JTextField) brand.getEditor().getEditorComponent();
-        
+
         editor.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 checkForMatchingResult();
             }
-            
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 checkForMatchingResult();
             }
-            
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 checkForMatchingResult();
             }
-            
+
             private void checkForMatchingResult() {
                 String input = editor.getText();
                 boolean matchFound = false;
-                
+
                 if (input.isBlank()) {
                     brand.hidePopup();
                     return;
                 }
-                
+
                 for (int i = 0; i < brand.getItemCount(); i++) {
                     if (brand.getItemAt(i).toString().toLowerCase().startsWith(input.toLowerCase())) {
                         matchFound = true;
                         break;
                     }
                 }
-                
+
                 if (matchFound) {
                     brand.showPopup();
                 } else {
@@ -677,6 +683,13 @@ public class TestAddProduct extends javax.swing.JPanel {
                 }
             }
         });
+    }
+
+    private void adjustButtonSize(JButton button) {
+        FontMetrics fontMetrics = getFontMetrics(getFont());
+        int textWidth = fontMetrics.stringWidth(button.getText());
+        int buttonWidth = textWidth > 40 ? textWidth : 40;  // Adding padding to button width (40px extra)
+        button.setPreferredSize(new Dimension(buttonWidth + 40, 40));
     }
 
     // Variables declaration - do not modify                     
@@ -716,4 +729,5 @@ public class TestAddProduct extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> type;
     private RoundedButton uploadBtn;
     // End of variables declaration                   
+
 }

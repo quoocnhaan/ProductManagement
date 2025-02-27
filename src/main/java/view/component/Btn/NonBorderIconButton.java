@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class NonBorderIconButton extends JButton {
 
@@ -20,9 +22,11 @@ public class NonBorderIconButton extends JButton {
     private Color normalTextColor;
     private Color hoverTextColor;
     private Color borderColor;
+    private boolean hasBorder;
 
-    public NonBorderIconButton(String text, ImageIcon icon) {
-        super(text);
+    public NonBorderIconButton(String text, ImageIcon icon, boolean hasBorder) {
+        setText(text);
+        this.hasBorder = hasBorder;
 
         // Set default properties
         setFocusPainted(false); // Remove focus border
@@ -32,26 +36,45 @@ public class NonBorderIconButton extends JButton {
         setIcon(icon);
 
         // Set normal and hover colors
-        normalBackgroundColor = Color.WHITE; // Light background color
-        hoverBackgroundColor = new Color(247, 249, 250);  // Slightly darker on hover
-        normalTextColor = new Color(81, 84, 174); // Blue text
-        hoverTextColor = new Color(247, 248, 252); // Same blue on hover (optional)
-        borderColor = Color.WHITE;  // Light gray border color
+        borderColor = hasBorder ? new Color(239, 239, 239) : Color.WHITE;
+
+        normalBackgroundColor = Color.WHITE;
+        hoverBackgroundColor = new Color(247, 249, 250);
+        normalTextColor = hasBorder ? new Color(72, 71, 80) : new Color(81, 84, 174);
+        hoverTextColor = new Color(247, 248, 252);
 
         setForeground(normalTextColor); // Text color
-        setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 12)); // Adjusted padding (40px on the left)
+        setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 12)); // Adjusted padding
         setBackground(normalBackgroundColor);
 
         // Add hover effect listener
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setBackground(hoverBackgroundColor);
+                if (hasBorder) {
+                    setBackground(new Color(250, 250, 250)); // Change background to yellow if hasBorder
+                } else {
+                    setBackground(hoverBackgroundColor); // Change background to hover color
+                    borderColor = hoverBackgroundColor; // Also change border color to hover color
+                }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(normalBackgroundColor);
+                setBackground(normalBackgroundColor); // Reset to normal background
+                borderColor = hasBorder ? new Color(239, 239, 239) : Color.WHITE; // Reset border color
+            }
+        });
+
+        addPropertyChangeListener("enabled", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                boolean isEnabled = (boolean) evt.getNewValue();
+                if (isEnabled) {
+                    setForeground(normalTextColor);
+                } else {
+                    setForeground(new Color(143, 143, 143));
+                }
             }
         });
 
@@ -64,14 +87,16 @@ public class NonBorderIconButton extends JButton {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Fill the rounded background
-        g2.setColor(getBackground() != null ? getBackground() : normalBackgroundColor);
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // Rounded corners (radius 15)
+        // Fill the background
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // Rounded background
 
-        // Draw the border
-        g2.setColor(borderColor);
-        g2.setStroke(new BasicStroke(2));
-        g2.drawRoundRect(1, 1, getWidth() - 2, getHeight() - 2, 15, 15); // Border around the button
+        // Draw the border only if hasBorder is true
+        if (hasBorder) {
+            g2.setColor(borderColor); // Set border color
+            g2.setStroke(new BasicStroke(2f)); // Set border thickness
+            g2.drawRoundRect(1, 1, getWidth() - 2, getHeight() - 2, 15, 15); // Draw the border
+        }
 
         // Paint the text/icon after background and border
         super.paintComponent(g);
@@ -81,13 +106,6 @@ public class NonBorderIconButton extends JButton {
     @Override
     public void setBackground(Color bg) {
         super.setBackground(bg);
-        // to-do: change the border color
-        if (bg.equals(hoverBackgroundColor)) {
-            borderColor = hoverBackgroundColor;  // Example: Change to a light blue when hovered
-        } else {
-            borderColor = Color.WHITE;  // Default border color when not hovered
-        }
         repaint();
     }
-
 }

@@ -5,7 +5,9 @@
 package view.component.Product;
 
 import java.awt.BorderLayout;
+import java.util.List;
 import view.component.Product.Product_Component.ProductList_Component;
+import view.component.Product.Product_Component.Product_Component;
 import view.component.Product.Title.Title_Component;
 
 /**
@@ -13,10 +15,10 @@ import view.component.Product.Title.Title_Component;
  * @author PC
  */
 public class ProductPage_Component extends javax.swing.JPanel {
-
+    
     private Title_Component title_Component;
     private ProductList_Component productList_Component;
-
+    
     public ProductPage_Component() {
         initComponents();
         setLayout(new BorderLayout());
@@ -50,9 +52,17 @@ public class ProductPage_Component extends javax.swing.JPanel {
         add(title_Component, BorderLayout.NORTH);
         add(productList_Component, BorderLayout.CENTER);
     }
-
+    
     public void changeStatusCheckbox(boolean b) {
         productList_Component.changeStatusCheckbox(b);
+    }
+    
+    public void updateData(List<Product_Component> list) {
+        productList_Component.updateData(list);
+    }
+    
+    public void changeStatusEditBtn(boolean b) {
+        productList_Component.changeStatusEditBtn(b);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

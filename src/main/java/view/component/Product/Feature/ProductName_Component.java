@@ -17,10 +17,11 @@ public class ProductName_Component extends javax.swing.JPanel {
     /**
      * Creates new form SubFeature_Component
      */
-    public ProductName_Component() {
+    public ProductName_Component(String name, String code, ImageIcon icon) {
         initComponents();
-        ImageIcon i = new ImageIcon(getClass().getResource("/img/coco1.png"));
-        img.setIcon(Functional.scaleImg(img, i));
+        this.name.setText(name);
+        this.code.setText(code);
+        img.setIcon(Functional.scaleImg(img, icon));
     }
 
     /**
@@ -31,24 +32,24 @@ public class ProductName_Component extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-        
+
         img = new ImageLabel(15);
         img.setSize(60, 60);
         name = new javax.swing.JLabel();
         code = new javax.swing.JLabel();
-        
+
         setBackground(new java.awt.Color(255, 255, 255));
-        
+
         img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/home_e.png"))); // NOI18N
         img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        
+
         name.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         name.setForeground(new java.awt.Color(0, 0, 0));
         name.setText("Nike Air");
-        
+
         code.setForeground(new java.awt.Color(102, 102, 102));
         code.setText("Code: LQN2002");
-        
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(

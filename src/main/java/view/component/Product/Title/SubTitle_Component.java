@@ -13,8 +13,9 @@ public class SubTitle_Component extends javax.swing.JPanel {
     /**
      * Creates new form SubTitle_Component
      */
-    public SubTitle_Component() {
+    public SubTitle_Component(String text) {
         initComponents();
+        title.setText(text);
     }
 
     /**
@@ -30,9 +31,9 @@ public class SubTitle_Component extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(246, 248, 250));
 
-        title.setBackground(new java.awt.Color(102, 102, 102));
+        title.setBackground(new java.awt.Color(51, 51, 51));
         title.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
-        title.setForeground(new java.awt.Color(127, 132, 144));
+        title.setForeground(new java.awt.Color(51, 51, 51));
         title.setText("Brand");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

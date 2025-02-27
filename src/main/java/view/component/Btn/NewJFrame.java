@@ -4,10 +4,12 @@
  */
 package view.component.Btn;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
@@ -24,14 +26,20 @@ public class NewJFrame extends javax.swing.JFrame {
         setLayout(new FlowLayout());
         ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
 
-//        for (int i = 0; i < 5; i++) {
-//            NonBorderIconButton btn = new NonBorderIconButton("Edit", icon);
-//            add(btn);
-//        }
+        JPanel j = new JPanel(new FlowLayout());
+        j.setBackground(Color.WHITE);
+        j.setPreferredSize(new Dimension(500, 500));
 
         for (int i = 0; i < 5; i++) {
-            add(new RoundedButton("hello", true));
+            //NonBorderIconButton btn = new NonBorderIconButton("Edit", icon, true);
+            MyButton btn = new MyButton("hello");
+            j.add(btn);
         }
+
+        add(j);
+//        for (int i = 0; i < 5; i++) {
+//            add(new RoundedButton("hello", true));
+//        }
     }
 
     /**

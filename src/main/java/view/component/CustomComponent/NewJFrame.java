@@ -4,8 +4,8 @@
  */
 package view.component.CustomComponent;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+
 
 /**
  *
@@ -19,6 +19,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new FlowLayout());
+        add(new NewJPanel());
 
     }
 

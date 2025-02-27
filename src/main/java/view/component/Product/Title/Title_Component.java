@@ -54,8 +54,9 @@ public class Title_Component extends javax.swing.JPanel {
         customCheckbox = new CustomCheckbox(false);
         add(customCheckbox);
         add(new ProductNameTitle_Component());
-        for (int i = 1; i <= 6; i++) {
-            add(new SubTitle_Component());
+        String[] titles = {"Brand", "Quantity", "Sale Price", "Discount", "Type", "Gender"};
+        for (int i = 0; i < 6; i++) {
+            add(new SubTitle_Component(titles[i]));
         }
     }
 
@@ -65,8 +66,10 @@ public class Title_Component extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (customCheckbox.isSelected()) {
                     parent.changeStatusCheckbox(true);
+                    parent.changeStatusEditBtn(false);
                 } else {
                     parent.changeStatusCheckbox(false);
+                    parent.changeStatusEditBtn(true);
                 }
             }
         });
