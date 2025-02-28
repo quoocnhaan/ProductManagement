@@ -4,9 +4,12 @@
  */
 package view.component.Product.Title;
 
+import controller.Session.SharedData;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import view.component.CustomComponent.CustomCheckbox;
 import view.component.Product.ProductPage_Component;
 
@@ -61,18 +64,27 @@ public class Title_Component extends javax.swing.JPanel {
     }
 
     private void addEvents() {
-        customCheckbox.addActionListener(new ActionListener() {
+        customCheckbox.addItemListener(new ItemListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (customCheckbox.isSelected()) {
-                    parent.changeStatusCheckbox(true);
-                    parent.changeStatusEditBtn(false);
-                } else {
-                    parent.changeStatusCheckbox(false);
-                    parent.changeStatusEditBtn(true);
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if (customCheckbox.isFocusOwner()) {
+                        parent.changeStatusCheckbox(true);
+                        parent.changeStatusEditBtn(false);
+                    }
+                } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    if (customCheckbox.isFocusOwner()) {
+                        parent.changeStatusCheckbox(false);
+                        parent.changeStatusEditBtn(true);
+                    }
                 }
+                parent.updateSelectedAmount();
             }
         });
+    }
+
+    public void setSelected(boolean isSelected) {
+        this.customCheckbox.setSelected(isSelected);
     }
 
 

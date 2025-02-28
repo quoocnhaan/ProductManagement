@@ -13,6 +13,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import javax.swing.plaf.metal.MetalTabbedPaneUI;
 
 /**
@@ -43,9 +44,11 @@ public class CustomTabbedPaneUI extends MetalTabbedPaneUI {
 
     @Override
     protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected) {
-        g.setFont(font);
-        g.setColor(isSelected ? selectedColor : unselectedColor);
-        g.drawString(title, textRect.x, textRect.y + metrics.getAscent());
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2d.setFont(font);
+        g2d.setColor(isSelected ? selectedColor : unselectedColor);
+        g2d.drawString(title, textRect.x, textRect.y + metrics.getAscent());
     }
 
     @Override

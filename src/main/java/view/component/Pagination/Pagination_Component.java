@@ -19,13 +19,17 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
+import view.component.CustomComponent.CustomCheckbox;
 import view.component.Product.ProductPage_Component;
 import view.component.Product.Product_Component.Product_Component;
 
@@ -39,10 +43,14 @@ public class Pagination_Component extends javax.swing.JPanel {
     private int itemsPerPage = 2;
     private int maxVisiblePages = 3; // Only show 3 page buttons at once
     private JButton prevButton, nextButton;
-    private ProductPage_Component productPage_Component;
+    private List<ProductPage_Component> productPages; // -> List ProductPage
     private List<Product_Component> products; // Product list
+    private JPanel footer;
     private JPanel productPanel;
     private JPanel paginationPanel;
+    private JPanel selectedPanel;
+    private JLabel totalSelected;
+    private CustomCheckbox checkbox;
     private int totalPages;
 
     public Pagination_Component() {
@@ -50,32 +58,82 @@ public class Pagination_Component extends javax.swing.JPanel {
         setLayout(new BorderLayout());
 
         products = new ArrayList<>();
+        productPages = new ArrayList<>();
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             ProductDAO productDAO = new ProductDAOImp(session);
             List<Product> productList = productDAO.getAll();
             for (Product product : productList) {
-                products.add(new Product_Component(product));
+                products.add(new Product_Component(product, this, product.getId()));
             }
 
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
 
-        productPage_Component = new ProductPage_Component();
         // Initialize products (for demo purposes)
         // Calculate total pages
         totalPages = (int) Math.ceil((double) products.size() / itemsPerPage);
 
+        for (int i = 0; i < totalPages; i++) {
+            ProductPage_Component productPage_Component = new ProductPage_Component(this);
+            productPages.add(productPage_Component);
+        }
+
         // Panel to display products
         productPanel = new JPanel(new BorderLayout());
-        productPanel.add(productPage_Component);
+        selectedPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        footer = new JPanel(new BorderLayout());
+
+        selectedPanel.setBackground(Color.WHITE);
+        footer.setBackground(Color.WHITE);
+        footer.setBorder(new EmptyBorder(0, 15, 0, 15));
+
+        totalSelected = new JLabel("0 selected");
+
+        totalSelected.setFont(new Font("Roboto", Font.PLAIN, 15));
+        checkbox = new CustomCheckbox(true);
+
+        checkbox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentPage = 1;
+                if (checkbox.isSelected()) {
+                    SharedData.beingSelected = true;
+                    totalPages = (int) Math.ceil((double) SharedData.selectedProduct.size() / itemsPerPage);
+                } else {
+                    SharedData.beingSelected = false;
+                    updateSelectedProduct();
+                    totalPages = (int) Math.ceil((double) products.size() / itemsPerPage);
+                }
+                updatePaginationControls();
+            }
+
+            private void updateSelectedProduct() {
+                Iterator<Product_Component> iterator = SharedData.selectedProduct.iterator();
+                while (iterator.hasNext()) {
+                    Product_Component productPage = iterator.next();
+                    if (!productPage.isSelected()) {
+                        iterator.remove();  // Safely removes the element
+                    }
+                }
+            }
+
+        });
+
+        selectedPanel.add(checkbox);
+        selectedPanel.add(totalSelected);
+
+        //productPanel.add(productPages.get(0));
         add(productPanel, BorderLayout.CENTER);
 
         // Pagination panel
         paginationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         paginationPanel.setBackground(Color.WHITE);
-        add(paginationPanel, BorderLayout.SOUTH);
+        footer.add(paginationPanel, BorderLayout.EAST);
+        footer.add(selectedPanel, BorderLayout.WEST);
+
+        add(footer, BorderLayout.SOUTH);
 
         // Previous button
         prevButton = createPageButton("< Previous");
@@ -189,19 +247,55 @@ public class Pagination_Component extends javax.swing.JPanel {
         paginationPanel.repaint();
 
         // Display products for the current page
-        displayProductsForCurrentPage();
+        if (checkbox.isSelected()) {
+            displaySelectedProducs();
+        } else {
+            displayProductsForCurrentPage();
+        }
     }
 
-    // Display products based on the current page
     private void displayProductsForCurrentPage() {
+        productPanel.removeAll();
         int start = (currentPage - 1) * itemsPerPage;
         int end = Math.min(start + itemsPerPage, products.size());
+
+        int pageIndex = (int) Math.ceil(end * 1.0 / itemsPerPage);
+
+        ProductPage_Component productPage_Component = productPages.get(pageIndex - 1);
+
         List<Product_Component> list = new ArrayList<>();
 
         for (int i = start; i < end; i++) {
-            list.add(products.get(i));
-            productPage_Component.updateData(list);
+            Product_Component product_Component = products.get(i);
+            product_Component.setProductPage_Component(productPage_Component);
+            list.add(product_Component);
+
         }
+        productPage_Component.updateData(list);
+
+        productPanel.add(productPage_Component);
+
+        // Repaint and revalidate to show the updated products
+        productPanel.revalidate();
+        productPanel.repaint();
+    }
+
+    private void displaySelectedProducs() {
+        productPanel.removeAll();
+        int start = (currentPage - 1) * itemsPerPage;
+        int end = Math.min(start + itemsPerPage, SharedData.selectedProduct.size());
+
+        int pageIndex = (int) Math.ceil(end * 1.0 / itemsPerPage);
+
+        List<Product_Component> list = new ArrayList<>();
+
+        for (int i = start; i < end; i++) {
+            list.add(SharedData.selectedProduct.get(i));
+        }
+        productPages.get(pageIndex - 1).updateData(list);
+
+        productPanel.add(productPages.get(pageIndex - 1));
+
         // Repaint and revalidate to show the updated products
         productPanel.revalidate();
         productPanel.repaint();
@@ -227,6 +321,10 @@ public class Pagination_Component extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    public void updateSelectedAmount() {
+        totalSelected.setText(SharedData.selectedAmount + " selected");
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

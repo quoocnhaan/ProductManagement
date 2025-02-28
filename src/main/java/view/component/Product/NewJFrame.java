@@ -88,7 +88,6 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void addComponents() {
         add(new Header_Component(), BorderLayout.NORTH);
-        add(new ProductPage_Component(), BorderLayout.CENTER);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

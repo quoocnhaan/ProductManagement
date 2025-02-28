@@ -21,12 +21,12 @@ public class CustomTabbedPaneExample {
         // Create the first panel and add components to it
         JPanel panel1 = new JPanel();
         panel1.add(new JLabel("This is Panel 1"));
-        tabbedPane.addTab("Tab 1", panel1);
+        tabbedPane.addTab("All", panel1);
 
         // Create the second panel and add components to it
         JPanel panel2 = new JPanel();
         panel2.add(new JLabel("This is Panel 2"));
-        tabbedPane.addTab("Tab 2", panel2);
+        tabbedPane.addTab("Paid", panel2);
 
         // Add the JTabbedPane to the main panel
         main.add(tabbedPane);
@@ -51,7 +51,7 @@ public class CustomTabbedPaneExample {
             tabInsets = new Insets(10, 20, 10, 20); // Adjust insets for tabs to remove extra padding
             contentBorderInsets = new Insets(0, 0, 0, 0); // Remove space around the content panel
             tabAreaInsets.left = 30;
-            tabPane.setFont(new Font("Roboto", Font.BOLD, 14));
+            tabPane.setFont(new Font("Roboto", Font.BOLD, 15));
         }
 
         @Override
@@ -61,13 +61,21 @@ public class CustomTabbedPaneExample {
             g.fillRect(x, y, w, h);
         }
 
+//        @Override
+//        protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected) {
+//            g.setFont(font);
+//            g.setColor(isSelected ? selectedColor : unselectedColor);
+//            g.drawString(title, textRect.x, textRect.y + metrics.getAscent());
+//        }
+
         @Override
         protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected) {
-            g.setFont(font);
-            g.setColor(isSelected ? selectedColor : unselectedColor);
-            g.drawString(title, textRect.x, textRect.y + metrics.getAscent());
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g2d.setFont(font);
+            g2d.setColor(isSelected ? selectedColor : unselectedColor);
+            g2d.drawString(title, textRect.x, textRect.y + metrics.getAscent());
         }
-
         @Override
         protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
             // No focus indicator
@@ -89,6 +97,8 @@ public class CustomTabbedPaneExample {
 
             // Set the color for the line (Green color)
             g2.setColor(new Color(240, 240, 240));
+
+            //g2.setColor(Color.RED);
 
             // Set the stroke thickness to 3px
             g2.setStroke(new BasicStroke(2));

@@ -4,6 +4,7 @@
  */
 package view.component.Product.Product_Component;
 
+import controller.Session.SharedData;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,6 @@ public class ProductList_Component extends javax.swing.JPanel {
 //            list.add(product_Component);
 //        }
 //    }
-    
     public void changeStatusCheckbox(boolean isChecked) {
         for (Product_Component product_Component : list) {
             product_Component.changeStatusCheckbox(isChecked);
@@ -74,6 +74,26 @@ public class ProductList_Component extends javax.swing.JPanel {
         for (Product_Component product_Component : list) {
             product_Component.changeStatusEditBtn(b);
         }
+    }
+
+//    public int getSelectedAmount() {
+//        int count = 0;
+//        for (Product_Component product_Component : list) {
+//            if (!product_Component.isSelected()) {
+//                count++;
+//            }
+//        }
+//        return count;
+//    }
+
+    public boolean isSelectAll() {
+        int count = 0;
+        for (Product_Component product_Component : list) {
+            if (product_Component.isSelected()) {
+                count++;
+            }
+        }
+        return count == list.size();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
