@@ -1,5 +1,7 @@
+CustomTabbedPaneExample$CustomTabbedPaneUI.class
 Filter\LanguageSelection.class
 CustomPaginationWithProducts$4.class
+CustomTabbedPaneExample.class
 InventoryUI.class
 newpackage\Main$3.class
 newpackage\Search_Item$3.class
@@ -22,6 +24,7 @@ newpackage\Main$2.class
 RoundedPanel.class
 newpackage\PanelSearch.class
 UpdateDatabase.class
+CustomTabbedPaneExample$CustomTabbedPaneUI$1.class
 RoundedLabel.class
 CustomPaginationWithProducts$3.class
 CustomPaginationWithProducts$Product.class

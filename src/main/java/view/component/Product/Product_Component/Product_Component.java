@@ -22,7 +22,7 @@ import javax.swing.ImageIcon;
 import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
-import view.component.Btn.NonBorderIconButton;
+import view.component.Btn.IconButton;
 import view.component.CustomComponent.CustomCheckbox;
 import view.component.Product.Feature.SubFeature_Component;
 import view.component.Product.Feature.ProductName_Component;
@@ -34,7 +34,7 @@ import view.component.Product.Feature.ProductName_Component;
 public class Product_Component extends javax.swing.JPanel {
 
     private CustomCheckbox customCheckbox;
-    private NonBorderIconButton editBtn;
+    private IconButton editBtn;
 
     public Product_Component(Product product) {
         initComponents();
@@ -162,7 +162,7 @@ public class Product_Component extends javax.swing.JPanel {
         }
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
-        editBtn = new NonBorderIconButton("Edit", icon, false);
+        editBtn = new IconButton("Edit", icon, false);
         add(editBtn);
     }
 

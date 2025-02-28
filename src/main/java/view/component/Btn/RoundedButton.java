@@ -12,10 +12,14 @@ public class RoundedButton extends JButton {
     private Color bg;
     private Color fg;
     private boolean isConfirm;
+    private int radius;
+    private int height;
 
-    public RoundedButton(String text, boolean isConfirm) {
+    public RoundedButton(String text, boolean isConfirm, int radius, int height) {
         super(text);
         this.isConfirm = isConfirm;
+        this.radius = radius;
+        this.height = height;
         bg = isConfirm ? SharedData.mainColor : new Color(243, 244, 245);
         fg = isConfirm ? Color.white : Color.black;
         setContentAreaFilled(false);  // Remove default background painting
@@ -71,7 +75,7 @@ public class RoundedButton extends JButton {
         FontMetrics fontMetrics = getFontMetrics(getFont());
         int textWidth = fontMetrics.stringWidth(getText());
         int buttonWidth = textWidth > 40 ? textWidth : 40;  // Adding padding to button width
-        setPreferredSize(new Dimension(buttonWidth + 30, 30));  // Adjust size
+        setPreferredSize(new Dimension(buttonWidth + 30, height));  // Adjust size
     }
 
     @Override
@@ -83,7 +87,7 @@ public class RoundedButton extends JButton {
         g2.setColor(getBackground());
 
         // Paint the rounded button with a radius of 30
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
 
         // Call the parent method to paint text and other components
         super.paintComponent(g2);

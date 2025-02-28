@@ -94,15 +94,15 @@ public class TestAddProduct extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         description = new RoundedTextArea();
         status = new javax.swing.JComboBox<>();
-        cancelBtn = new RoundedButton("Cancel", false);
-        confirmBtn = new RoundedButton("Save", true);
+        cancelBtn = new RoundedButton("Cancel", false, 15, 30);
+        confirmBtn = new RoundedButton("Save", true, 15, 30);
         finalPrice = new RoundedLabel("");
         jLabel1 = new javax.swing.JLabel();
         imagePanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         img = new ImageLabel(35);
         img.setSize(180, 180);
-        uploadBtn = new RoundedButton("", true);
+        uploadBtn = new RoundedButton("", true, 15, 30);
         jLabel14 = new javax.swing.JLabel();
         categoryPanel = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();

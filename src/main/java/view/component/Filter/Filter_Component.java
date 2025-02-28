@@ -104,8 +104,8 @@ public class Filter_Component extends javax.swing.JPanel {
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         footer.setBackground(Color.WHITE);
 
-        RoundedButton clear = new RoundedButton("Clear all", false);
-        RoundedButton apply = new RoundedButton("Apply", true);
+        RoundedButton clear = new RoundedButton("Clear all", false, 30, 30);
+        RoundedButton apply = new RoundedButton("Apply", true, 30, 30);
 
         clear.addActionListener(new ActionListener() {
             @Override

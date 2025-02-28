@@ -53,8 +53,8 @@ public class RoundedPanel extends JPanel {
         int cornerRadius = 20;  // Same radius as the rounded corners
 
 // Set the stroke to 1.5 for the line (top border)
-        g2.setStroke(new BasicStroke(2.5f));
-        g2.drawLine(cornerRadius / 2, 0, getWidth() - cornerRadius / 2 - 1, 0);  // Adjusted to fit inside the corners
+        g2.setStroke(new BasicStroke(5f));
+        g2.drawLine(cornerRadius / 2, -1, getWidth() - cornerRadius / 2 - 1, -1);  // Adjusted to fit inside the corners
 
 // Set the stroke to 1 for the arcs (corners)
         g2.setStroke(new BasicStroke(2f));
