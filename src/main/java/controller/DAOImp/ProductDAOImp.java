@@ -65,7 +65,8 @@ public class ProductDAOImp implements ProductDAO {
         Transaction transaction = session.beginTransaction();
         try {
             Product user = session.find(Product.class, id);
-            session.delete(user);
+            user.setStatus(false);
+            session.update(user);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -78,7 +79,8 @@ public class ProductDAOImp implements ProductDAO {
 
     @Override
     public List<Product> getAll() {
-        Query<Product> query = session.createQuery("FROM Product", Product.class);
+        Query<Product> query = session.createQuery("FROM Product p WHERE p.status IS TRUE", Product.class);
         return query.list();
     }
+
 }

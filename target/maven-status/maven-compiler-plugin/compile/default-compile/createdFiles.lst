@@ -25,9 +25,13 @@ view\component\CustomComponent\RoundedTextArea$1.class
 view\component\Product\AddingProduct\AddProduct_Component.class
 view\component\CustomComponent\NewJFrame$1.class
 view\component\Product\AddingProduct\AddProduct_Component$8.class
+view\component\DataTable_Component.class
 view\component\Navigation\NewJFrame.class
+view\component\SearchSuggestion\SearchSuggestion_Component$4.class
 view\component\CustomComponent\NewJFrame.class
 model\Bills.class
+view\component\Btn\NewJPanel.class
+view\component\Header\HeaderTitle_Component$1.class
 view\component\Product\Product_Component\Product_Component$3.class
 controller\Enum\Status.class
 view\component\Product\AddingProduct\AddNewProduct_Test$3.class
@@ -35,6 +39,7 @@ view\component\Product\AddingProduct\AddProduct_Component$2.class
 view\component\Navigation\Navigation_Component.class
 view\component\Filter\Filter_Component$2.class
 view\component\Product\AddingProduct\NewJFrame$1.class
+view\component\PaginationWithSearchBar.class
 view\component\Product\Product_Component\Product_Component.class
 view\component\SearchSuggestion\EventClick.class
 view\component\Product\Product_Component\Product_Component$5.class
@@ -59,6 +64,7 @@ view\component\Product\AddingProduct\AddNewProduct_Test$5.class
 view\component\SearchBar\NewJFrame.class
 view\component\SearchSuggestion\Search_Item.class
 controller\DAOImp\BillsDAOImp.class
+view\component\Btn\FilterButton.class
 view\component\Product\Title\Title_Component$1.class
 controller\DAO\InventoryDAO.class
 view\component\Header\NewJFrame$1.class
@@ -75,6 +81,7 @@ view\component\Btn\IconButton$1.class
 view\component\Product\Feature\SubFeature_Component.class
 controller\DAO\BillsPerDayDAO.class
 util\HibernateUtil.class
+view\component\CustomComponent\ButtonGroupPanel.class
 view\component\Navigation\Navigation_Component$1.class
 view\component\Product\Header\NewJFrame.class
 view\component\Product\Product_Component\ProductList_Component.class
@@ -92,6 +99,7 @@ model\NavigationItem.class
 controller\DAOImp\InventoryDetailDAOImp.class
 view\component\Product\AddingProduct\AddNewProduct_Test$1.class
 view\component\Btn\RoundedToggleButton.class
+view\component\SearchBar\SearchBarPanel$4.class
 model\InventoryDetail.class
 view\component\Btn\MyButton$1.class
 view\component\SearchSuggestion\PanelSearch$2.class
@@ -100,8 +108,10 @@ view\component\CustomComponent\CustomTabbedPaneUI$1.class
 view\component\Product\Header\NewJFrame$1.class
 view\component\Product\Product_Component\Product_Component$1.class
 view\component\Btn\IconButton.class
+view\component\NewJFrame$1.class
 view\component\CustomComponent\RoundedTextField$1.class
 view\component\Header\Header_Component.class
+view\component\NewJFrame.class
 view\component\Product\AddingProduct\AddNewProduct_Test$2.class
 controller\DAOImp\InventoryDAOImp.class
 view\component\Navigation\NewClass.class
@@ -114,8 +124,8 @@ controller\DAO\BillsDetailDAO.class
 view\component\Filter\FilterItem.class
 controller\DAOImp\ProductDAOImp.class
 view\component\Product\Product_Component\Product_Component$2.class
+view\component\SearchBar\SearchBarPanel$3.class
 view\component\Product\Header\HeaderName.class
-view\component\DataTable\DataTable_Component.class
 view\component\Pagination\NewJFrame$1.class
 model\Product.class
 view\component\Navigation\Navigation.class
@@ -125,6 +135,7 @@ controller\DAO\InterfaceDAO.class
 view\component\Navigation\NewJFrame$1.class
 model\Brand.class
 view\component\SearchSuggestion\SearchSuggestion_Component$2.class
+view\component\ContentPage_Component.class
 view\component\Product\AddingProduct\AddNewProduct_Test.class
 view\component\Product\AddingProduct\AddProduct_Component$4.class
 view\component\Product\AddingProduct\AddProduct_Component$7.class
@@ -140,9 +151,12 @@ view\component\SearchSuggestion\SearchSuggestion_Component$1.class
 view\component\CustomComponent\RoundedTextArea.class
 controller\Functional\Functional.class
 view\component\Product\NewJFrame$1.class
+view\component\Btn\NewJPanel$1.class
+view\component\SearchBar\SearchBarPanel$1.class
 view\component\SearchSuggestion\Search_Item$3.class
 view\component\Product\AddingProduct\AddProduct_Component$6.class
 controller\DAOImp\NavigationItemDAOImp.class
+view\component\SearchBar\SearchBarPanel$2.class
 view\component\SearchSuggestion\SearchSuggestion_Component.class
 view\component\CustomComponent\RoundedLabel.class
 view\component\CustomComponent\CustomTabbedPaneUI.class

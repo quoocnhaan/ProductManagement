@@ -2,19 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package view.component.DataTable;
+package view.component;
+
+import java.awt.BorderLayout;
+import view.component.Pagination.Pagination_Component;
+import view.component.SearchBar.SearchBarPanel;
 
 /**
  *
- * @author LENOVO
+ * @author PC
  */
-public class DataTable_Component extends javax.swing.JPanel {
+public class PaginationWithSearchBar extends javax.swing.JPanel {
 
-    /**
-     * Creates new form DataTable_Component
-     */
-    public DataTable_Component() {
+    private SearchBarPanel searchBarPanel;
+    private Pagination_Component pagination_Component;
+
+    public PaginationWithSearchBar() {
         initComponents();
+        setLayout(new BorderLayout(0, 15));
+
+        searchBarPanel = new SearchBarPanel(this);
+        pagination_Component = new Pagination_Component();
+
+        add(searchBarPanel, BorderLayout.NORTH);
+        add(pagination_Component, BorderLayout.CENTER);
     }
 
     /**
@@ -25,6 +36,8 @@ public class DataTable_Component extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -37,6 +50,10 @@ public class DataTable_Component extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    public void resetData() {
+        pagination_Component.resetData();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

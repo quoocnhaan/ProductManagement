@@ -6,6 +6,7 @@ package view.component.Header;
 
 import java.awt.BorderLayout;
 import java.util.List;
+import view.component.ContentPage_Component;
 import view.component.CustomComponent.RoundedCard;
 
 /**
@@ -14,20 +15,26 @@ import view.component.CustomComponent.RoundedCard;
  */
 public class Header_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Header_Component
-     */
-    public Header_Component() {
+    private ContentPage_Component parent;
+    private HeaderTitle_Component headerTitle_Component;
+    private Card_Component card_Component;
+
+    public Header_Component(ContentPage_Component parent) {
         initComponents();
         setLayout(new BorderLayout());
-        add(new HeaderTitle_Component(), BorderLayout.NORTH);
+
+        this.parent = parent;
+        headerTitle_Component = new HeaderTitle_Component(this);
+
+        add(headerTitle_Component, BorderLayout.NORTH);
         RoundedCard card1 = new RoundedCard("Total Orders", "3210");
         RoundedCard card2 = new RoundedCard("Returns", "3210");
         RoundedCard card3 = new RoundedCard("Delivered Orders", "3210");
 
-        // Add them to a list
         List<RoundedCard> cards = List.of(card1, card2, card3);
-        add(new Card_Component(cards));
+
+        card_Component = new Card_Component(cards);
+        add(card_Component);
     }
 
     /**
@@ -50,6 +57,10 @@ public class Header_Component extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    void updateData() {
+        parent.updateData();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

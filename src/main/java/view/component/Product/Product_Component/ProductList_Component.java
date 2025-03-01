@@ -20,6 +20,7 @@ public class ProductList_Component extends javax.swing.JPanel {
     public ProductList_Component() {
         initComponents();
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
+        list = new ArrayList<>();
         //addComponents();
     }
 
@@ -85,7 +86,6 @@ public class ProductList_Component extends javax.swing.JPanel {
 //        }
 //        return count;
 //    }
-
     public boolean isSelectAll() {
         int count = 0;
         for (Product_Component product_Component : list) {

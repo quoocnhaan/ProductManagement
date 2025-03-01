@@ -6,11 +6,14 @@ package view.component.SearchSuggestion;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
 import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -29,8 +32,12 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
 
     public SearchSuggestion_Component() {
         initComponents();
+        setPlaceholder();
+
         menu = new JPopupMenu();
         search = new PanelSearch();
+        search.setData(search(""));
+
         menu.setBorder(BorderFactory.createLineBorder(new Color(164, 164, 164)));
         menu.add(search);
         menu.setFocusable(false);
@@ -69,8 +76,9 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         txtSearch.setText("Find product");
-        txtSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtSearch.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtSearch.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
+        txtSearch.setSelectionColor(new java.awt.Color(51, 153, 255));
         txtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtSearchMouseClicked(evt);
@@ -126,7 +134,7 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
             search.setData(search(text));
             if (search.getItemSize() > 0) {
                 //  * 2 top and bot border
-                menu.show(txtSearch, 0, txtSearch.getHeight());
+                menu.show(txtSearch, 0, txtSearch.getHeight() + 5);
                 menu.setPopupSize(menu.getWidth(), (search.getItemSize() * 35) + 2);
             } else {
                 menu.setVisible(false);
@@ -136,7 +144,7 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
 
     private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearchMouseClicked
         if (search.getItemSize() > 0) {
-            menu.show(txtSearch, 0, txtSearch.getHeight() + 30);
+            menu.show(txtSearch, 0, txtSearch.getHeight() + 5);
             search.clearSelected();
         }
     }//GEN-LAST:event_txtSearchMouseClicked
@@ -161,6 +169,29 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
         }
 
         return resultList;
+    }
+
+    private void setPlaceholder() {
+        String placeholder = txtSearch.getText();
+
+        txtSearch.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (txtSearch.getText().equals(placeholder)) {
+                    txtSearch.setText("");
+                    txtSearch.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (txtSearch.getText().isEmpty()) {
+                    txtSearch.setText(placeholder);
+                    txtSearch.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+        txtSearch.setForeground(java.awt.Color.GRAY);
     }
 
 

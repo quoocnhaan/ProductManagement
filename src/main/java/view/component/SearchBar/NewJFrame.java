@@ -19,7 +19,6 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new BorderLayout());
-        add(new SearchBarPanel());
     }
 
     /**

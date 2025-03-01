@@ -8,12 +8,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import view.component.Btn.IconButton;
 import view.component.Btn.RoundedButton;
+import view.component.Product.AddingProduct.AddProduct_Component;
 
 /**
  *
@@ -21,11 +26,13 @@ import view.component.Btn.RoundedButton;
  */
 public class HeaderTitle_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form HeaderTitle_Component
-     */
-    public HeaderTitle_Component() {
+    private RoundedButton createBtn;
+    private IconButton exportBtn;
+    private Header_Component parent;
+
+    public HeaderTitle_Component(Header_Component parent) {
         initComponents();
+        this.parent = parent;
         setLayout(new BorderLayout());
         addComponents();
         addEvents();
@@ -59,7 +66,7 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
 
         // Title on the left
         JLabel titleLabel = new JLabel("Order");
-        titleLabel.setFont(new Font("Roboto", Font.BOLD, 18)); // Set title font and size
+        titleLabel.setFont(new Font("Roboto", Font.BOLD, 24)); // Set title font and size
         mainPanel.add(titleLabel, BorderLayout.WEST);
 
         // Panel to hold buttons on the right
@@ -68,9 +75,9 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
         buttonPanel.setBackground(Color.WHITE);
 
         // Add button
-        RoundedButton createBtn = new RoundedButton("Create product", true, 15, 35);
+        createBtn = new RoundedButton("Create product", true, 15, 35);
         ImageIcon icon = new ImageIcon(getClass().getResource("/icon/export.png"));
-        IconButton exportBtn = new IconButton("Export", icon, true);
+        exportBtn = new IconButton("Export", icon, true);
 
         // Add buttons to the panel
         buttonPanel.add(exportBtn);
@@ -82,6 +89,26 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
     }
 
     private void addEvents() {
+        HeaderTitle_Component headerTitle_Component = this;
+        createBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Create a JDialog for the popup
+                JDialog addProductDialog = new JDialog((Frame) null, "Add Product", true);  // true for modal
+                addProductDialog.setSize(1250, 900);
+                addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
+                addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
+
+                addProductDialog.add(new AddProduct_Component(headerTitle_Component));
+
+                addProductDialog.setVisible(true);
+
+            }
+        });
+    }
+
+    public void updateData() {
+        parent.updateData();
     }
 
 
