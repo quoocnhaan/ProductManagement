@@ -457,8 +457,10 @@ public class AddProduct_Component extends javax.swing.JPanel {
     private void uploadBtnActionPerformed(java.awt.event.ActionEvent evt) {
         JFileChooser fileChooser = new JFileChooser();
 
+        String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "bmp"));
+        fileChooser.setCurrentDirectory(new File(desktopPath));
 
         int returnValue = fileChooser.showOpenDialog(this);
 

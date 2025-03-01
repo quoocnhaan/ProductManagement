@@ -56,6 +56,7 @@ view\component\Btn\IconButton$2.class
 view\component\Filter\NewJFrame$1.class
 controller\DAOImp\GoodsReceiptDetailDAOImp.class
 view\component\Product\AddingProduct\AddNewProduct_Test$5.class
+view\component\SearchBar\NewJFrame.class
 view\component\SearchSuggestion\Search_Item.class
 controller\DAOImp\BillsDAOImp.class
 view\component\Product\Title\Title_Component$1.class
@@ -105,6 +106,7 @@ view\component\Product\AddingProduct\AddNewProduct_Test$2.class
 controller\DAOImp\InventoryDAOImp.class
 view\component\Navigation\NewClass.class
 view\component\Pagination\NewJFrame.class
+view\component\SearchBar\SearchBarPanel.class
 controller\DAO\CustomerDAO.class
 view\component\CustomComponent\NewJPanel.class
 view\component\SearchSuggestion\PanelSearch$1.class
@@ -144,4 +146,5 @@ controller\DAOImp\NavigationItemDAOImp.class
 view\component\SearchSuggestion\SearchSuggestion_Component.class
 view\component\CustomComponent\RoundedLabel.class
 view\component\CustomComponent\CustomTabbedPaneUI.class
+view\component\SearchBar\NewJFrame$1.class
 view\component\SearchSuggestion\MyTextField.class
