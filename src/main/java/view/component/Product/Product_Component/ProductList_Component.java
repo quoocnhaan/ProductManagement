@@ -5,6 +5,7 @@
 package view.component.Product.Product_Component;
 
 import controller.Session.SharedData;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +16,11 @@ import java.util.List;
  */
 public class ProductList_Component extends javax.swing.JPanel {
 
-    private List<Product_Component> list;
-
+    //private List<Product_Component> list;
     public ProductList_Component() {
         initComponents();
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
-        list = new ArrayList<>();
+        //list = new ArrayList<>();
         //addComponents();
     }
 
@@ -47,33 +47,37 @@ public class ProductList_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-//    private void addComponents() {
-//        list = new ArrayList<>();
-//        for (int i = 1; i <= 6; i++) {
-//            Product_Component product_Component = new Product_Component();
-//            add(product_Component);
-//            list.add(product_Component);
-//        }
-//    }
     public void changeStatusCheckbox(boolean isChecked) {
-        for (Product_Component product_Component : list) {
-            product_Component.changeStatusCheckbox(isChecked);
+//        for (Product_Component product_Component : list) {
+//            product_Component.changeStatusCheckbox(isChecked);
+//        }
+        for (Component component : getComponents()) {
+            if (component instanceof Product_Component) {
+                ((Product_Component) component).changeStatusCheckbox(isChecked);
+            }
         }
     }
 
     public void updateData(List<Product_Component> list) {
         removeAll();
-        this.list = list;
+        //this.list = list;
         for (Product_Component product_Component : list) {
             add(product_Component);
         }
+
         repaint();
         revalidate();
     }
 
     public void changeStatusEditBtn(boolean b) {
-        for (Product_Component product_Component : list) {
-            product_Component.changeStatusEditBtn(b);
+//        for (Product_Component product_Component : list) {
+//            product_Component.changeStatusEditBtn(b);
+//        }
+
+        for (Component component : getComponents()) {
+            if (component instanceof Product_Component) {
+                ((Product_Component) component).changeStatusEditBtn(b);
+            }
         }
     }
 
@@ -88,12 +92,51 @@ public class ProductList_Component extends javax.swing.JPanel {
 //    }
     public boolean isSelectAll() {
         int count = 0;
-        for (Product_Component product_Component : list) {
-            if (product_Component.isSelected()) {
-                count++;
+//        for (Product_Component product_Component : list) {
+//            if (product_Component.isSelected()) {
+//                count++;
+//            }
+//        }
+        List<Product_Component> productComponents = new ArrayList<>();
+        for (Component component : getComponents()) {
+            if (component instanceof Product_Component) {
+                productComponents.add((Product_Component) component);
+                if (((Product_Component) component).isSelected()) {
+                    count++;
+                }
             }
         }
-        return count == list.size();
+        return count == productComponents.size();
+    }
+
+    public void checkStatusEditButton() {
+        int count = 0;
+        for (Component component : getComponents()) {
+            if (component instanceof Product_Component) {
+                if (((Product_Component) component).isSelected()) {
+                    count++;
+                }
+            }
+        }
+        if (count >= 2) {
+            changeStatusEditButton(false);
+        } else {
+            changeStatusEditButton(true);
+        }
+    }
+
+    private void changeStatusEditButton(boolean b) {
+        for (Component component : getComponents()) {
+            if (component instanceof Product_Component) {
+                if (!b) {
+                    if (((Product_Component) component).isSelected()) {
+                        ((Product_Component) component).changeStatusEditBtn(b);
+                    }
+                } else {
+                    ((Product_Component) component).changeStatusEditBtn(b);
+                }
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

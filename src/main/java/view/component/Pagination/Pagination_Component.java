@@ -30,6 +30,7 @@ import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.CustomComponent.CustomCheckbox;
+import view.component.PaginationWithSearchBar;
 import view.component.Product.ProductPage_Component;
 import view.component.Product.Product_Component.Product_Component;
 
@@ -52,9 +53,11 @@ public class Pagination_Component extends javax.swing.JPanel {
     private JLabel totalSelected;
     private CustomCheckbox checkbox;
     private int totalPages;
+    private PaginationWithSearchBar parent;
 
-    public Pagination_Component() {
+    public Pagination_Component(PaginationWithSearchBar parent) {
         initComponents();
+        this.parent = parent;
         setLayout(new BorderLayout());
         initMyComponents();
         customMyComponents();
@@ -191,15 +194,19 @@ public class Pagination_Component extends javax.swing.JPanel {
 
         int pageIndex = (int) Math.ceil(end * 1.0 / itemsPerPage);
 
-        List<Product_Component> list = new ArrayList<>();
-
-        for (int i = start; i < end; i++) {
-            list.add(SharedData.selectedProduct.get(i));
-        }
-
         if (pageIndex >= 1) {
-            productPages.get(pageIndex - 1).updateData(list);
-            productPanel.add(productPages.get(pageIndex - 1));
+            ProductPage_Component productPage_Component = productPages.get(pageIndex - 1);
+            List<Product_Component> list = new ArrayList<>();
+
+            for (int i = start; i < end; i++) {
+                Product_Component product_Component = SharedData.selectedProduct.get(i);
+                product_Component.setProductPage_Component(productPage_Component);
+                list.add(product_Component);
+            }
+
+            productPage_Component.updateData(list);
+
+            productPanel.add(productPage_Component);
         } else {
             productPanel.add(new ProductPage_Component(this));
         }
@@ -366,7 +373,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         }
 
         if (totalPages != 0 && totalPages < currentPage) {
-            currentPage--;
+            currentPage = currentPage - (currentPage - totalPages);
         } else {
             currentPage = 1;
         }
@@ -391,6 +398,11 @@ public class Pagination_Component extends javax.swing.JPanel {
             productPages.add(productPage_Component);
         }
     }
+
+    public void changeStatusDeleteButton(boolean b) {
+        parent.changeStatusDeleteButton(b);
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

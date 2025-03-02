@@ -1,8 +1,10 @@
 view\component\CustomComponent\ImageLabel.class
 view\component\CustomComponent\RoundedCard.class
+view\component\Pagination\Pagination_Component$2.class
 view\component\SearchSuggestion\SearchSuggestion_Component$3.class
 view\component\SearchSuggestion\NewJFrame.class
 view\component\Btn\RoundedButton$1.class
+view\component\Product\Feature\CheckBox_Component.class
 view\component\Product\AddingProduct\AddProduct_Component$3.class
 view\component\Product\AddingProduct\AddNewProduct_Test$4.class
 view\component\SearchSuggestion\Search_Item$1.class
@@ -25,6 +27,7 @@ view\component\CustomComponent\RoundedTextArea$1.class
 view\component\Product\AddingProduct\AddProduct_Component.class
 view\component\CustomComponent\NewJFrame$1.class
 view\component\Product\AddingProduct\AddProduct_Component$8.class
+view\component\Pagination\Pagination_Component$3.class
 view\component\DataTable_Component.class
 view\component\Navigation\NewJFrame.class
 view\component\SearchSuggestion\SearchSuggestion_Component$4.class
@@ -35,6 +38,7 @@ view\component\Header\HeaderTitle_Component$1.class
 view\component\Product\Product_Component\Product_Component$3.class
 controller\Enum\Status.class
 view\component\Product\AddingProduct\AddNewProduct_Test$3.class
+view\component\Pagination\Pagination_Component.class
 view\component\Product\AddingProduct\AddProduct_Component$2.class
 view\component\Navigation\Navigation_Component.class
 view\component\Filter\Filter_Component$2.class
@@ -52,6 +56,7 @@ model\Customer.class
 view\component\Product\Feature\ProductName_Component.class
 view\component\Product\AddingProduct\AddNewProduct_Test$8.class
 view\component\Product\AddingProduct\AddProduct_Component$1.class
+view\component\Pagination\Pagination_Component$4.class
 controller\DAOImp\GoodsReceiptDAOImp.class
 view\component\CustomComponent\CustomCheckbox.class
 view\component\Product\Title\SubTitle_Component.class
@@ -134,6 +139,7 @@ controller\DAO\GoodsReceiptDAO.class
 controller\DAO\InterfaceDAO.class
 view\component\Navigation\NewJFrame$1.class
 model\Brand.class
+view\component\Pagination\Pagination_Component$1.class
 view\component\SearchSuggestion\SearchSuggestion_Component$2.class
 view\component\ContentPage_Component.class
 view\component\Product\AddingProduct\AddNewProduct_Test.class

@@ -93,6 +93,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
         ImageIcon bin = new ImageIcon(getClass().getResource("/icon/bin.png"));
         deleteBtn = new MyButton("");
         deleteBtn.setIcon(bin);
+        deleteBtn.setEnabled(false);
     }
 
     private void customMyComponents() {
@@ -146,6 +147,10 @@ public class SearchBarPanel extends javax.swing.JPanel {
             }
         });
 
+    }
+
+    public void changeStatusDeleteButton(boolean b) {
+        deleteBtn.setEnabled(b);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

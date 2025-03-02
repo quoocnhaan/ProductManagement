@@ -123,8 +123,11 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
             txtSearch.setText(text);
         } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             text = search.getSelectedText();
-            txtSearch.setText(text);
+            if (!text.isBlank()) {
+                txtSearch.setText(text);
+            }
             menu.setVisible(false);
+            txtSearch.transferFocus();
         }
     }//GEN-LAST:event_txtSearchKeyPressed
 
@@ -156,8 +159,9 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // HQL query to search for products with names similar to the search term
 
-            List<Product> products = session.createQuery("FROM Product p WHERE p.name LIKE :search", Product.class)
+            List<Product> products = session.createQuery("FROM Product p WHERE p.name LIKE :search ", Product.class)
                     .setParameter("search", "%" + search + "%")
+                    .setMaxResults(5)
                     .getResultList();
 
             for (Product product : products) {

@@ -13,17 +13,17 @@ import view.component.SearchBar.SearchBarPanel;
  * @author PC
  */
 public class PaginationWithSearchBar extends javax.swing.JPanel {
-
+    
     private SearchBarPanel searchBarPanel;
     private Pagination_Component pagination_Component;
-
+    
     public PaginationWithSearchBar() {
         initComponents();
         setLayout(new BorderLayout(0, 15));
-
+        
         searchBarPanel = new SearchBarPanel(this);
-        pagination_Component = new Pagination_Component();
-
+        pagination_Component = new Pagination_Component(this);
+        
         add(searchBarPanel, BorderLayout.NORTH);
         add(pagination_Component, BorderLayout.CENTER);
     }
@@ -58,7 +58,10 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     public void resetDataWhenAdded() {
         pagination_Component.resetDataWhenAdded();
     }
-
+    
+    public void changeStatusDeleteButton(boolean b) {
+        searchBarPanel.changeStatusDeleteButton(b);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
