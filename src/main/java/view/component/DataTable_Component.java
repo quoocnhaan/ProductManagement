@@ -52,8 +52,8 @@ public class DataTable_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    void updateData() {
-        paginationWithSearchBar.resetData();
+    void resetDataWhenAdded() {
+        paginationWithSearchBar.resetDataWhenAdded();
     }
 
 

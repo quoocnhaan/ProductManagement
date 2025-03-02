@@ -51,8 +51,12 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void resetData() {
-        pagination_Component.resetData();
+    public void resetDataWhenDeleted() {
+        pagination_Component.resetDataWhenDeleted();
+    }
+    
+    public void resetDataWhenAdded() {
+        pagination_Component.resetDataWhenAdded();
     }
 
 

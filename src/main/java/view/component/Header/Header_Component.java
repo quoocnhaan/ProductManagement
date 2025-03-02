@@ -58,8 +58,8 @@ public class Header_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    void updateData() {
-        parent.updateData();
+    void resetDataWhenAdded() {
+        parent.resetDataWhenAdded();
     }
 
 

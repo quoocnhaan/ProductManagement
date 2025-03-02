@@ -102,13 +102,12 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                 addProductDialog.add(new AddProduct_Component(headerTitle_Component));
 
                 addProductDialog.setVisible(true);
-
             }
         });
     }
 
-    public void updateData() {
-        parent.updateData();
+    public void resetDataWhenAdded() {
+        parent.resetDataWhenAdded();
     }
 
 

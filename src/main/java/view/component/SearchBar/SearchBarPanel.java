@@ -135,12 +135,14 @@ public class SearchBarPanel extends javax.swing.JPanel {
                 try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                     ProductDAO productDAO = new ProductDAOImp(session);
                     for (Product_Component object : SharedData.selectedProduct) {
-                        productDAO.delete(object.getProduct().getId());
+                        if (object.isSelected()) {
+                            productDAO.delete(object.getProduct().getId());
+                        }
                     }
-                    parent.resetData();
                 } catch (Exception exception) {
                     System.out.println(exception + getClass().getName());
                 }
+                parent.resetDataWhenDeleted();
             }
         });
 

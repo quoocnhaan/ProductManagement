@@ -58,10 +58,10 @@ public class Pagination_Component extends javax.swing.JPanel {
         setLayout(new BorderLayout());
         initMyComponents();
         customMyComponents();
+        addEvents();
         fetchData();
         computePages();
         initData();
-        addEvents();
         updatePaginationControls();
     }
 
@@ -196,8 +196,6 @@ public class Pagination_Component extends javax.swing.JPanel {
         for (int i = start; i < end; i++) {
             list.add(SharedData.selectedProduct.get(i));
         }
-        
-        System.out.println(pageIndex);
 
         if (pageIndex >= 1) {
             productPages.get(pageIndex - 1).updateData(list);
@@ -248,6 +246,7 @@ public class Pagination_Component extends javax.swing.JPanel {
     }
 
     private void fetchData() {
+        products.clear();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             ProductDAO productDAO = new ProductDAOImp(session);
             List<Product> productList = productDAO.getAll();
@@ -262,6 +261,7 @@ public class Pagination_Component extends javax.swing.JPanel {
 
     private void computePages() {
         totalPages = (int) Math.ceil((double) products.size() / itemsPerPage);
+
     }
 
     private void initData() {
@@ -306,6 +306,7 @@ public class Pagination_Component extends javax.swing.JPanel {
                     updateSelectedProduct();
                     totalPages = (int) Math.ceil((double) products.size() / itemsPerPage);
                 }
+                updateProductPages();
                 updatePaginationControls();
             }
 
@@ -320,6 +321,7 @@ public class Pagination_Component extends javax.swing.JPanel {
             }
         });
 
+        // Prev button
         prevButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -342,38 +344,44 @@ public class Pagination_Component extends javax.swing.JPanel {
         });
     }
 
-    public void resetData() {
-
-        if (SharedData.beingSelected) {
-            for (Product_Component obj : SharedData.selectedProduct) {
+    public void resetDataWhenDeleted() {
+        for (Product_Component obj : SharedData.selectedProduct) {
+            if (obj.isSelected()) {
                 products.remove(obj);
             }
+        }
+
+        if (SharedData.beingSelected) {
             Iterator<Product_Component> iterator = SharedData.selectedProduct.iterator();
             while (iterator.hasNext()) {
                 Product_Component productPage = iterator.next();
                 if (productPage.isSelected()) {
-                    iterator.remove();
+                    iterator.remove();  // Safely removes the element
                 }
             }
-
             totalPages = (int) Math.ceil((double) SharedData.selectedProduct.size() / itemsPerPage);
-            updateProductPages();
-            updatePaginationControls();
-            SharedData.selectedAmount = 0;
-            updateSelectedAmount();
+        } else {
+            SharedData.selectedProduct.clear();
+            computePages();
         }
 
-        //products.clear();
-        //fetchData();
-//        SharedData.beingSelected = false;
-//        checkbox.setSelected(false);
-//        currentPage = 1;
-//        computePages();
-//        updateProductPages();
-//        updatePaginationControls();
-//        SharedData.selectedProduct.clear();
-//        SharedData.selectedAmount = 0;
-//        updateSelectedAmount();
+        if (totalPages != 0 && totalPages < currentPage) {
+            currentPage--;
+        } else {
+            currentPage = 1;
+        }
+
+        updateProductPages();
+        updatePaginationControls();
+        SharedData.selectedAmount = 0;
+        updateSelectedAmount();
+    }
+
+    public void resetDataWhenAdded() {
+        fetchData();
+        computePages();
+        updateProductPages();
+        updatePaginationControls();
     }
 
     private void updateProductPages() {

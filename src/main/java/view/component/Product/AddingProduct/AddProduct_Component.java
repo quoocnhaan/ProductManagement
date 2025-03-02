@@ -525,7 +525,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
                 close();
 
-                parent.updateData();
+                parent.resetDataWhenAdded();
 
 //                ManageEmployeeInfo_Component.getInstance().updateData();
 //                EmployeeInfo_Component.getInstance().getManagerInfo_Component().updateTotal(employeeDAO.getAll().size());
