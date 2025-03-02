@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
+import view.component.SearchBar.SearchBarPanel;
 
 /**
  *
@@ -29,9 +30,12 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
      */
     private JPopupMenu menu;
     private PanelSearch search;
+    private SearchBarPanel parent;
 
-    public SearchSuggestion_Component() {
+    public SearchSuggestion_Component(SearchBarPanel parent) {
         initComponents();
+        this.parent = parent;
+
         setPlaceholder();
 
         menu = new JPopupMenu();
@@ -46,6 +50,8 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
             public void itemClick(DataSearch data) {
                 menu.setVisible(false);
                 txtSearch.setText(data.getText());
+                txtSearch.transferFocus();
+                transferData(txtSearch.getText());
                 System.out.println("Click Item : " + data.getText());
             }
 
@@ -128,6 +134,7 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
             }
             menu.setVisible(false);
             txtSearch.transferFocus();
+            transferData(txtSearch.getText());
         }
     }//GEN-LAST:event_txtSearchKeyPressed
 
@@ -196,6 +203,10 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
             }
         });
         txtSearch.setForeground(java.awt.Color.GRAY);
+    }
+
+    public void transferData(String text) {
+        parent.transferData(text);
     }
 
 

@@ -63,6 +63,11 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
         searchBarPanel.changeStatusDeleteButton(b);
     }
 
+    public void transferData(String text) {
+        pagination_Component.updateData(text);
+    }
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

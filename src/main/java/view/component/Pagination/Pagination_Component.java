@@ -39,7 +39,7 @@ import view.component.Product.Product_Component.Product_Component;
  * @author PC
  */
 public class Pagination_Component extends javax.swing.JPanel {
-
+    
     private int currentPage = 1;
     private int itemsPerPage = 6;
     private int maxVisiblePages = 3; // Only show 3 page buttons at once
@@ -54,7 +54,7 @@ public class Pagination_Component extends javax.swing.JPanel {
     private CustomCheckbox checkbox;
     private int totalPages;
     private PaginationWithSearchBar parent;
-
+    
     public Pagination_Component(PaginationWithSearchBar parent) {
         initComponents();
         this.parent = parent;
@@ -92,7 +92,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         return button;
     }
-
+    
     private Dimension getAdjustButtonSize(String text) {
         if (text.equals("< Previous")) {
             return new Dimension(70, 35);
@@ -132,7 +132,7 @@ public class Pagination_Component extends javax.swing.JPanel {
                 pageButton.setBackground(Color.WHITE);
                 pageButton.setForeground(Color.BLACK);
             }
-
+            
             pageButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -140,10 +140,10 @@ public class Pagination_Component extends javax.swing.JPanel {
                     updatePaginationControls();
                 }
             });
-
+            
             paginationPanel.add(pageButton);
         }
-
+        
         paginationPanel.add(nextButton);
 
         // Revalidate and repaint pagination panel to update the display
@@ -157,24 +157,24 @@ public class Pagination_Component extends javax.swing.JPanel {
             displayProductsForCurrentPage();
         }
     }
-
+    
     private void displayProductsForCurrentPage() {
         productPanel.removeAll();
         int start = (currentPage - 1) * itemsPerPage;
         int end = Math.min(start + itemsPerPage, products.size());
-
+        
         int pageIndex = (int) Math.ceil(end * 1.0 / itemsPerPage);
-
+        
         if (pageIndex >= 1) {
             ProductPage_Component productPage_Component = productPages.get(pageIndex - 1);
-
+            
             List<Product_Component> list = new ArrayList<>();
-
+            
             for (int i = start; i < end; i++) {
                 Product_Component product_Component = products.get(i);
                 product_Component.setProductPage_Component(productPage_Component);
                 list.add(product_Component);
-
+                
             }
             productPage_Component.updateData(list);
             productPanel.add(productPage_Component);
@@ -186,26 +186,26 @@ public class Pagination_Component extends javax.swing.JPanel {
         productPanel.revalidate();
         productPanel.repaint();
     }
-
+    
     private void displaySelectedProducs() {
         productPanel.removeAll();
         int start = (currentPage - 1) * itemsPerPage;
         int end = Math.min(start + itemsPerPage, SharedData.selectedProduct.size());
-
+        
         int pageIndex = (int) Math.ceil(end * 1.0 / itemsPerPage);
-
+        
         if (pageIndex >= 1) {
             ProductPage_Component productPage_Component = productPages.get(pageIndex - 1);
             List<Product_Component> list = new ArrayList<>();
-
+            
             for (int i = start; i < end; i++) {
                 Product_Component product_Component = SharedData.selectedProduct.get(i);
                 product_Component.setProductPage_Component(productPage_Component);
                 list.add(product_Component);
             }
-
+            
             productPage_Component.updateData(list);
-
+            
             productPanel.add(productPage_Component);
         } else {
             productPanel.add(new ProductPage_Component(this));
@@ -214,7 +214,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         productPanel.revalidate();
         productPanel.repaint();
     }
-
+    
     public void updateSelectedAmount() {
         totalSelected.setText(SharedData.selectedAmount + " selected");
     }
@@ -251,7 +251,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         prevButton = createPageButton("< Previous");
         nextButton = createPageButton("Next >");
     }
-
+    
     private void fetchData() {
         products.clear();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -260,46 +260,58 @@ public class Pagination_Component extends javax.swing.JPanel {
             for (Product product : productList) {
                 products.add(new Product_Component(product, this));
             }
-
+            
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
     }
-
+    
+    private void fetchData(String text) {
+        products.clear();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            ProductDAO productDAO = new ProductDAOImp(session);
+            List<Product> productList = productDAO.findByText(text);
+            for (Product product : productList) {
+                products.add(new Product_Component(product, this));
+            }            
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
+        }
+    }
+    
     private void computePages() {
         totalPages = (int) Math.ceil((double) products.size() / itemsPerPage);
-
     }
-
+    
     private void initData() {
         for (int i = 0; i < totalPages; i++) {
             ProductPage_Component productPage_Component = new ProductPage_Component(this);
             productPages.add(productPage_Component);
         }
-
+        
         selectedPanel.add(checkbox);
         selectedPanel.add(totalSelected);
-
+        
         footer.add(paginationPanel, BorderLayout.EAST);
         footer.add(selectedPanel, BorderLayout.WEST);
-
+        
         add(productPanel, BorderLayout.CENTER);
         add(footer, BorderLayout.SOUTH);
     }
-
+    
     private void customMyComponents() {
         selectedPanel.setBackground(Color.WHITE);
-
+        
         footer.setBackground(Color.WHITE);
         footer.setBorder(new EmptyBorder(0, 15, 0, 15));
-
+        
         totalSelected.setFont(new Font("Roboto", Font.PLAIN, 15));
-
+        
         paginationPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         paginationPanel.setBackground(Color.WHITE);
-
+        
     }
-
+    
     private void addEvents() {
         checkbox.addActionListener(new ActionListener() {
             @Override
@@ -316,7 +328,7 @@ public class Pagination_Component extends javax.swing.JPanel {
                 updateProductPages();
                 updatePaginationControls();
             }
-
+            
             private void updateSelectedProduct() {
                 Iterator<Product_Component> iterator = SharedData.selectedProduct.iterator();
                 while (iterator.hasNext()) {
@@ -350,14 +362,14 @@ public class Pagination_Component extends javax.swing.JPanel {
             }
         });
     }
-
+    
     public void resetDataWhenDeleted() {
         for (Product_Component obj : SharedData.selectedProduct) {
             if (obj.isSelected()) {
                 products.remove(obj);
             }
         }
-
+        
         if (SharedData.beingSelected) {
             Iterator<Product_Component> iterator = SharedData.selectedProduct.iterator();
             while (iterator.hasNext()) {
@@ -371,26 +383,26 @@ public class Pagination_Component extends javax.swing.JPanel {
             SharedData.selectedProduct.clear();
             computePages();
         }
-
+        
         if (totalPages != 0 && totalPages < currentPage) {
             currentPage = currentPage - (currentPage - totalPages);
         } else {
             currentPage = 1;
         }
-
+        
         updateProductPages();
         updatePaginationControls();
         SharedData.selectedAmount = 0;
         updateSelectedAmount();
     }
-
+    
     public void resetDataWhenAdded() {
         fetchData();
         computePages();
         updateProductPages();
         updatePaginationControls();
     }
-
+    
     private void updateProductPages() {
         productPages.clear();
         for (int i = 0; i < totalPages; i++) {
@@ -398,13 +410,18 @@ public class Pagination_Component extends javax.swing.JPanel {
             productPages.add(productPage_Component);
         }
     }
-
+    
     public void changeStatusDeleteButton(boolean b) {
         parent.changeStatusDeleteButton(b);
     }
-
-
-
+    
+    public void updateData(String text) {
+        currentPage = 1;
+        fetchData(text);
+        computePages();
+        updateProductPages();
+        updatePaginationControls();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

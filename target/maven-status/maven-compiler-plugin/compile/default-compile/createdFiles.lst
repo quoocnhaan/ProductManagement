@@ -86,6 +86,7 @@ view\component\Btn\IconButton$1.class
 view\component\Product\Feature\SubFeature_Component.class
 controller\DAO\BillsPerDayDAO.class
 util\HibernateUtil.class
+controller\Session\Router.class
 view\component\CustomComponent\ButtonGroupPanel.class
 view\component\Navigation\Navigation_Component$1.class
 view\component\Product\Header\NewJFrame.class

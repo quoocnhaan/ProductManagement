@@ -16,8 +16,9 @@ public class ContentPage_Component extends javax.swing.JPanel {
     private Header_Component header_Component;
     private DataTable_Component dataTable_Component;
 
-    public ContentPage_Component() {
+    public ContentPage_Component(Object object) {
         initComponents();
+        
         header_Component = new Header_Component(this);
         dataTable_Component = new DataTable_Component();
         

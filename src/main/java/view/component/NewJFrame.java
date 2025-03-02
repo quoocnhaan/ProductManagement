@@ -5,6 +5,7 @@
 package view.component;
 
 import java.awt.BorderLayout;
+import model.Product;
 
 /**
  *
@@ -19,7 +20,8 @@ public class NewJFrame extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-        add(new ContentPage_Component());
+                
+        add(new ContentPage_Component(Product.class));
     }
 
     /**

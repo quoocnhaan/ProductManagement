@@ -9,6 +9,7 @@ import controller.DAOImp.ProductDAOImp;
 import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.Btn.IconButton;
@@ -82,7 +84,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
     private void initMyComponents() {
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-        searchSuggestion_Component = new SearchSuggestion_Component();
+        searchSuggestion_Component = new SearchSuggestion_Component(this);
 
         ImageIcon sortIcon = new ImageIcon(getClass().getResource("/icon/sort.png"));
         sortBtn = new IconButton("Sort by", sortIcon, true);
@@ -119,7 +121,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog addProductDialog = new JDialog((Frame) null, "Filter", true);  // true for modal
-                addProductDialog.setSize(1250, 900);
+                addProductDialog.setSize(700, 900);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
 
@@ -129,6 +131,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
                 addProductDialog.setVisible(true);
             }
         });
+
 
         deleteBtn.addActionListener(new ActionListener() {
             @Override
@@ -151,6 +154,10 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
     public void changeStatusDeleteButton(boolean b) {
         deleteBtn.setEnabled(b);
+    }
+
+    public void transferData(String text) {
+        parent.transferData(text);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

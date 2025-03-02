@@ -83,4 +83,10 @@ public class ProductDAOImp implements ProductDAO {
         return query.list();
     }
 
+    @Override
+    public List<Product> findByText(String text) {
+        return session.createQuery("FROM Product p WHERE p.name LIKE :search", Product.class)
+                .setParameter("search", "%" + text + "%")
+                .getResultList();
+    }
 }
