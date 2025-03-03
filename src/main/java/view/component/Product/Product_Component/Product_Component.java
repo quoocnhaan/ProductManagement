@@ -22,7 +22,7 @@ import javax.swing.ImageIcon;
 import model.Product;
 import view.component.Btn.IconButton;
 import view.component.CustomComponent.CustomCheckbox;
-import view.component.Pagination.Pagination_Component;
+import view.component.Product.Pagination.Pagination_Component;
 import view.component.Product.Feature.SubFeature_Component;
 import view.component.Product.Feature.ProductName_Component;
 import view.component.Product.ProductPage_Component;

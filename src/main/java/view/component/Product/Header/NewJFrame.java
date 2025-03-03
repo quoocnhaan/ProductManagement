@@ -5,10 +5,12 @@
 package view.component.Product.Header;
 
 import java.awt.BorderLayout;
+import java.util.List;
+import view.component.CustomComponent.RoundedCard;
 
 /**
  *
- * @author PC
+ * @author LENOVO
  */
 public class NewJFrame extends javax.swing.JFrame {
 
@@ -17,8 +19,7 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
-        setLayout(new BorderLayout());
-        add(new Header_Component());
+        setLayout(new BorderLayout());        
     }
 
     /**
@@ -36,11 +37,11 @@ public class NewJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1020, Short.MAX_VALUE)
+            .addGap(0, 1250, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 47, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();

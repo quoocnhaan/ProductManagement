@@ -33,7 +33,7 @@ import view.component.CustomComponent.ImageLabel;
 import view.component.CustomComponent.RoundedLabel;
 import view.component.CustomComponent.RoundedTextArea;
 import view.component.CustomComponent.RoundedTextField;
-import view.component.Header.HeaderTitle_Component;
+import view.component.Product.Header.HeaderTitle_Component;
 
 /**
  *
@@ -519,7 +519,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
                 ImageIcon newImg = (ImageIcon) img.getIcon();
                 byte[] imgByte = Functional.convertIconToByteArray(newImg);
 
-                Product product = new Product(productName, productCode, brand, gender, imgByte, price, description, 0, productStatus, type, true);
+                Product product = new Product(productName, productCode, brand, gender, imgByte, price, description, 0, productStatus == 1, type, true);
 
                 productDAO.add(product);
 

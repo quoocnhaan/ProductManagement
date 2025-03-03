@@ -510,7 +510,7 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
                 ImageIcon newImg = (ImageIcon) img.getIcon();
                 byte[] imgByte = Functional.convertIconToByteArray(newImg);
 
-                Product product = new Product(productName, productCode, brand, gender, imgByte, price, description, 0, productStatus, type, true);
+                Product product = new Product(productName, productCode, brand, gender, imgByte, price, description, 0, productStatus == 1, type, true);
 
                 productDAO.add(product);
 

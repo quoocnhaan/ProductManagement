@@ -6,7 +6,7 @@ package view.component.Product;
 
 import java.awt.BorderLayout;
 import java.util.List;
-import view.component.Pagination.Pagination_Component;
+import view.component.Product.Pagination.Pagination_Component;
 import view.component.Product.Product_Component.ProductList_Component;
 import view.component.Product.Product_Component.Product_Component;
 import view.component.Product.Title.Title_Component;

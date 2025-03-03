@@ -11,6 +11,7 @@ import model.Product;
  *
  * @author PC
  */
-public interface ProductDAO extends InterfaceDAO<Product>{
-    List<Product> findByText(String text);
+public interface ProductDAO extends InterfaceDAO<Product> {
+
+    List<Product> findByText(String name, List<String> brands, String price, String gender, String type, String sort);
 }

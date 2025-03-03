@@ -4,12 +4,9 @@
  */
 package view.component.Product;
 
+import view.component.Product.ContentPage_Component;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.border.Border;
-import view.component.Product.Header.Header_Component;
-import view.component.Product.Product_Component.ProductList_Component;
-import view.component.Product.Title.Title_Component;
+import model.Product;
 
 /**
  *
@@ -22,8 +19,10 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
-        setLayout(new BorderLayout(0, 10));
-        addComponents();
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+                
+        add(new ContentPage_Component());
     }
 
     /**
@@ -45,7 +44,7 @@ public class NewJFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 777, Short.MAX_VALUE)
+            .addGap(0, 900, Short.MAX_VALUE)
         );
 
         pack();
@@ -84,10 +83,6 @@ public class NewJFrame extends javax.swing.JFrame {
                 new NewJFrame().setVisible(true);
             }
         });
-    }
-
-    private void addComponents() {
-        add(new Header_Component(), BorderLayout.NORTH);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

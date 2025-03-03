@@ -5,20 +5,31 @@
 package view.component.Product.Header;
 
 import java.awt.BorderLayout;
+import java.util.List;
+import view.component.Product.ContentPage_Component;
+import view.component.CustomComponent.RoundedCard;
 
 /**
  *
- * @author PC
+ * @author LENOVO
  */
 public class Header_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Header_Component
-     */
-    public Header_Component() {
+    private ContentPage_Component parent;
+    private HeaderTitle_Component headerTitle_Component;
+    private Card_Component card_Component;
+
+    public Header_Component(ContentPage_Component parent) {
         initComponents();
         setLayout(new BorderLayout());
-        addComponents();
+
+        this.parent = parent;
+        
+        headerTitle_Component = new HeaderTitle_Component(this);
+        add(headerTitle_Component, BorderLayout.NORTH);
+        
+        card_Component = new Card_Component();
+        add(card_Component);
     }
 
     /**
@@ -30,8 +41,6 @@ public class Header_Component extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(245, 246, 250));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -40,13 +49,12 @@ public class Header_Component extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 47, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addComponents() {
-        add(new HeaderName(), BorderLayout.WEST);
-        add(new AddingBtn(), BorderLayout.EAST);
+    void resetDataWhenAdded() {
+        parent.resetDataWhenAdded();
     }
 
 

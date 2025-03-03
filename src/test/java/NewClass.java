@@ -14,36 +14,58 @@ import java.awt.event.ActionListener;
 public class NewClass {
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Toggle Button Group");
+        JFrame frame = new JFrame("Toggle Button Group Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
+        frame.setSize(300, 200);
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
-        // Create buttons
-        JToggleButton allButton = new JToggleButton("All");
-        JToggleButton unfulfilledButton = new JToggleButton("Unfulfilled");
-        JToggleButton unpaidButton = new JToggleButton("Unpaid");
-        JToggleButton paidButton = new JToggleButton("Paid");
-        JToggleButton openButton = new JToggleButton("Open");
-        JToggleButton closeButton = new JToggleButton("Close");
+        // Create toggle buttons
+        JToggleButton button1 = new JToggleButton("Button 1");
+        JToggleButton button2 = new JToggleButton("Button 2");
+        JToggleButton button3 = new JToggleButton("Button 3");
 
-        // Create ButtonGroup to ensure only one button is selected at a time
+        // Add buttons to ButtonGroup
         ButtonGroup group = new ButtonGroup();
-        group.add(allButton);
-        group.add(unfulfilledButton);
-        group.add(unpaidButton);
-        group.add(paidButton);
-        group.add(openButton);
-        group.add(closeButton);
+        group.add(button1);
+        group.add(button2);
+        group.add(button3);
 
-        // Add buttons to frame
-        frame.add(allButton);
-        frame.add(unfulfilledButton);
-        frame.add(unpaidButton);
-        frame.add(paidButton);
-        frame.add(openButton);
-        frame.add(closeButton);
+        // Add ActionListener to each button
+        ActionListener toggleListener = new ActionListener() {
+            JToggleButton previouslySelected = null;
 
-        frame.setSize(400, 100);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JToggleButton selectedButton = (JToggleButton) e.getSource();
+
+                if (selectedButton.isSelected()) {
+                    // Perform the "selected" action
+                    System.out.println(selectedButton.getText() + " is selected");
+
+                    // Unselect previously selected button, if any
+                    if (previouslySelected != null && previouslySelected != selectedButton) {
+                        previouslySelected.setSelected(false);
+                        System.out.println(previouslySelected.getText() + " is unselected");
+                    }
+                    previouslySelected = selectedButton;
+                } else {
+                    // Perform the "unselected" action
+                    System.out.println(selectedButton.getText() + " is unselected");
+                    previouslySelected = null;
+                }
+            }
+        };
+
+        // Attach the listener to each button
+        button1.addActionListener(toggleListener);
+        button2.addActionListener(toggleListener);
+        button3.addActionListener(toggleListener);
+
+        // Add buttons to the frame
+        frame.add(button1);
+        frame.add(button2);
+        frame.add(button3);
+
         frame.setVisible(true);
     }
 }

@@ -51,7 +51,7 @@ public class Product {
     private int amount;
 
     @Column(name = "product_status", nullable = false)
-    private int productStatus;
+    private boolean productStatus;
 
     @Column(nullable = false)
     private int type;
@@ -62,7 +62,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String code, Brand brand, int gender, byte[] img, double price, String description, int amount, int productStatus, int type, boolean status) {
+    public Product(String name, String code, Brand brand, int gender, byte[] img, double price, String description, int amount, boolean productStatus, int type, boolean status) {
         this.name = name;
         this.code = code;
         this.brand = brand;
@@ -148,11 +148,11 @@ public class Product {
         this.gender = gender;
     }
 
-    public int getProductStatus() {
+    public boolean getProductStatus() {
         return productStatus;
     }
 
-    public void setProductStatus(int productStatus) {
+    public void setProductStatus(boolean productStatus) {
         this.productStatus = productStatus;
     }
 

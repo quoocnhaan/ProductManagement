@@ -4,6 +4,7 @@
  */
 package view.component.CustomComponent;
 
+import view.component.Product.ButtonGroupPanel;
 import java.awt.FlowLayout;
 import java.util.List;
 
