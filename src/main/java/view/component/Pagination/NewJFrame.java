@@ -19,7 +19,6 @@ public class NewJFrame extends javax.swing.JFrame {
         initComponents();
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);  // Center the popup on screen
-        add(new Pagination_Component());
     }
 
     /**

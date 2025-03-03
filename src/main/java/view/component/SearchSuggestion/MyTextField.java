@@ -47,7 +47,7 @@ public class MyTextField extends JTextField {
         if (isFocusOwner()) {
             g2.setColor(new Color(6, 135, 196));
         } else {
-            g2.setColor(new Color(76, 181, 195));
+            g2.setColor(new Color(240, 240, 240));
         }
 
         g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, borderRadius, borderRadius);  // Outer border

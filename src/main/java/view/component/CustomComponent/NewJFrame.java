@@ -5,7 +5,7 @@
 package view.component.CustomComponent;
 
 import java.awt.FlowLayout;
-
+import java.util.List;
 
 /**
  *
@@ -19,8 +19,10 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new FlowLayout());
-        add(new NewJPanel());
-
+        List<String> buttonLabels = List.of("Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6");
+        
+        add(new ButtonGroupPanel(buttonLabels));
+        
     }
 
     /**

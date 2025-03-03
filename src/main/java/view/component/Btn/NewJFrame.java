@@ -9,8 +9,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
 
 /**
  *
@@ -24,18 +26,26 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new FlowLayout());
-        ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
-
+//        ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
+//
         JPanel j = new JPanel(new FlowLayout());
-        j.setBackground(Color.WHITE);
-        j.setPreferredSize(new Dimension(500, 500));
 
-        for (int i = 0; i < 5; i++) {
-            //NonBorderIconButton btn = new NonBorderIconButton("Edit", icon, true);
-            MyButton btn = new MyButton("hello");
-            j.add(btn);
-        }
+        JButton button = new JButton("Click Me");
 
+        // Set a MatteBorder with only a bottom border
+        button.setBorder(new MatteBorder(0, 0, 2, 0, Color.BLACK));
+
+        j.add(button);
+        j.add(button);
+
+//        j.setBackground(Color.WHITE);
+//        j.setPreferredSize(new Dimension(500, 500));
+//
+//        for (int i = 0; i < 5; i++) {
+//            //NonBorderIconButton btn = new NonBorderIconButton("Edit", icon, true);
+//            MyButton btn = new MyButton("hello");
+//            j.add(btn);
+//        }
         add(j);
 //        for (int i = 0; i < 5; i++) {
 //            add(new RoundedButton("hello", true));

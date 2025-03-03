@@ -19,12 +19,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import model.Product;
 import view.component.Btn.IconButton;
 import view.component.CustomComponent.CustomCheckbox;
 import view.component.Pagination.Pagination_Component;
-import view.component.Product.AddingProduct.AddProduct_Component;
 import view.component.Product.Feature.SubFeature_Component;
 import view.component.Product.Feature.ProductName_Component;
 import view.component.Product.ProductPage_Component;
@@ -39,12 +37,12 @@ public class Product_Component extends javax.swing.JPanel {
     private IconButton editBtn;
     private Pagination_Component parent;
     private ProductPage_Component productPage_Component;
-    private int id;
+    private Product product;
 
-    public Product_Component(Product product, Pagination_Component parent, int id) {
+    public Product_Component(Product product, Pagination_Component parent) {
         initComponents();
         this.parent = parent;
-        this.id = id;
+        this.product = product;
         setLayout(new FlowLayout(FlowLayout.LEFT, 15, 0));
         addComponents(product);
         addEvents();
@@ -126,7 +124,7 @@ public class Product_Component extends javax.swing.JPanel {
 
             @Override
             public void mouseClicked(MouseEvent evt) {
-                
+                //open view detail
             }
         });
         add(productName);
@@ -161,7 +159,7 @@ public class Product_Component extends javax.swing.JPanel {
 
                 @Override
                 public void mouseClicked(MouseEvent evt) {
-                    
+                    //open view detail
                 }
             });
 
@@ -203,10 +201,6 @@ public class Product_Component extends javax.swing.JPanel {
         repaint();
     }
 
-    private void childMouseClicked(MouseEvent evt) {
-        System.out.println("Child component clicked: " + evt.getSource().getClass().getSimpleName());
-    }
-
     public void changeStatusCheckbox(boolean isCheck) {
         customCheckbox.setSelected(isCheck);
     }
@@ -236,24 +230,17 @@ public class Product_Component extends javax.swing.JPanel {
                         productPage_Component.checkStatusSelectAllCheckbox();
                     }
                 }
-                SharedData.selectedProduct.sort((p1, p2) -> Integer.compare(p1.getId(), p2.getId()));
+                SharedData.selectedProduct.sort((p1, p2) -> Integer.compare(p1.getProduct().getId(), p2.getProduct().getId()));
                 parent.updateSelectedAmount();
+                parent.changeStatusDeleteButton(SharedData.selectedAmount != 0);
+                productPage_Component.checkStatusEditButton();
             }
         });
 
         editBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Create a JDialog for the popup
-                JDialog addProductDialog = new JDialog((Frame) null, "Add Product", true);  // true for modal
-                addProductDialog.setSize(1250, 900);
-                addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
-                addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
-
-                addProductDialog.add(new AddProduct_Component());
-
-                // Show the dialog
-                addProductDialog.setVisible(true);
+                System.out.println("hello");
             }
         });
 
@@ -267,11 +254,6 @@ public class Product_Component extends javax.swing.JPanel {
         changeColor(false);
     }
 
-    private void handlePanelClick(MouseEvent e) {
-        // Handle click logic here, regardless of slight mouse movement
-        customCheckbox.setSelected(!customCheckbox.isSelected());
-    }
-
     public void changeStatusEditBtn(boolean b) {
         editBtn.setEnabled(b);
     }
@@ -280,12 +262,12 @@ public class Product_Component extends javax.swing.JPanel {
         return customCheckbox.isSelected();
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void setProductPage_Component(ProductPage_Component productPage_Component) {
         this.productPage_Component = productPage_Component;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

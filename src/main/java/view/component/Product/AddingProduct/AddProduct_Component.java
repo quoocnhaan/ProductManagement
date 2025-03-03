@@ -33,6 +33,7 @@ import view.component.CustomComponent.ImageLabel;
 import view.component.CustomComponent.RoundedLabel;
 import view.component.CustomComponent.RoundedTextArea;
 import view.component.CustomComponent.RoundedTextField;
+import view.component.Header.HeaderTitle_Component;
 
 /**
  *
@@ -40,11 +41,11 @@ import view.component.CustomComponent.RoundedTextField;
  */
 public class AddProduct_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AddNewProduct_Component
-     */
-    public AddProduct_Component() {
+    private HeaderTitle_Component parent;
+
+    public AddProduct_Component(HeaderTitle_Component parent) {
         initComponents();
+        this.parent = parent;
         initData();
         customComponents();
         setting();
@@ -523,6 +524,8 @@ public class AddProduct_Component extends javax.swing.JPanel {
                 productDAO.add(product);
 
                 close();
+
+                parent.resetDataWhenAdded();
 
 //                ManageEmployeeInfo_Component.getInstance().updateData();
 //                EmployeeInfo_Component.getInstance().getManagerInfo_Component().updateTotal(employeeDAO.getAll().size());

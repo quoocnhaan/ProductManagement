@@ -4,6 +4,7 @@
  */
 package controller.Functional;
 
+import controller.Session.SharedData;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -15,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import view.component.Product.Product_Component.Product_Component;
 
 /**
  *
