@@ -4,6 +4,8 @@
  */
 package controller.Functional;
 
+import controller.DAO.Product_SelectedDAO;
+import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Session.SharedData;
 import java.awt.Color;
 import java.awt.Image;
@@ -16,6 +18,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import org.hibernate.Session;
+import util.HibernateUtil;
 import view.component.Product.Product_Component.Product_Component;
 
 /**
@@ -87,6 +91,15 @@ public class Functional {
         int g = Math.min(255, (int) (color.getGreen() * factor));
         int b = Math.min(255, (int) (color.getBlue() * factor));
         return new Color(r, g, b);
+    }
+
+    public static void clearDataTemp() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
+            product_SelectedDAO.deleteAll();
+        } catch (Exception e) {
+        }
     }
 
 }

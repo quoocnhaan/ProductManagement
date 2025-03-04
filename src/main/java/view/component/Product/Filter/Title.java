@@ -23,10 +23,12 @@ public class Title extends javax.swing.JPanel {
 
     private JButton clearButton;
     private FilterItem parent;
+    private String name;
 
     public Title(String titleName, FilterItem parent) {
         initComponents();
         this.parent = parent;
+        this.name = titleName;
         setLayout(new BorderLayout());
         addComponents(titleName);
         addEvents();
@@ -89,4 +91,7 @@ public class Title extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    public String getTitleName() {
+        return name;
+    }
 }

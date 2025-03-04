@@ -13,11 +13,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Map;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import view.component.Btn.RoundedButton;
 import view.component.CustomComponent.CustomScrollBarUI;
+import view.component.Product.SearchBar.SearchBarPanel;
 
 /**
  *
@@ -26,9 +29,14 @@ import view.component.CustomComponent.CustomScrollBarUI;
 public class Filter_Component extends javax.swing.JPanel {
 
     private FilterItem_Container filterItem_Container;
+    private RoundedButton apply;
+    private RoundedButton clear;
+    private SearchBarPanel parent;
+    private JDialog dialog;
 
-    public Filter_Component() {
+    public Filter_Component(SearchBarPanel parent) {
         initComponents();
+        this.parent = parent;
         setLayout(new BorderLayout());
         addComponents();
     }
@@ -104,15 +112,24 @@ public class Filter_Component extends javax.swing.JPanel {
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         footer.setBackground(Color.WHITE);
 
-        RoundedButton clear = new RoundedButton("Clear all", false, 30, 30);
-        RoundedButton apply = new RoundedButton("Apply", true, 30, 30);
+        clear = new RoundedButton("Clear all", false, 30, 30);
+        apply = new RoundedButton("Apply", true, 30, 30);
 
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<FilterItem> list = filterItem_Container.getAll();
-                for (FilterItem filterItem : list) {
-                    filterItem.clear();
+                reset();
+            }
+        });
+
+        // apply is a button in Filter_Component
+        apply.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Map<String, List<String>> map = filterItem_Container.getSelectedItems();
+                parent.setData(map);
+                if (dialog != null) {
+                    dialog.dispose();  // This will close the dialog
                 }
             }
         });
@@ -122,6 +139,17 @@ public class Filter_Component extends javax.swing.JPanel {
 
         add(scrollPane, BorderLayout.CENTER);
         add(footer, BorderLayout.SOUTH);
+    }
+
+    public void setDialog(JDialog addProductDialog) {
+        this.dialog = addProductDialog;
+    }
+
+    public void reset() {
+        List<FilterItem> list = filterItem_Container.getAll();
+        for (FilterItem filterItem : list) {
+            filterItem.clear();
+        }
     }
 
 

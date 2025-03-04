@@ -21,7 +21,7 @@ import javax.swing.JToggleButton;
  * @author PC
  */
 public class RoundedToggleButton extends JToggleButton {
-    
+        
     public RoundedToggleButton(String text) {
         super(text);
         setContentAreaFilled(false);  // Remove default background painting

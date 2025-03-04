@@ -4,9 +4,10 @@
  */
 package view.component.Product;
 
-import view.component.Product.ContentPage_Component;
+import controller.Functional.Functional;
 import java.awt.BorderLayout;
-import model.Product;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -19,10 +20,19 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
-        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-                
         add(new ContentPage_Component());
+        setLocationRelativeTo(null);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Custom action before closing the window
+                Functional.clearDataTemp();
+
+                // Close the window
+                dispose();
+            }
+        });
     }
 
     /**

@@ -106,8 +106,8 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
         });
     }
 
-    public void resetDataWhenAdded() {
-        parent.resetDataWhenAdded();
+    public void resetDataWhenAdded(int quantity) {
+        parent.resetDataWhenAdded(quantity);
     }
 
 

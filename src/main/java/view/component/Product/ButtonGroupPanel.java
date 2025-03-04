@@ -7,6 +7,8 @@ package view.component.Product;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -18,22 +20,25 @@ import view.component.Btn.FilterButton;
  * @author PC
  */
 public class ButtonGroupPanel extends JPanel {
-    
+
     private FilterButton all;
     private FilterButton inStock;
     private FilterButton outStock;
     private ButtonGroup group;
-    
-    public ButtonGroupPanel(List<String> names) {
+    private DataTable_Component parent;
+
+    public ButtonGroupPanel(List<String> names, DataTable_Component parent) {
         initComponents();
+        this.parent = parent;
         setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
         setPreferredSize(new Dimension(1250, 40));
-        
+
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, new Color(240, 240, 240)));
-        
+
         initData();
         addComponents();
+        addEvents();
     }
 
     /**
@@ -60,21 +65,53 @@ public class ButtonGroupPanel extends JPanel {
     private void initData() {
         all = new FilterButton("All");
         all.setSelected(true);
-        
+
         inStock = new FilterButton("In-Stock");
         outStock = new FilterButton("Out-of-Stock");
         group = new ButtonGroup();
     }
-    
+
+    private void addEvents() {
+        // Assuming 'all', 'inStock', 'outStock' are JRadioButtons or JCheckBox
+        ButtonGroup group = new ButtonGroup();
+        group.add(all);
+        group.add(inStock);
+        group.add(outStock);
+
+        all.addActionListener(e -> {
+            if (all.isSelected()) {
+                parent.transferData("All");
+            }
+        });
+
+        inStock.addActionListener(e -> {
+            if (inStock.isSelected()) {
+                parent.transferData("In-Stock");
+            }
+        });
+
+        outStock.addActionListener(e -> {
+            if (outStock.isSelected()) {
+                parent.transferData("Out-of-Stock");
+            }
+        });
+    }
+
     private void addComponents() {
         group.add(all);
         add(all);
-        
+
         group.add(inStock);
         add(inStock);
-        
+
         group.add(outStock);
         add(outStock);
+    }
+
+    public void reset() {
+        all.setSelected(true);
+        inStock.setSelected(false);
+        outStock.setSelected(false);
     }
 
 

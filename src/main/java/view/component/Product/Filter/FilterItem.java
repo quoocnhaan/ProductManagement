@@ -5,7 +5,9 @@
 package view.component.Product.Filter;
 
 import java.awt.BorderLayout;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -55,6 +57,16 @@ public class FilterItem extends javax.swing.JPanel {
 
     public void clear() {
         content.clear();
+    }
+
+    public Map<String, List<String>> getSelectedItems() {
+        List<String> selectedItems = content.getSelectedItems();
+        Map<String, List<String>> selectedMap = new HashMap<>();
+
+        // Store the title and selected items in the map
+        selectedMap.put(title.getTitleName(), selectedItems);
+
+        return selectedMap;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

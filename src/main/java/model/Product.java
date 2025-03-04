@@ -36,6 +36,8 @@ public class Product {
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
+    private double discount;
+
     @Column(nullable = false)
     private int gender;
 
@@ -62,10 +64,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String code, Brand brand, int gender, byte[] img, double price, String description, int amount, boolean productStatus, int type, boolean status) {
+    public Product(String name, String code, Brand brand, double discount, int gender, byte[] img, double price, String description, int amount, boolean productStatus, int type, boolean status) {
         this.name = name;
         this.code = code;
         this.brand = brand;
+        this.discount = discount;
         this.gender = gender;
         this.img = img;
         this.price = price;
@@ -171,4 +174,13 @@ public class Product {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
 }

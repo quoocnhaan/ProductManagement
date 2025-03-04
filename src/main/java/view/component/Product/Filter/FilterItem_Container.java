@@ -9,7 +9,9 @@ import controller.DAOImp.BrandDAOImp;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import model.Brand;
 import org.hibernate.Session;
@@ -99,6 +101,24 @@ public class FilterItem_Container extends javax.swing.JPanel {
         return list;
     }
 
+    public Map<String, List<String>> getSelectedItems() {
+        Map<String, List<String>> selectedItems = new HashMap<>();
+
+        // Add all items from the brand map
+        selectedItems.putAll(brand.getSelectedItems());
+
+        // Add all items from the type map
+        selectedItems.putAll(type.getSelectedItems());
+
+        // Add all items from the gender map
+        selectedItems.putAll(gender.getSelectedItems());
+
+        // Add all items from the price map
+        selectedItems.putAll(price.getSelectedItems());
+
+        // return the combined map
+        return selectedItems;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

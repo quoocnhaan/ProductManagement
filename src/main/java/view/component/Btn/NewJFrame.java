@@ -26,30 +26,14 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new FlowLayout());
-//        ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
-//
-        JPanel j = new JPanel(new FlowLayout());
+        ImageIcon bin = new ImageIcon(getClass().getResource("/icon/bin.png"));
+        MyButton deleteBtn = new MyButton("");
+        deleteBtn.setIcon(bin);
+        deleteBtn.setEnabled(false);
+        add(deleteBtn);
+        add(deleteBtn);
+        add(deleteBtn);
 
-        JButton button = new JButton("Click Me");
-
-        // Set a MatteBorder with only a bottom border
-        button.setBorder(new MatteBorder(0, 0, 2, 0, Color.BLACK));
-
-        j.add(button);
-        j.add(button);
-
-//        j.setBackground(Color.WHITE);
-//        j.setPreferredSize(new Dimension(500, 500));
-//
-//        for (int i = 0; i < 5; i++) {
-//            //NonBorderIconButton btn = new NonBorderIconButton("Edit", icon, true);
-//            MyButton btn = new MyButton("hello");
-//            j.add(btn);
-//        }
-        add(j);
-//        for (int i = 0; i < 5; i++) {
-//            add(new RoundedButton("hello", true));
-//        }
     }
 
     /**

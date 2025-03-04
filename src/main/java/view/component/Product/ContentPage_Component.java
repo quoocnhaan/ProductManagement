@@ -4,7 +4,6 @@
  */
 package view.component.Product;
 
-import view.component.Product.DataTable_Component;
 import java.awt.BorderLayout;
 import view.component.Product.Header.Header_Component;
 
@@ -21,12 +20,11 @@ public class ContentPage_Component extends javax.swing.JPanel {
         initComponents();
         
         header_Component = new Header_Component(this);
-        dataTable_Component = new DataTable_Component();
+        dataTable_Component = new DataTable_Component(this);
         
         setLayout(new BorderLayout(0, 20));
         add(header_Component, BorderLayout.NORTH);
         add(dataTable_Component, BorderLayout.CENTER);
-
     }
 
     /**
@@ -52,8 +50,13 @@ public class ContentPage_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void resetDataWhenAdded() {
+    public void resetDataWhenAdded(int quantity) {
+        header_Component.updateTotal(quantity);
         dataTable_Component.resetDataWhenAdded();
+    }
+
+    public void updateDataWhenEdit(int quantity) {
+        header_Component.updateTotal(quantity);
     }
 
 

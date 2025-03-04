@@ -6,6 +6,8 @@ package view.component.Product.Sort;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import view.component.Btn.FilterButton;
@@ -87,10 +89,13 @@ public class SortPopup extends javax.swing.JPanel {
     }
 
     private void addEvents() {
-        none.addItemListener(e -> {
-            if (none.isSelected()) {
-                parent.resetSorting();
-                parent.closePopup();
+        none.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (none.isSelected()) {
+                    parent.resetSorting();
+                    parent.closePopup();
+                }
             }
         });
 
@@ -123,6 +128,10 @@ public class SortPopup extends javax.swing.JPanel {
             }
         });
 
+    }
+
+    public void reset() {
+        none.setSelected(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

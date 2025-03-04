@@ -8,7 +8,6 @@ import controller.DAO.ProductDAO;
 import controller.DAO.Product_SelectedDAO;
 import controller.DAOImp.ProductDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
-import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,8 +16,8 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -27,10 +26,8 @@ import model.Product_Selected;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.Btn.IconButton;
-import view.component.Btn.MyButton;
 import view.component.Product.Filter.Filter_Component;
 import view.component.Product.PaginationWithSearchBar;
-import view.component.Product.Product_Component.Product_Component;
 import view.component.Product.SearchSuggestion.SearchSuggestion_Component;
 import view.component.Product.Sort.SortPopup;
 
@@ -43,11 +40,13 @@ public class SearchBarPanel extends javax.swing.JPanel {
     private SearchSuggestion_Component searchSuggestion_Component;
     private IconButton sortBtn;
     private IconButton filterBtn;
-    private MyButton deleteBtn;
+    private IconButton deleteBtn;
     private JPanel buttonPanel;
     private PaginationWithSearchBar parent;
     private JPopupMenu popupSort;
     private SortPopup sortPopup;
+    private Filter_Component filter_Component;
+    private Map<String, List<String>> map;
 
     public SearchBarPanel(PaginationWithSearchBar parent) {
         initComponents();
@@ -104,6 +103,8 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
         searchSuggestion_Component = new SearchSuggestion_Component(this);
 
+        filter_Component = new Filter_Component(this);
+
         ImageIcon sortIcon = new ImageIcon(getClass().getResource("/icon/sort.png"));
         sortBtn = new IconButton("Sort by", sortIcon, true);
 
@@ -111,8 +112,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
         filterBtn = new IconButton("Filter", filterIcon, true);
 
         ImageIcon bin = new ImageIcon(getClass().getResource("/icon/bin.png"));
-        deleteBtn = new MyButton("");
-        deleteBtn.setIcon(bin);
+        deleteBtn = new IconButton("Delete", bin, true);
         deleteBtn.setEnabled(false);
     }
 
@@ -135,6 +135,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
             }
         });
 
+        // this is SearchBarPanel
         filterBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -143,10 +144,13 @@ public class SearchBarPanel extends javax.swing.JPanel {
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
 
-                addProductDialog.add(new Filter_Component());
+                filter_Component.setDialog(addProductDialog);
+                addProductDialog.add(filter_Component);
 
                 // Show the dialog
                 addProductDialog.setVisible(true);
+
+                transferData(map);
             }
         });
 
@@ -159,7 +163,10 @@ public class SearchBarPanel extends javax.swing.JPanel {
                     List<Product_Selected> products = product_SelectedDAO.getAll();
 
                     for (Product_Selected product : products) {
-                        productDAO.delete(product.getId());
+                        if (product.isStatus()) {
+                            productDAO.delete(product.getProduct().getId());
+                            product_SelectedDAO.delete(product.getId());
+                        }
                     }
                 } catch (Exception exception) {
                     System.out.println(exception + getClass().getName());
@@ -200,6 +207,21 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
     public void resetSorting() {
         parent.resetSorting();
+    }
+
+    public void transferData(Map<String, List<String>> map) {
+        parent.searchByFilter(map);
+    }
+
+    public void setData(Map<String, List<String>> map) {
+        this.map = map;
+    }
+
+    public void resetSearchOptions() {
+        searchSuggestion_Component.reset();
+        filter_Component.reset();
+        sortPopup.reset();
+        parent.reset();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

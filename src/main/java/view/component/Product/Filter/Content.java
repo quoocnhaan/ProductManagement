@@ -7,6 +7,7 @@ package view.component.Product.Filter;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JToggleButton;
 import org.jdesktop.swingx.WrapLayout;
@@ -19,10 +20,12 @@ import view.component.Btn.RoundedToggleButton;
 public class Content extends javax.swing.JPanel {
 
     private FilterItem parent;
-    
+    private List<RoundedToggleButton> result;
+
     public Content(List<String> contents, FilterItem parent) {
         initComponents();
         this.parent = parent;
+        result = new ArrayList<>();
         setLayout(new WrapLayout(FlowLayout.LEFT, 10, 10));
         addComponents(contents);
     }
@@ -54,10 +57,11 @@ public class Content extends javax.swing.JPanel {
         for (String language : contents) {
             RoundedToggleButton button = new RoundedToggleButton(language);
             add(button);
+            result.add(button);
         }
     }
 
-    void clear() {
+    public void clear() {
         Component[] components = getComponents();
         for (Component component : components) {
             if (component instanceof JToggleButton) {
@@ -67,6 +71,18 @@ public class Content extends javax.swing.JPanel {
             }
         }
     }
+
+    public List<String> getSelectedItems() {
+        List<String> temp = new ArrayList<>();
+        for (RoundedToggleButton button : result) {
+            if (button.isSelected()) {
+                temp.add(button.getText());
+            }
+        }
+        return temp;
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

@@ -14,18 +14,19 @@ import java.util.List;
  */
 public class DataTable_Component extends javax.swing.JPanel {
 
-    private ButtonGroupPanel buttonGroupPanel;
+    private ButtonGroupPanel card;
     private PaginationWithSearchBar paginationWithSearchBar;
+    private ContentPage_Component parent;
 
-    public DataTable_Component() {
+    public DataTable_Component(ContentPage_Component parent) {
         initComponents();
-
+        this.parent = parent;
         setLayout(new BorderLayout(0, 10));
         List<String> buttonLabels = List.of("All", "In stock", "Out of stock");
-        buttonGroupPanel = new ButtonGroupPanel(buttonLabels);
-        paginationWithSearchBar = new PaginationWithSearchBar();
+        card = new ButtonGroupPanel(buttonLabels, this);
+        paginationWithSearchBar = new PaginationWithSearchBar(this);
 
-        add(buttonGroupPanel, BorderLayout.NORTH);
+        add(card, BorderLayout.NORTH);
         add(paginationWithSearchBar, BorderLayout.CENTER);
     }
 
@@ -52,8 +53,20 @@ public class DataTable_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    void resetDataWhenAdded() {
+    public void resetDataWhenAdded() {
         paginationWithSearchBar.resetDataWhenAdded();
+    }
+
+    public void transferData(String status) {
+        paginationWithSearchBar.sortByStatus(status);
+    }
+
+    public void reset() {
+        card.reset();
+    }
+
+    public void updateDataWhenEdit(int quantity) {
+        parent.updateDataWhenEdit(quantity);
     }
 
 

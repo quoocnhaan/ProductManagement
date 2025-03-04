@@ -21,7 +21,7 @@ public class RoundedLabel extends JLabel {
         super(text);
         setOpaque(false);  // To allow custom painting
         setBorder(new EmptyBorder(5, 10, 5, 10));  // Padding around text
-        setFont(new Font("Arial", Font.PLAIN, 16));  // Custom font and size
+        setFont(new Font("Roboto", Font.PLAIN, 16));  // Custom font and size
         setForeground(new Color(100, 100, 100)); // Set text color
     }
 

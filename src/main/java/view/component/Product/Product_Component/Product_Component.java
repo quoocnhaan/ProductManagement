@@ -11,21 +11,25 @@ import controller.Session.SharedData;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import model.Product;
 import model.Product_Selected;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.Btn.IconButton;
 import view.component.CustomComponent.CustomCheckbox;
+import view.component.Product.AddingProduct.AddProduct_Component;
 import view.component.Product.Pagination.Pagination_Component;
 import view.component.Product.Feature.SubFeature_Component;
 import view.component.Product.Feature.ProductName_Component;
@@ -107,6 +111,20 @@ public class Product_Component extends javax.swing.JPanel {
 
         customCheckbox = new CustomCheckbox(true);
 
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
+
+            Product_Selected product_Selected = product_SelectedDAO.findByProduct(product);
+
+            if (product_Selected != null) {
+                customCheckbox.setSelected(product_Selected.isStatus());
+            }
+
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
+        }
+
         add(customCheckbox);
 
         ProductName_Component productName = new ProductName_Component(product.getName(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
@@ -138,10 +156,33 @@ public class Product_Component extends javax.swing.JPanel {
 
         features.add(product.getBrand().getName());
         features.add(product.getAmount() + "");
-        features.add(product.getPrice() + "");
-        features.add("0");
-        features.add("10ml");
-        features.add("Man");
+        features.add(formatPrice(product.getPrice()));
+        features.add(product.getDiscount() + "");
+
+        String typeString = "";
+        int typeValue = product.getType();
+        if (typeValue == 1) {
+            typeString = "10ml";
+        } else if (typeValue == 2) {
+            typeString = "20ml";
+        } else if (typeValue == 3) {
+            typeString = "30ml";
+        } else if (typeValue == 4) {
+            typeString = "Full";
+        }
+
+        features.add(typeString);
+
+        String genderString = "";
+        int genderValue = product.getGender();
+        if (genderValue == 1) {
+            genderString = "Men";
+        } else if (genderValue == 2) {
+            genderString = "Women";
+        } else if (genderValue == 3) {
+            genderString = "Unisex";
+        }
+        features.add(genderString);
 
         for (int i = 0; i < features.size(); i++) {
             SubFeature_Component subFeature = new SubFeature_Component(features.get(i));
@@ -265,7 +306,14 @@ public class Product_Component extends javax.swing.JPanel {
         editBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("hello");
+                JDialog addProductDialog = new JDialog((Frame) null, "Edit Product", true);  // true for modal
+                addProductDialog.setSize(1250, 900);
+                addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
+                addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
+
+                addProductDialog.add(new AddProduct_Component(parent, product));
+
+                addProductDialog.setVisible(true);
             }
         });
 
@@ -293,6 +341,14 @@ public class Product_Component extends javax.swing.JPanel {
 
     public Product getProduct() {
         return product;
+    }
+
+    private String formatPrice(double priceValue) {
+        if (priceValue == 0) {
+            return "0";
+        }
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(priceValue);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

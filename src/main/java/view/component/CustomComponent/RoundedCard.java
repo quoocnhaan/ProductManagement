@@ -1,6 +1,5 @@
 package view.component.CustomComponent;
 
-
 import controller.Session.SharedData;
 import javax.swing.*;
 import java.awt.*;
@@ -8,11 +7,11 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 public class RoundedCard extends JPanel {
-
+    
     private Color borderColor = Color.LIGHT_GRAY;  // Border color
     private JLabel titleLabel;
     private JLabel contentLabel;
-
+    
     public RoundedCard(String title, String content) {
         setOpaque(false);  // To allow custom painting
         setBorder(new EmptyBorder(10, 10, 10, 10));  // Padding around panel
@@ -35,7 +34,7 @@ public class RoundedCard extends JPanel {
         add(titleLabel, BorderLayout.NORTH);
         add(contentLabel, BorderLayout.CENTER);
     }
-
+    
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -70,9 +69,13 @@ public class RoundedCard extends JPanel {
         // Dispose of the graphics object to release resources
         g2.dispose();
     }
-
+    
     @Override
     public void setBorder(Border border) {
         // Prevent changing the border to preserve the custom look
+    }
+    
+    public void updateValue(int totalValue) {
+        contentLabel.setText(totalValue + "");
     }
 }

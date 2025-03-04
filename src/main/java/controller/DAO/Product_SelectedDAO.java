@@ -14,9 +14,11 @@ import model.Product_Selected;
  */
 public interface Product_SelectedDAO extends InterfaceDAO<Product_Selected> {
 
-    List<Product_Selected> findByText(String name, List<String> brands, String price, String gender, String type, String sort);
+    List<Product_Selected> findByText(String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus);
 
     Product_Selected findByProduct(Product product);
 
     void deleteByStatusFalse();
+    
+    boolean deleteAll();
 }

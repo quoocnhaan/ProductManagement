@@ -62,4 +62,5 @@ public class Product_Selected {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
 }

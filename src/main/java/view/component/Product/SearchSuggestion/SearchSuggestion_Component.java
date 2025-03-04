@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
 import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -205,6 +204,10 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
 
     public void transferData(String text) {
         parent.transferData(text);
+    }
+    
+    public void reset() {
+        txtSearch.setText("");
     }
 
 

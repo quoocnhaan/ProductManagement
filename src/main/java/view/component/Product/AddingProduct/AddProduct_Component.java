@@ -15,6 +15,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -34,6 +35,7 @@ import view.component.CustomComponent.RoundedLabel;
 import view.component.CustomComponent.RoundedTextArea;
 import view.component.CustomComponent.RoundedTextField;
 import view.component.Product.Header.HeaderTitle_Component;
+import view.component.Product.Pagination.Pagination_Component;
 
 /**
  *
@@ -42,6 +44,8 @@ import view.component.Product.Header.HeaderTitle_Component;
 public class AddProduct_Component extends javax.swing.JPanel {
 
     private HeaderTitle_Component parent;
+    private Pagination_Component pagiantionParent;
+    private Product product;
 
     public AddProduct_Component(HeaderTitle_Component parent) {
         initComponents();
@@ -49,6 +53,16 @@ public class AddProduct_Component extends javax.swing.JPanel {
         initData();
         customComponents();
         setting();
+        removeFocus();
+    }
+
+    public AddProduct_Component(Pagination_Component parent, Product product) {
+        initComponents();
+        this.pagiantionParent = parent;
+        this.product = product;
+        initData(product);
+        customComponents();
+        addEvents();
         removeFocus();
     }
 
@@ -80,7 +94,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         description = new RoundedTextArea();
-        status = new javax.swing.JComboBox<>();
+        status = new RoundedLabel("   In-Stock");
         cancelBtn = new javax.swing.JButton();
         confirmBtn = new javax.swing.JButton();
         finalPrice = new RoundedLabel("");
@@ -116,7 +130,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
         jLabel3.setText("Product Name");
 
         name.setBackground(new java.awt.Color(255, 255, 255));
-        name.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        name.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         name.setForeground(new java.awt.Color(102, 102, 102));
         name.setText("Enter Product Name");
 
@@ -125,7 +139,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
         jLabel4.setText("Product Code");
 
         code.setBackground(new java.awt.Color(255, 255, 255));
-        code.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        code.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         code.setForeground(new java.awt.Color(102, 102, 102));
         code.setText("Enter Product Code");
 
@@ -134,16 +148,16 @@ public class AddProduct_Component extends javax.swing.JPanel {
         jLabel5.setText("Sale Price");
 
         price.setBackground(new java.awt.Color(255, 255, 255));
-        price.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        price.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         price.setForeground(new java.awt.Color(102, 102, 102));
-        price.setText("100000 VND");
+        price.setText("100000");
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Discount %");
 
         discount.setBackground(new java.awt.Color(255, 255, 255));
-        discount.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        discount.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         discount.setForeground(new java.awt.Color(102, 102, 102));
         discount.setText("0");
 
@@ -160,12 +174,12 @@ public class AddProduct_Component extends javax.swing.JPanel {
         jLabel8.setText("Brand");
 
         quantity.setBackground(new java.awt.Color(255, 255, 255));
-        quantity.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        quantity.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         quantity.setForeground(new java.awt.Color(102, 102, 102));
         quantity.setText("1");
 
         brand.setBackground(new java.awt.Color(255, 255, 255));
-        brand.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        brand.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         brand.setForeground(new java.awt.Color(102, 102, 102));
 
         label13.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
@@ -178,16 +192,15 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
         description.setBackground(new java.awt.Color(255, 255, 255));
         description.setColumns(20);
-        description.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        description.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         description.setForeground(new java.awt.Color(102, 102, 102));
         description.setRows(5);
         jScrollPane1.setViewportView(description);
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
 
         status.setBackground(new java.awt.Color(255, 255, 255));
-        status.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        status.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         status.setForeground(new java.awt.Color(102, 102, 102));
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"In stock", "Out of stock", "In transit"}));
 
         cancelBtn.setBackground(new java.awt.Color(255, 255, 255));
         cancelBtn.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -210,9 +223,9 @@ public class AddProduct_Component extends javax.swing.JPanel {
         });
 
         finalPrice.setBackground(new java.awt.Color(51, 51, 51));
-        finalPrice.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        finalPrice.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         finalPrice.setForeground(new java.awt.Color(102, 102, 102));
-        finalPrice.setText("jLabel10");
+        finalPrice.setText("   100000");
 
         javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
         contentPanel.setLayout(contentPanelLayout);
@@ -334,7 +347,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
             }
         });
 
-        jLabel14.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(102, 102, 102));
         jLabel14.setText("jLabel14");
 
@@ -380,7 +393,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
         jLabel16.setText("Type");
 
         type.setBackground(new java.awt.Color(255, 255, 255));
-        type.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        type.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         type.setForeground(new java.awt.Color(102, 102, 102));
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"10ml", "20ml", "30ml", "Full"}));
 
@@ -389,7 +402,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
         jLabel9.setText("Gender");
 
         gender.setBackground(new java.awt.Color(255, 255, 255));
-        gender.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        gender.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         gender.setForeground(new java.awt.Color(102, 102, 102));
         gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Men", "Women", "Unisex"}));
 
@@ -475,29 +488,31 @@ public class AddProduct_Component extends javax.swing.JPanel {
     }
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {
-
         int option = JOptionPane.showConfirmDialog(this, "Do you want to save ?", "Confirm", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
-
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
                 ProductDAO productDAO = new ProductDAOImp(session);
                 BrandDAO brandDAO = new BrandDAOImp(session);
 
-                String productName = name.getText();
-                if (productName.equals("Enter Product Name")) {
-                    JOptionPane.showMessageDialog(this, "Please enter Product Name !");
+                // Validate product name
+                String productName = name.getText().trim();
+                if (productName == null || productName.isEmpty() || productName.equals("Enter Product Name")) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid Product Name!");
                     return;
                 }
 
-                String productCode = code.getText();
-                if (productCode.equals("Enter Product Code")) {
-                    JOptionPane.showMessageDialog(this, "Please enter Product Code !");
+                // Validate product code
+                String productCode = code.getText().trim();
+                if (productCode == null || productCode.isEmpty() || productCode.equals("Enter Product Code")) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid Product Code!");
                     return;
                 }
-                String brandString = this.brand.getSelectedItem().toString();
+
+                // Validate brand
+                String brandString = this.brand.getSelectedItem() != null ? this.brand.getSelectedItem().toString() : "";
                 if (brandString.isBlank()) {
-                    JOptionPane.showMessageDialog(this, "Please enter Product Brand !");
+                    JOptionPane.showMessageDialog(this, "Please select a valid Product Brand!");
                     return;
                 }
 
@@ -507,32 +522,110 @@ public class AddProduct_Component extends javax.swing.JPanel {
                     brandDAO.add(brand);
                 }
 
-                double price = Double.parseDouble(this.price.getText());
+                // Validate price
+                double price;
+                try {
+                    price = Double.parseDouble(this.price.getText().replace(",", ""));
+                    if (price <= 0) {
+                        throw new NumberFormatException();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid Price!");
+                    return;
+                }
 
-                double discount = Double.parseDouble(this.discount.getText());
+                // Validate discount
+                double discount;
+                try {
+                    discount = Double.parseDouble(this.discount.getText());
+                    if (discount < 0 || discount > 100) {
+                        throw new NumberFormatException();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid Discount (0-100%)!");
+                    return;
+                }
 
+                // Validate type selection
                 int type = this.type.getSelectedIndex() + 1;
-                int gender = this.type.getSelectedIndex() + 1;
-                int productStatus = status.getSelectedIndex() + 1;
-                String description = this.description.getText();
+                if (type <= 0) {
+                    JOptionPane.showMessageDialog(this, "Please select a valid Product Type!");
+                    return;
+                }
 
+                // Validate gender selection
+                int gender = this.gender.getSelectedIndex() + 1;
+                if (gender <= 0) {
+                    JOptionPane.showMessageDialog(this, "Please select a valid Gender!");
+                    return;
+                }
+
+                // Validate status selection
+                boolean productStatus = status.getText().trim().equals("In-Stock");
+
+//                if (productStatus <= 0) {
+//                    JOptionPane.showMessageDialog(this, "Please select a valid Product Status!");
+//                    return;
+//                }
+                // Validate quantity
+                int quantity;
+                try {
+                    quantity = Integer.parseInt(this.quantity.getText());
+                    if (quantity < 0) {
+                        throw new NumberFormatException();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid Quantity!");
+                    return;
+                }
+
+                // Validate description
+                String description = this.description.getText().trim();
+                if (description == null || description.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid Product Description!");
+                    return;
+                }
+
+                // Validate image
                 ImageIcon newImg = (ImageIcon) img.getIcon();
                 byte[] imgByte = Functional.convertIconToByteArray(newImg);
+                if (imgByte == null || imgByte.length == 0) {
+                    JOptionPane.showMessageDialog(this, "Please upload a valid image!");
+                    return;
+                }
 
-                Product product = new Product(productName, productCode, brand, gender, imgByte, price, description, 0, productStatus == 1, type, true);
+                // Save or update product
+                if (parent != null && product == null) {
+                    Product newProduct = new Product(productName, productCode, brand, discount, gender, imgByte, price, description, quantity, productStatus, type, true);
+                    productDAO.add(newProduct);
+                    parent.resetDataWhenAdded(quantity);
+                } else {
+                    // Update existing product
+                    int prevQuantity = product.getAmount();
+                    int disparity = quantity - prevQuantity;
 
-                productDAO.add(product);
+                    product.setName(productName);
+                    product.setCode(productCode);
+                    product.setBrand(brand);
+                    product.setDiscount(discount);
+                    product.setGender(gender);
+                    product.setImg(imgByte);
+                    product.setPrice(price);
+                    product.setDescription(description);
+                    product.setAmount(quantity);
+                    product.setProductStatus(productStatus);
+                    product.setType(type);
+                    product.setStatus(true);
 
+                    productDAO.update(product);
+                    pagiantionParent.setDisparity(disparity);
+                    pagiantionParent.resetDataWhenEdit();
+                }
                 close();
 
-                parent.resetDataWhenAdded();
-
-//                ManageEmployeeInfo_Component.getInstance().updateData();
-//                EmployeeInfo_Component.getInstance().getManagerInfo_Component().updateTotal(employeeDAO.getAll().size());
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Invalid Input !");
+                JOptionPane.showMessageDialog(this, "Invalid Input! Please check your data and try again.");
                 JOptionPane.showMessageDialog(this, e);
-
             }
         }
     }
@@ -547,11 +640,11 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {
         this.requestFocusInWindow();
+
     }
 
     private void initData() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            ProductDAO productDAO = new ProductDAOImp(session);
             BrandDAO brandDAO = new BrandDAOImp(session);
 
             List<Brand> items = brandDAO.getAll();
@@ -565,6 +658,106 @@ public class AddProduct_Component extends javax.swing.JPanel {
         jLabel14.setText(text);
     }
 
+    private void initData(Product product) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            BrandDAO brandDAO = new BrandDAOImp(session);
+
+            List<Brand> items = brandDAO.getAll();
+
+            for (Brand item : items) {
+                brand.addItem(item.getName());
+            }
+
+            // Check if product name is not null or empty before setting
+            if (product.getName() != null && !product.getName().isEmpty()) {
+                name.setText(product.getName());
+            } else {
+                name.setText("N/A");
+            }
+
+            // Check if product code is not null or empty before setting
+            if (product.getCode() != null && !product.getCode().isEmpty()) {
+                code.setText(product.getCode());
+            } else {
+                code.setText("N/A");
+            }
+
+            // Check if product price is valid
+            if (product.getPrice() != 0) {
+                price.setText(formatPrice(product.getPrice()));
+            } else {
+                price.setText("N/A");
+            }
+
+            // Check if discount is valid
+            if (product.getDiscount() != 0) {
+                discount.setText(String.valueOf(product.getDiscount()));
+            } else {
+                discount.setText("0");
+            }
+
+            // Calculate final price
+            double finalPriceValue = product.getPrice() * (1 - product.getDiscount() / 100.0);
+            finalPrice.setText("   " + formatPrice(finalPriceValue));
+
+            // Check if quantity is valid
+            if (product.getAmount() != 0) {
+                quantity.setText(String.valueOf(product.getAmount()));
+            } else {
+                quantity.setText("0");
+            }
+
+            // Check if brand name is not null or empty before selecting
+            if (product.getBrand() != null && product.getBrand().getName() != null && !product.getBrand().getName().isEmpty()) {
+                brand.setSelectedItem(product.getBrand().getName());
+            }
+
+            // Check product status
+            String statusStr = product.isStatus() ? "In-Stock" : "Out-of-Stock";
+
+            status.setText("   " + statusStr);
+
+            // Check if description is not null or empty before setting
+            if (product.getDescription() != null && !product.getDescription().isEmpty()) {
+                description.setText(product.getDescription());
+            } else {
+                description.setText("No description available");
+            }
+
+            // Check if image is not null before setting icon
+            if (product.getImg() != null) {
+                img.setIcon(Functional.convertByteArrayToIcon(product.getImg()));
+            } else {
+                img.setIcon(null); // Set a default or null icon
+            }
+
+            // Check if type is valid before setting
+            if (product.getType() != 0) {
+                type.setSelectedIndex(product.getType() - 1);
+            }
+
+            // Check if gender is valid before setting
+            if (product.getGender() != 0) {
+                gender.setSelectedIndex(product.getGender() - 1);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
+        }
+
+        // Set label for image upload instructions
+        String text = "<html>Please upload an image with a resolution of 180x180 or close to it for the best image quality.</html>";
+        jLabel14.setText(text);
+    }
+
+    private String formatPrice(double priceValue) {
+        if (priceValue == 0) {
+            return "N/A";
+        }
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(priceValue);
+    }
+
     private void customComponents() {
         customJComboBox();
     }
@@ -576,7 +769,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
         }
     }
 
-    private void setPlaceholder(final JTextField textField) {
+    private void setPlaceholderDefault(final JTextField textField) {
         String placeholder = textField.getText();
 
         textField.addFocusListener(new FocusListener() {
@@ -599,12 +792,146 @@ public class AddProduct_Component extends javax.swing.JPanel {
         textField.setForeground(java.awt.Color.GRAY);
     }
 
+    private void setPlaceholderForPrice() {
+        String placeholder = price.getText();
+        price.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (price.getText().equals(placeholder)) {
+                    price.setText("");
+                    price.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (price.getText().isEmpty()) {
+                    price.setText(placeholder);
+                    price.setForeground(java.awt.Color.GRAY);
+                } else {
+                    double priceValue;
+                    try {
+                        priceValue = Double.parseDouble(price.getText().replace(",", ""));
+                        if (priceValue <= 0) {
+//                            JOptionPane.showMessageDialog(null, "Please enter a valid Price!");
+//                            price.requestFocus();
+                            throw new NumberFormatException();
+                        } else {
+                            price.setText(formatPrice(priceValue));
+                            computeFinalPrice();
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Please enter a valid Price!");
+                        price.requestFocus();
+                        System.out.println(ex + getClass().getName());
+                    }
+                }
+            }
+        });
+        price.setForeground(java.awt.Color.GRAY);
+    }
+
+    private void setPlaceholderForDiscount() {
+        String placeholder = discount.getText();
+        discount.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (discount.getText().equals(placeholder)) {
+                    discount.setText("");
+                    discount.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (discount.getText().isEmpty()) {
+                    discount.setText(placeholder);
+                    discount.setForeground(java.awt.Color.GRAY);
+                } else {
+                    double discountValue;
+                    try {
+                        discountValue = Double.parseDouble(discount.getText());
+                        if (discountValue < 0 || discountValue > 100) {
+//                            JOptionPane.showMessageDialog(null, "Please enter a valid Discount (0-100%)!");
+//                            discount.requestFocus();
+                            throw new NumberFormatException();
+                        } else {
+                            discount.setText(discountValue + "");
+                            computeFinalPrice();
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Please enter a valid Discount (0-100%)!");
+                        discount.requestFocus();
+                        System.out.println(ex + getClass().getName());
+                    }
+                }
+            }
+        });
+        discount.setForeground(java.awt.Color.GRAY);
+    }
+
+    private void setPlaceholderForQuantity() {
+        String placeholder = quantity.getText();
+        quantity.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (quantity.getText().equals(placeholder)) {
+                    quantity.setText("");
+                    quantity.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (quantity.getText().isEmpty()) {
+                    quantity.setText(placeholder);
+                    quantity.setForeground(java.awt.Color.GRAY);
+                } else {
+                    try {
+                        int quantityValue = Integer.parseInt(quantity.getText().trim());
+                        if (quantityValue < 0) {
+//                            JOptionPane.showMessageDialog(null, "Please enter a valid Quantity!");
+//                            quantity.requestFocus();
+                            throw new NumberFormatException();
+                        } else {
+                            String statusStr = (quantityValue > 0) ? "In-Stock" : "Out-of-Stock";
+                            status.setText("   " + statusStr);
+                        }
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Please enter a valid Quantity!");
+                        quantity.requestFocus();
+                        System.out.println(ex + getClass().getName());
+                    }
+                }
+            }
+        });
+        quantity.setForeground(java.awt.Color.GRAY);
+    }
+
+    private void computeFinalPrice() {
+        try {
+            // Assuming price and discount are JTextFields or similar input fields
+            double originalPrice = Double.parseDouble(price.getText().replace(",", ""));
+            double discountValue = Double.parseDouble(discount.getText());
+
+            // Compute the final price after applying the discount
+            double finalPriceValue = originalPrice * (1 - discountValue / 100.0);
+
+            // Format the final price and set it in the finalPrice JTextField/JLabel
+            finalPrice.setText("   " + formatPrice(finalPriceValue));
+
+        } catch (NumberFormatException e) {
+            // Handle invalid input (e.g., if price or discount is not a valid number)
+            System.out.println(e + e.getClass().getName());
+        }
+    }
+
     private void setting() {
-        setPlaceholder(name);
-        setPlaceholder(code);
-        setPlaceholder(price);
-        setPlaceholder(discount);
-        setPlaceholder(quantity);
+        setPlaceholderDefault(name);
+        setPlaceholderDefault(code);
+        setPlaceholderForPrice();
+        setPlaceholderForDiscount();
+        setPlaceholderForQuantity();
     }
 
     private void removeFocus() {
@@ -714,8 +1041,89 @@ public class AddProduct_Component extends javax.swing.JPanel {
     private RoundedTextField name;
     private RoundedTextField price;
     private RoundedTextField quantity;
-    private javax.swing.JComboBox<String> status;
+    private RoundedLabel status;
     private javax.swing.JComboBox<String> type;
     private javax.swing.JButton uploadBtn;
     // End of variables declaration                   
+
+    private void addEvents() {
+        price.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                double priceValue;
+                try {
+                    priceValue = Double.parseDouble(price.getText().replace(",", ""));
+                    if (priceValue <= 0) {
+//                        JOptionPane.showMessageDialog(null, "Please enter a valid Price!");
+//                        price.requestFocus();
+                        throw new NumberFormatException();
+                    } else {
+                        price.setText(formatPrice(priceValue));
+                        computeFinalPrice();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid Price!");
+                    price.requestFocus();
+                    System.out.println(ex + getClass().getName());
+                }
+            }
+        });
+
+        discount.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                double discountValue;
+                try {
+                    discountValue = Double.parseDouble(discount.getText());
+                    if (discountValue < 0 || discountValue > 100) {
+//                        JOptionPane.showMessageDialog(null, "Please enter a valid Discount (0-100%)!");
+//                        discount.requestFocus();
+                        throw new NumberFormatException();
+                    } else {
+                        discount.setText(discountValue + "");
+                        computeFinalPrice();
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid Discount (0-100%)!");
+                    discount.requestFocus();
+                    System.out.println(ex + getClass().getName());
+                }
+            }
+        });
+
+        quantity.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    int quantityValue = Integer.parseInt(quantity.getText().trim());
+                    if (quantityValue < 0) {
+//                        JOptionPane.showMessageDialog(null, "Please enter a valid Quantity!");
+//                        quantity.requestFocus();
+                        throw new NumberFormatException();
+                    } else {
+                        String statusStr = (quantityValue > 0) ? "In-Stock" : "Out-of-Stock";
+                        status.setText("   " + statusStr);
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid Quantity!");
+                    quantity.requestFocus();
+                    System.out.println(ex + getClass().getName());
+                }
+            }
+        });
+    }
 }

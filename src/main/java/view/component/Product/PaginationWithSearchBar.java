@@ -5,6 +5,8 @@
 package view.component.Product;
 
 import java.awt.BorderLayout;
+import java.util.List;
+import java.util.Map;
 import view.component.Product.Pagination.Pagination_Component;
 import view.component.Product.SearchBar.SearchBarPanel;
 
@@ -16,9 +18,12 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
 
     private SearchBarPanel searchBarPanel;
     private Pagination_Component pagination_Component;
+    private DataTable_Component parent;
 
-    public PaginationWithSearchBar() {
+    public PaginationWithSearchBar(DataTable_Component parent) {
         initComponents();
+        this.parent = parent;
+
         setLayout(new BorderLayout(0, 15));
 
         searchBarPanel = new SearchBarPanel(this);
@@ -91,6 +96,51 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     public void resetSorting() {
         pagination_Component.setSort("");
         pagination_Component.updateData();
+    }
+
+    public void searchByFilter(Map<String, List<String>> map) {
+        if (map != null) {
+            for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+                String key = entry.getKey();
+                List<String> values = entry.getValue();
+                switch (key) {
+                    case "Brands":
+                        pagination_Component.setBrands_Search(values);
+                        break;
+                    case "Prices":
+                        pagination_Component.setPrice_Search(values);
+                        break;
+                    case "Genders":
+                        pagination_Component.setGender_Search(values);
+                        break;
+                    case "Types":
+                        pagination_Component.setType_Search(values);
+                        break;
+                    default:
+                        // Handle any other filters or ignore unrecognized keys
+                        System.out.println("Unrecognized filter: " + key);
+                        break;
+                }
+            }
+        }
+        pagination_Component.updateData();
+    }
+
+    public void resetSearchOptions() {
+        searchBarPanel.resetSearchOptions();
+    }
+
+    public void sortByStatus(String status) {
+        pagination_Component.setStatus(status);
+        pagination_Component.updateData();
+    }
+
+    public void reset() {
+        parent.reset();
+    }
+
+    public void updateDataWhenEdit(int quantity) {
+        parent.updateDataWhenEdit(quantity);
     }
 
 
