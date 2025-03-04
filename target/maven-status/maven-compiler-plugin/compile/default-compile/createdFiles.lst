@@ -20,6 +20,7 @@ view\component\Product\Header\Header_Component.class
 view\component\Product\SearchSuggestion\DataSearch.class
 view\component\Product\ProductPage_Component.class
 view\component\Product\SearchSuggestion\SearchSuggestion_Component.class
+controller\DAOImp\Product_SelectedDAOImp.class
 model\GoodsReceipt.class
 controller\DAO\BrandDAO.class
 controller\DAOImp\BrandDAOImp.class
@@ -157,6 +158,7 @@ view\component\Product\Pagination\NewJFrame.class
 view\component\Product\Pagination\Pagination_Component$5.class
 view\component\Product\AddingProduct\AddProduct_Component$6.class
 controller\DAOImp\NavigationItemDAOImp.class
+controller\DAO\Product_SelectedDAO.class
 view\component\Product\ButtonGroupPanel.class
 view\component\CustomComponent\RoundedLabel.class
 view\component\CustomComponent\CustomTabbedPaneUI.class

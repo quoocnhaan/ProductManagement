@@ -4,12 +4,13 @@
  */
 package view.component.Product.Product_Component;
 
+import controller.DAO.Product_SelectedDAO;
+import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Functional.Functional;
 import controller.Session.SharedData;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import model.Product;
+import model.Product_Selected;
+import org.hibernate.Session;
+import util.HibernateUtil;
 import view.component.Btn.IconButton;
 import view.component.CustomComponent.CustomCheckbox;
 import view.component.Product.Pagination.Pagination_Component;
@@ -206,31 +210,52 @@ public class Product_Component extends javax.swing.JPanel {
     }
 
     private void addEvents() {
-        Product_Component product_Component = this;
 
+        Product product = this.product;
         customCheckbox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     formMouseEntered();
                     SharedData.selectedAmount++;
-                    if (!SharedData.beingSelected) {
-                        SharedData.selectedProduct.add(product_Component);
+
+                    try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                        Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
+                        if (!SharedData.beingSelected) {
+                            Product_Selected product_Selected = new Product_Selected(product, true);
+                            product_SelectedDAO.add(product_Selected);
+                        } else {
+                            Product_Selected product_Selected = product_SelectedDAO.findByProduct(product);
+                            product_Selected.setStatus(true);
+                            product_SelectedDAO.update(product_Selected);
+                        }
+                    } catch (Exception exception) {
+                        System.out.println(exception + getClass().getName());
                     }
+
                     if (customCheckbox.isFocusOwner()) {
                         productPage_Component.checkStatusSelectAllCheckbox();
                     }
+
                 } else if (e.getStateChange() == ItemEvent.DESELECTED) {
                     formMouseExited();
                     SharedData.selectedAmount--;
-                    if (!SharedData.beingSelected) {
-                        SharedData.selectedProduct.remove(product_Component);
+                    try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                        Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
+                        Product_Selected product_Selected = product_SelectedDAO.findByProduct(product);
+                        if (!SharedData.beingSelected) {
+                            product_SelectedDAO.delete(product_Selected.getId());
+                        } else {
+                            product_Selected.setStatus(false);
+                            product_SelectedDAO.update(product_Selected);
+                        }
+                    } catch (Exception exception) {
+                        System.out.println(exception + getClass().getName());
                     }
                     if (customCheckbox.isFocusOwner()) {
                         productPage_Component.checkStatusSelectAllCheckbox();
                     }
                 }
-                SharedData.selectedProduct.sort((p1, p2) -> Integer.compare(p1.getProduct().getId(), p2.getProduct().getId()));
                 parent.updateSelectedAmount();
                 parent.changeStatusDeleteButton(SharedData.selectedAmount != 0);
                 productPage_Component.checkStatusEditButton();

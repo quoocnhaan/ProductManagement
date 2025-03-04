@@ -4,10 +4,7 @@
  */
 package view.component.Product.Title;
 
-import controller.Session.SharedData;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import view.component.CustomComponent.CustomCheckbox;

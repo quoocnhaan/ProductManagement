@@ -5,7 +5,9 @@
 package view.component.Product.SearchBar;
 
 import controller.DAO.ProductDAO;
+import controller.DAO.Product_SelectedDAO;
 import controller.DAOImp.ProductDAOImp;
+import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,12 +16,14 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.MatteBorder;
+import model.Product_Selected;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.Btn.IconButton;
@@ -151,10 +155,11 @@ public class SearchBarPanel extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                     ProductDAO productDAO = new ProductDAOImp(session);
-                    for (Product_Component object : SharedData.selectedProduct) {
-                        if (object.isSelected()) {
-                            productDAO.delete(object.getProduct().getId());
-                        }
+                    Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
+                    List<Product_Selected> products = product_SelectedDAO.getAll();
+
+                    for (Product_Selected product : products) {
+                        productDAO.delete(product.getId());
                     }
                 } catch (Exception exception) {
                     System.out.println(exception + getClass().getName());

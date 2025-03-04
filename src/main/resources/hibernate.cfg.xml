@@ -55,6 +55,7 @@ Contributor(s):
 
         <!--        <mapping class="model.Function"/>-->
         <mapping class="model.Product"/>
+        <mapping class="model.Product_Selected"/>
         <mapping class="model.InventoryDetail"/>
         <mapping class="model.Inventory"/>
         <mapping class="model.GoodsReceiptDetail"/>

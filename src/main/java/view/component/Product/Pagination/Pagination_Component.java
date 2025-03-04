@@ -5,7 +5,9 @@
 package view.component.Product.Pagination;
 
 import controller.DAO.ProductDAO;
+import controller.DAO.Product_SelectedDAO;
 import controller.DAOImp.ProductDAOImp;
+import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import model.Product;
+import model.Product_Selected;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.CustomComponent.CustomCheckbox;
@@ -279,17 +282,6 @@ public class Pagination_Component extends javax.swing.JPanel {
         }
     }
 
-    private void fetchData(List<Product_Component> list) {
-        list.clear();
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            ProductDAO productDAO = new ProductDAOImp(session);
-            List<Product> productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort);
-            for (Product product : productList) {
-                list.add(new Product_Component(product, this));
-            }
-        }
-    }
-
     private void computePages() {
         totalPages = (int) Math.ceil((double) products.size() / itemsPerPage);
     }
@@ -330,23 +322,23 @@ public class Pagination_Component extends javax.swing.JPanel {
                 currentPage = 1;
                 if (checkbox.isSelected()) {
                     SharedData.beingSelected = true;
-                    totalPages = (int) Math.ceil((double) SharedData.selectedProduct.size() / itemsPerPage);
+                    fetchDataInSelectedProduct();
                 } else {
                     SharedData.beingSelected = false;
+                    fetchData();
                     updateSelectedProduct();
-                    totalPages = (int) Math.ceil((double) products.size() / itemsPerPage);
                 }
+                computePages();
                 updateProductPages();
                 updatePaginationControls();
             }
 
             private void updateSelectedProduct() {
-                Iterator<Product_Component> iterator = SharedData.selectedProduct.iterator();
-                while (iterator.hasNext()) {
-                    Product_Component productPage = iterator.next();
-                    if (!productPage.isSelected()) {
-                        iterator.remove();  // Safely removes the element
-                    }
+                try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                    Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
+                    product_SelectedDAO.deleteByStatusFalse();
+                } catch (Exception e) {
+                    System.out.println(e + getClass().getName());
                 }
             }
         });
@@ -375,12 +367,6 @@ public class Pagination_Component extends javax.swing.JPanel {
     }
 
     public void resetDataWhenDeleted() {
-        for (Product_Component obj : SharedData.selectedProduct) {
-            if (obj.isSelected()) {
-                products.remove(obj);
-            }
-        }
-
         if (SharedData.beingSelected) {
             Iterator<Product_Component> iterator = SharedData.selectedProduct.iterator();
             while (iterator.hasNext()) {
@@ -389,10 +375,8 @@ public class Pagination_Component extends javax.swing.JPanel {
                     iterator.remove();  // Safely removes the element
                 }
             }
-            totalPages = (int) Math.ceil((double) SharedData.selectedProduct.size() / itemsPerPage);
         } else {
             SharedData.selectedProduct.clear();
-            computePages();
         }
 
         if (totalPages != 0 && totalPages < currentPage) {
@@ -400,7 +384,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         } else {
             currentPage = 1;
         }
-        //fetchData(products);
+        computePages();
         updateProductPages();
         updatePaginationControls();
         SharedData.selectedAmount = 0;
@@ -408,7 +392,7 @@ public class Pagination_Component extends javax.swing.JPanel {
     }
 
     public void resetDataWhenAdded() {
-        fetchData(products);
+        fetchData();
         computePages();
         updateProductPages();
         updatePaginationControls();
@@ -429,14 +413,29 @@ public class Pagination_Component extends javax.swing.JPanel {
     public void updateData() {
         currentPage = 1;
         if (SharedData.beingSelected) {
-            fetchData(SharedData.selectedProduct);
-            totalPages = (int) Math.ceil((double) SharedData.selectedProduct.size() / itemsPerPage);
+            fetchDataInSelectedProduct();
         } else {
-            fetchData(products);
-            computePages();
+            fetchData();
         }
+        computePages();
         updateProductPages();
         updatePaginationControls();
+    }
+
+    // something wrong with getAll Product_Selected
+    
+    private void fetchDataInSelectedProduct() {
+        products.clear();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Product_SelectedDAO productDAO = new Product_SelectedDAOImp(session);
+            List<Product_Selected> productList = productDAO.getAll();
+            for (Product_Selected product : productList) {
+                products.add(new Product_Component(product.getProduct(), this));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
+        }
     }
 
     public void setName_Search(String name_Search) {
