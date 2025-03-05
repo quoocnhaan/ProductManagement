@@ -163,12 +163,6 @@ public class Pagination_Component extends javax.swing.JPanel {
         paginationPanel.revalidate();
         paginationPanel.repaint();
 
-        // Display products for the current page
-//        if (checkbox.isSelected()) {
-//            displaySelectedProducs();
-//        } else {
-//            
-//        }
         displayProductsForCurrentPage();
     }
 
@@ -202,33 +196,6 @@ public class Pagination_Component extends javax.swing.JPanel {
         productPanel.repaint();
     }
 
-//    private void displaySelectedProducs() {
-//        productPanel.removeAll();
-//        int start = (currentPage - 1) * itemsPerPage;
-//        int end = Math.min(start + itemsPerPage, SharedData.selectedProduct.size());
-//
-//        int pageIndex = (int) Math.ceil(end * 1.0 / itemsPerPage);
-//
-//        if (pageIndex >= 1) {
-//            ProductPage_Component productPage_Component = productPages.get(pageIndex - 1);
-//            List<Product_Component> list = new ArrayList<>();
-//
-//            for (int i = start; i < end; i++) {
-//                Product_Component product_Component = SharedData.selectedProduct.get(i);
-//                product_Component.setProductPage_Component(productPage_Component);
-//                list.add(product_Component);
-//            }
-//
-//            productPage_Component.updateData(list);
-//
-//            productPanel.add(productPage_Component);
-//        } else {
-//            productPanel.add(new ProductPage_Component(this));
-//        }
-//        // Repaint and revalidate to show the updated products
-//        productPanel.revalidate();
-//        productPanel.repaint();
-//    }
     public void updateSelectedAmount() {
         totalSelected.setText(SharedData.selectedAmount + " selected");
     }

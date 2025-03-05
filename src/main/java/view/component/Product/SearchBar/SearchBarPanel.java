@@ -250,6 +250,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
     public void resetSearchOptions() {
         searchSuggestion_Component.reset();
         filter_Component.reset();
+        filterBtn.changeColor(false);
         sortPopup.reset();
         parent.reset();
     }

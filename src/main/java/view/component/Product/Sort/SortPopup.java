@@ -137,6 +137,7 @@ public class SortPopup extends javax.swing.JPanel {
 
     public void reset() {
         none.setSelected(true);
+        parent.changeColorOfSortBtn(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
