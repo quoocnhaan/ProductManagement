@@ -259,7 +259,6 @@ public class Product_Component extends javax.swing.JPanel {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     formMouseEntered();
                     SharedData.selectedAmount++;
-
                     try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                         Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
                         if (!SharedData.beingSelected) {
@@ -310,8 +309,8 @@ public class Product_Component extends javax.swing.JPanel {
                 addProductDialog.setSize(1250, 900);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
-
-                addProductDialog.add(new AddProduct_Component(parent, product));
+                addProductDialog.setResizable(false);
+                addProductDialog.add(new AddProduct_Component(parent, product, addProductDialog));
 
                 addProductDialog.setVisible(true);
             }

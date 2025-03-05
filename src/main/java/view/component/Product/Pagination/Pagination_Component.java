@@ -56,7 +56,6 @@ public class Pagination_Component extends javax.swing.JPanel {
     private CustomCheckbox checkbox;
     private int totalPages;
     private PaginationWithSearchBar parent;
-    private int disparity;
 
     private String status;
 
@@ -399,6 +398,12 @@ public class Pagination_Component extends javax.swing.JPanel {
     public void resetDataWhenDeleted() {
         if (SharedData.beingSelected) {
             fetchDataInSelectedProductWithOptions();
+            if (products.isEmpty()) {
+                checkbox.doClick();
+                SharedData.selectedAmount = 0;
+                updateSelectedAmount();
+                return;
+            }
         } else {
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                 Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
@@ -416,6 +421,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         updatePaginationControls();
         SharedData.selectedAmount = 0;
         updateSelectedAmount();
+        parent.updateData();
     }
 
     public void resetDataWhenAdded() {
@@ -434,7 +440,7 @@ public class Pagination_Component extends javax.swing.JPanel {
             fetchDataInSelectedProductWithOptions();
         }
         updatePaginationControls();
-        parent.updateDataWhenEdit();
+        parent.updateData();
     }
 
     private void updateProductPages() {
@@ -525,9 +531,6 @@ public class Pagination_Component extends javax.swing.JPanel {
         this.status = status;
     }
 
-    public void setDisparity(int disparity) {
-        this.disparity = disparity;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

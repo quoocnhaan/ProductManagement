@@ -14,12 +14,16 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -46,20 +50,26 @@ public class AddProduct_Component extends javax.swing.JPanel {
     private HeaderTitle_Component parent;
     private Pagination_Component pagiantionParent;
     private Product product;
+    private JDialog parentFrame;
+    private boolean isFrameClosing;
 
-    public AddProduct_Component(HeaderTitle_Component parent) {
+    public AddProduct_Component(HeaderTitle_Component parent, JDialog parentFrame) {
         initComponents();
         this.parent = parent;
+        this.parentFrame = parentFrame;
+        addEventForFrame();
         initData();
         customComponents();
         setting();
         removeFocus();
     }
 
-    public AddProduct_Component(Pagination_Component parent, Product product) {
+    public AddProduct_Component(Pagination_Component parent, Product product, JDialog parentFrame) {
         initComponents();
         this.pagiantionParent = parent;
+        this.parentFrame = parentFrame;
         this.product = product;
+        addEventForFrame();
         initData(product);
         customComponents();
         addEvents();
@@ -206,6 +216,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
         cancelBtn.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         cancelBtn.setForeground(new java.awt.Color(51, 51, 51));
         cancelBtn.setText("Cancel");
+        cancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
@@ -216,6 +227,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
         confirmBtn.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         confirmBtn.setForeground(new java.awt.Color(255, 255, 255));
         confirmBtn.setText("Save");
+        confirmBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         confirmBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmBtnActionPerformed(evt);
@@ -339,8 +351,10 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
         uploadBtn.setBackground(new java.awt.Color(0, 0, 255));
         uploadBtn.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        uploadBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         uploadBtn.setForeground(new java.awt.Color(255, 255, 255));
         uploadBtn.setText("Upload");
+
         uploadBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadBtnActionPerformed(evt);
@@ -618,7 +632,6 @@ public class AddProduct_Component extends javax.swing.JPanel {
                     product.setStatus(true);
 
                     productDAO.update(product);
-                    pagiantionParent.setDisparity(disparity);
                     pagiantionParent.resetDataWhenEdit();
                 }
                 close();
@@ -713,7 +726,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
             }
 
             // Check product status
-            String statusStr = product.isStatus() ? "In-Stock" : "Out-of-Stock";
+            String statusStr = product.getProductStatus() ? "In-Stock" : "Out-of-Stock";
 
             status.setText("   " + statusStr);
 
@@ -783,6 +796,9 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
+                if (isFrameClosing) {
+                    return;
+                }
                 if (textField.getText().isEmpty()) {
                     textField.setText(placeholder);
                     textField.setForeground(java.awt.Color.GRAY);
@@ -805,6 +821,9 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
+                if (isFrameClosing) {
+                    return;
+                }
                 if (price.getText().isEmpty()) {
                     price.setText(placeholder);
                     price.setForeground(java.awt.Color.GRAY);
@@ -844,6 +863,9 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
+                if (isFrameClosing) {
+                    return;
+                }
                 if (discount.getText().isEmpty()) {
                     discount.setText(placeholder);
                     discount.setForeground(java.awt.Color.GRAY);
@@ -883,6 +905,9 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
+                if (isFrameClosing) {
+                    return;
+                }
                 if (quantity.getText().isEmpty()) {
                     quantity.setText(placeholder);
                     quantity.setForeground(java.awt.Color.GRAY);
@@ -1055,6 +1080,9 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
+                if (isFrameClosing) {
+                    return;
+                }
                 double priceValue;
                 try {
                     priceValue = Double.parseDouble(price.getText().replace(",", ""));
@@ -1081,6 +1109,9 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
+                if (isFrameClosing) {
+                    return;
+                }
                 double discountValue;
                 try {
                     discountValue = Double.parseDouble(discount.getText());
@@ -1108,6 +1139,9 @@ public class AddProduct_Component extends javax.swing.JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
+                if (isFrameClosing) {
+                    return;
+                }
                 try {
                     int quantityValue = Integer.parseInt(quantity.getText().trim());
                     if (quantityValue < 0) {
@@ -1126,4 +1160,16 @@ public class AddProduct_Component extends javax.swing.JPanel {
             }
         });
     }
+
+    private void addEventForFrame() {
+        if (parentFrame != null) {
+            parentFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    isFrameClosing = true; // Set the flag when the frame is closing
+                }
+            });
+        }
+    }
+
 }

@@ -8,6 +8,7 @@ package view.component.Btn;
  *
  * @author PC
  */
+import controller.Session.SharedData;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -23,6 +24,7 @@ public class IconButton extends JButton {
     private Color hoverTextColor;
     private Color borderColor;
     private boolean hasBorder;
+    private boolean beingSelected = false;
 
     public IconButton(String text, ImageIcon icon, boolean hasBorder) {
         setText(text);
@@ -62,7 +64,11 @@ public class IconButton extends JButton {
             @Override
             public void mouseExited(MouseEvent e) {
                 setBackground(normalBackgroundColor); // Reset to normal background
-                borderColor = hasBorder ? new Color(239, 239, 239) : Color.WHITE; // Reset border color
+                if (!beingSelected) {
+                    borderColor = hasBorder ? new Color(239, 239, 239) : Color.WHITE; // Reset border color
+                }
+                //borderColor = hasBorder ? Color.RED : Color.WHITE; // Reset border color
+
             }
         });
 
@@ -94,6 +100,7 @@ public class IconButton extends JButton {
         // Draw the border only if hasBorder is true
         if (hasBorder) {
             g2.setColor(borderColor); // Set border color
+
             g2.setStroke(new BasicStroke(2f)); // Set border thickness
             g2.drawRoundRect(1, 1, getWidth() - 2, getHeight() - 2, 15, 15); // Draw the border
         }
@@ -107,5 +114,15 @@ public class IconButton extends JButton {
     public void setBackground(Color bg) {
         super.setBackground(bg);
         repaint();
+    }
+
+    public void changeColor(boolean beingSelected) {
+        this.beingSelected = beingSelected; // Track the state of being selected
+        if (beingSelected) {
+            borderColor = SharedData.mainColor; // Set border color to green (you can adjust the shade)
+        } else {
+            borderColor = new Color(239, 239, 239);
+        }
+        repaint(); // Repaint the button to reflect the changes
     }
 }

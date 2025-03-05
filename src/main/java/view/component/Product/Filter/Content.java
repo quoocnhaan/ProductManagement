@@ -81,8 +81,6 @@ public class Content extends javax.swing.JPanel {
         }
         return temp;
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

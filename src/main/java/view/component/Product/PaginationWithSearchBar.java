@@ -139,8 +139,8 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
         parent.reset();
     }
 
-    public void updateDataWhenEdit() {
-        parent.updateDataWhenEdit();
+    public void updateData() {
+        parent.updateData();
     }
 
 

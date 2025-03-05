@@ -55,7 +55,7 @@ public class ContentPage_Component extends javax.swing.JPanel {
         dataTable_Component.resetDataWhenAdded();
     }
 
-    public void updateDataWhenEdit() {
+    public void updateData() {
         header_Component.updateData();
     }
 

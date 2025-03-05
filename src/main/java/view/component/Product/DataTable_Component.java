@@ -65,8 +65,8 @@ public class DataTable_Component extends javax.swing.JPanel {
         card.reset();
     }
 
-    public void updateDataWhenEdit() {
-        parent.updateDataWhenEdit();
+    public void updateData() {
+        parent.updateData();
     }
 
 

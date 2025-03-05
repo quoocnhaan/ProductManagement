@@ -8,6 +8,7 @@ import controller.DAO.ProductDAO;
 import controller.DAO.Product_SelectedDAO;
 import controller.DAOImp.ProductDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
+import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,17 +16,20 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import model.Product_Selected;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.Btn.IconButton;
+import view.component.Product.DeleteDialog.DeleteDialog_Component;
 import view.component.Product.Filter.Filter_Component;
 import view.component.Product.PaginationWithSearchBar;
 import view.component.Product.SearchSuggestion.SearchSuggestion_Component;
@@ -46,6 +50,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
     private JPopupMenu popupSort;
     private SortPopup sortPopup;
     private Filter_Component filter_Component;
+    private DeleteDialog_Component deleteDialog_Component;
     private Map<String, List<String>> map;
 
     public SearchBarPanel(PaginationWithSearchBar parent) {
@@ -104,6 +109,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
         searchSuggestion_Component = new SearchSuggestion_Component(this);
 
         filter_Component = new Filter_Component(this);
+        deleteDialog_Component = new DeleteDialog_Component(this);
 
         ImageIcon sortIcon = new ImageIcon(getClass().getResource("/icon/sort.png"));
         sortBtn = new IconButton("Sort by", sortIcon, true);
@@ -143,6 +149,9 @@ public class SearchBarPanel extends javax.swing.JPanel {
                 addProductDialog.setSize(700, 900);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
+                addProductDialog.setResizable(false);
+                addProductDialog.setUndecorated(true);
+                filter_Component.setBorder(new LineBorder(Color.GRAY, 2));
 
                 filter_Component.setDialog(addProductDialog);
                 addProductDialog.add(filter_Component);
@@ -150,6 +159,11 @@ public class SearchBarPanel extends javax.swing.JPanel {
                 // Show the dialog
                 addProductDialog.setVisible(true);
 
+                if (!isEmpty(map)) {
+                    filterBtn.changeColor(true);
+                } else {
+                    filterBtn.changeColor(false);
+                }
                 transferData(map);
             }
         });
@@ -157,21 +171,20 @@ public class SearchBarPanel extends javax.swing.JPanel {
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                    ProductDAO productDAO = new ProductDAOImp(session);
-                    Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
-                    List<Product_Selected> products = product_SelectedDAO.getAll();
 
-                    for (Product_Selected product : products) {
-                        if (product.isStatus()) {
-                            productDAO.delete(product.getProduct().getId());
-                            product_SelectedDAO.delete(product.getId());
-                        }
-                    }
-                } catch (Exception exception) {
-                    System.out.println(exception + getClass().getName());
-                }
-                parent.resetDataWhenDeleted();
+                JDialog addProductDialog = new JDialog((Frame) null, "Confirm", true);  // true for modal
+                addProductDialog.setSize(488, 480);
+                addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
+                addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
+                addProductDialog.setResizable(false);
+                addProductDialog.setUndecorated(true);
+                deleteDialog_Component.setBorder(new LineBorder(Color.GRAY, 2));
+                deleteDialog_Component.setDialog(addProductDialog);
+                deleteDialog_Component.setMessage();
+                addProductDialog.add(deleteDialog_Component);
+
+                addProductDialog.setVisible(true);
+
             }
         });
 
@@ -217,11 +230,50 @@ public class SearchBarPanel extends javax.swing.JPanel {
         this.map = map;
     }
 
+    public boolean isEmpty(Map<String, List<String>> map) {
+        // Check if the map itself is empty
+        if (map == null || map.isEmpty()) {
+            return true; // The map is empty
+        }
+
+        // Iterate through the map to check if all lists are empty
+        for (List<String> list : map.values()) {
+            if (list != null && !list.isEmpty()) {
+                return false; // Found at least one non-empty list
+            }
+        }
+
+        // If all lists are empty
+        return true;
+    }
+
     public void resetSearchOptions() {
         searchSuggestion_Component.reset();
         filter_Component.reset();
         sortPopup.reset();
         parent.reset();
+    }
+
+    public void changeColorOfSortBtn(boolean b) {
+        sortBtn.changeColor(b);
+    }
+
+    public void deleteSelectedItems() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            ProductDAO productDAO = new ProductDAOImp(session);
+            Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
+            List<Product_Selected> products = product_SelectedDAO.getAll();
+
+            for (Product_Selected product : products) {
+                if (product.isStatus()) {
+                    productDAO.delete(product.getProduct().getId());
+                    product_SelectedDAO.delete(product.getId());
+                }
+            }
+        } catch (Exception exception) {
+            System.out.println(exception + getClass().getName());
+        }
+        parent.resetDataWhenDeleted();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

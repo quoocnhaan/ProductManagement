@@ -94,6 +94,7 @@ public class SortPopup extends javax.swing.JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (none.isSelected()) {
                     parent.resetSorting();
+                    parent.changeColorOfSortBtn(false);
                     parent.closePopup();
                 }
             }
@@ -102,6 +103,7 @@ public class SortPopup extends javax.swing.JPanel {
         aToZ.addItemListener(e -> {
             if (aToZ.isSelected()) {
                 parent.sortByNameAscending();
+                parent.changeColorOfSortBtn(true);
                 parent.closePopup();
             }
         });
@@ -109,6 +111,7 @@ public class SortPopup extends javax.swing.JPanel {
         zToA.addItemListener(e -> {
             if (zToA.isSelected()) {
                 parent.sortByNameDescending();
+                parent.changeColorOfSortBtn(true);
                 parent.closePopup();
             }
 
@@ -117,6 +120,7 @@ public class SortPopup extends javax.swing.JPanel {
         lowToHigh.addItemListener(e -> {
             if (lowToHigh.isSelected()) {
                 parent.sortByPriceLowToHigh();
+                parent.changeColorOfSortBtn(true);
                 parent.closePopup();
             }
         });
@@ -124,6 +128,7 @@ public class SortPopup extends javax.swing.JPanel {
         highToLow.addItemListener(e -> {
             if (highToLow.isSelected()) {
                 parent.sortByPriceHighToLow();
+                parent.changeColorOfSortBtn(true);
                 parent.closePopup();
             }
         });

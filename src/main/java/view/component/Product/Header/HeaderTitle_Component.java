@@ -4,6 +4,9 @@
  */
 package view.component.Product.Header;
 
+import controller.DAO.ProductDAO;
+import controller.DAOImp.ProductDAOImp;
+import controller.Session.ExcelExporter;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -11,11 +14,18 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import model.Product;
+import org.hibernate.Session;
+import util.HibernateUtil;
 import view.component.Btn.IconButton;
 import view.component.Btn.RoundedButton;
 import view.component.Product.AddingProduct.AddProduct_Component;
@@ -96,14 +106,61 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                 // Create a JDialog for the popup
                 JDialog addProductDialog = new JDialog((Frame) null, "Add New Product", true);  // true for modal
                 addProductDialog.setSize(1250, 900);
+                addProductDialog.setResizable(false);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
 
-                addProductDialog.add(new AddProduct_Component(headerTitle_Component));
+                addProductDialog.add(new AddProduct_Component(headerTitle_Component, addProductDialog));
 
                 addProductDialog.setVisible(true);
             }
         });
+
+        exportBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+                    ProductDAO productDAO = new ProductDAOImp(session);
+
+                    List<Product> products = productDAO.getAll();
+
+                    JFileChooser fileChooser = new JFileChooser();
+                    // Set the default directory to Desktop
+                    fileChooser.setCurrentDirectory(new File(System.getProperty("user.home"), "Desktop"));
+
+                    // Set file chooser to save dialog mode
+                    fileChooser.setDialogTitle("Choose location to save the Excel file");
+                    fileChooser.setSelectedFile(new File("products.xlsx")); // Default file name
+
+                    int userSelection = fileChooser.showSaveDialog(null);
+
+                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        File fileToSave = fileChooser.getSelectedFile();
+                        String filePath = fileToSave.getAbsolutePath();
+
+                        // Ensure the file has the correct extension
+                        if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                            filePath += ".xlsx";
+                        }
+
+                        // Export the products to Excel
+                        ExcelExporter.exportProductsToExcel(products, filePath);
+
+                        JOptionPane.showMessageDialog(null, "Excel file created successfully !");
+                        System.out.println("Excel file created: " + filePath);
+                    } else {
+                        System.out.println("File save operation was canceled.");
+                    }
+
+                } catch (Exception exception) {
+                    System.out.println(exception + getClass().getName());
+                }
+
+            }
+        });
+
     }
 
     public void resetDataWhenAdded() {
