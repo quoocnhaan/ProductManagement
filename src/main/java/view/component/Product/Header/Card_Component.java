@@ -19,7 +19,7 @@ import view.component.CustomComponent.RoundedCard;
  * @author LENOVO
  */
 public class Card_Component extends javax.swing.JPanel {
-    
+
     private RoundedCard total;
     private RoundedCard sold;
     private RoundedCard inStock;
@@ -30,11 +30,11 @@ public class Card_Component extends javax.swing.JPanel {
     private int inStockValue = 0;
     private int outStockValue = 0;
     private int soldValue;
-    
+
     public Card_Component() {
         setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         setBackground(Color.WHITE);
-        
+
         initData();
         addComponents();
     }
@@ -65,7 +65,7 @@ public class Card_Component extends javax.swing.JPanel {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             ProductDAO productDAO = new ProductDAOImp(session);
             List<Product> products = productDAO.getAll();
-            
+
             for (Product product : products) {
                 if (product.getProductStatus()) {
                     inStockValue++;
@@ -80,12 +80,12 @@ public class Card_Component extends javax.swing.JPanel {
             inStock = new RoundedCard("In-Stock Products", inStockValue + "");
             outStock = new RoundedCard("Out-of-Stock Products", outStockValue + "");
             quantity = new RoundedCard("Total Quantity", quantityValue + "");
-            
+
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
     }
-    
+
     private void addComponents() {
         add(total);
         add(sold);
@@ -93,14 +93,35 @@ public class Card_Component extends javax.swing.JPanel {
         add(outStock);
         add(quantity);
     }
-    
-    public void updateTotal(int quantity) {
-        totalValue++;
-        inStockValue++;
-        quantityValue += quantity;
-        total.updateValue(totalValue);
-        inStock.updateValue(inStockValue);
-        this.quantity.updateValue(quantityValue);
+
+    public void updateData() {
+        inStockValue = 0;
+        quantityValue = 0;
+        outStockValue = 0;
+        soldValue = 0;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            ProductDAO productDAO = new ProductDAOImp(session);
+            List<Product> products = productDAO.getAll();
+
+            for (Product product : products) {
+                if (product.getProductStatus()) {
+                    inStockValue++;
+                    quantityValue += product.getAmount();
+                } else {
+                    outStockValue++;
+                }
+            }
+            totalValue = products.size();
+            total.updateValue(totalValue);
+            sold.updateValue(soldValue);
+            inStock.updateValue(inStockValue);
+            outStock.updateValue(outStockValue);
+            quantity.updateValue(quantityValue);;
+
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
+        }
     }
 
 

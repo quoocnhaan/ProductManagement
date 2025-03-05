@@ -50,13 +50,13 @@ public class ContentPage_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void resetDataWhenAdded(int quantity) {
-        header_Component.updateTotal(quantity);
+    public void resetDataWhenAdded() {
+        header_Component.updateData();
         dataTable_Component.resetDataWhenAdded();
     }
 
-    public void updateDataWhenEdit(int quantity) {
-        header_Component.updateTotal(quantity);
+    public void updateDataWhenEdit() {
+        header_Component.updateData();
     }
 
 

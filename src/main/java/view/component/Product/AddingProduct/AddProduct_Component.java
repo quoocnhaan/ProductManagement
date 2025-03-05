@@ -598,7 +598,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
                 if (parent != null && product == null) {
                     Product newProduct = new Product(productName, productCode, brand, discount, gender, imgByte, price, description, quantity, productStatus, type, true);
                     productDAO.add(newProduct);
-                    parent.resetDataWhenAdded(quantity);
+                    parent.resetDataWhenAdded();
                 } else {
                     // Update existing product
                     int prevQuantity = product.getAmount();

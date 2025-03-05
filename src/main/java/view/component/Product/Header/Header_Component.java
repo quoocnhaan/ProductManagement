@@ -53,13 +53,13 @@ public class Header_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void resetDataWhenAdded(int quantity) {
-        parent.resetDataWhenAdded(quantity);
+    public void resetDataWhenAdded() {
+        parent.resetDataWhenAdded();
         
     }
 
-    public void updateTotal(int quantity) {
-        card_Component.updateTotal(quantity);
+    public void updateData() {
+        card_Component.updateData();
     }
 
 

@@ -434,7 +434,7 @@ public class Pagination_Component extends javax.swing.JPanel {
             fetchDataInSelectedProductWithOptions();
         }
         updatePaginationControls();
-        parent.updateDataWhenEdit(disparity);
+        parent.updateDataWhenEdit();
     }
 
     private void updateProductPages() {
