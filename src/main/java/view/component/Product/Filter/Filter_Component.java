@@ -109,7 +109,7 @@ public class Filter_Component extends javax.swing.JPanel {
         // Set scroll bar width to something smaller
         verticalScrollBar.setPreferredSize(new Dimension(8, Integer.MAX_VALUE));
 
-        JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 20));
         footer.setBackground(Color.WHITE);
 
         clear = new RoundedButton("Clear all", false, 30, 30);

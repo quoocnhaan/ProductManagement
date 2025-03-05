@@ -8,6 +8,7 @@ package view.component.Btn;
  *
  * @author PC
  */
+import controller.Functional.Functional;
 import controller.Session.SharedData;
 import javax.swing.*;
 import java.awt.*;
@@ -122,6 +123,17 @@ public class IconButton extends JButton {
             borderColor = SharedData.mainColor; // Set border color to green (you can adjust the shade)
         } else {
             borderColor = new Color(239, 239, 239);
+        }
+        repaint(); // Repaint the button to reflect the changes
+    }
+
+    public void changeOutOfStockColor(boolean isOutOfStock) {
+        if (isOutOfStock) {
+            hoverBackgroundColor = Functional.adjustColorBrightness(new Color(255, 207, 207), 0.97f);
+            borderColor = hoverBackgroundColor;
+        } else {
+            hoverBackgroundColor = new Color(247, 249, 250);
+            borderColor = hoverBackgroundColor;
         }
         repaint(); // Repaint the button to reflect the changes
     }

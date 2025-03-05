@@ -21,6 +21,8 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -108,9 +110,9 @@ public class Pagination_Component extends javax.swing.JPanel {
 
     private Dimension getAdjustButtonSize(String text) {
         if (text.equals("< Previous")) {
-            return new Dimension(70, 35);
+            return new Dimension(80, 35);
         } else if (text.equals("Next >")) {
-            return new Dimension(45, 35);
+            return new Dimension(55, 35);
         }
         return new Dimension(35, 35);
     }
@@ -243,6 +245,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             ProductDAO productDAO = new ProductDAOImp(session);
             List<Product> productList = productDAO.getAll();
+            //productList.sort(Comparator.comparing(Product::getId));
             for (Product product : productList) {
                 products.add(new Product_Component(product, this));
             }
@@ -268,6 +271,8 @@ public class Pagination_Component extends javax.swing.JPanel {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             ProductDAO productDAO = new ProductDAOImp(session);
             List<Product> productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
+            //productList.sort(Comparator.comparing(Product::getId));
+
             for (Product product : productList) {
                 products.add(new Product_Component(product, this));
             }
@@ -439,6 +444,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Product_SelectedDAO productDAO = new Product_SelectedDAOImp(session);
             List<Product_Selected> productList = productDAO.getAll();
+            Collections.sort(productList, (Product_Selected ps1, Product_Selected ps2) -> Integer.compare(ps1.getProduct().getId(), ps2.getProduct().getId()));
             for (Product_Selected product : productList) {
                 products.add(new Product_Component(product.getProduct(), this));
             }
@@ -453,6 +459,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Product_SelectedDAO productDAO = new Product_SelectedDAOImp(session);
             List<Product_Selected> productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
+            Collections.sort(productList, (Product_Selected ps1, Product_Selected ps2) -> Integer.compare(ps1.getProduct().getId(), ps2.getProduct().getId()));
             for (Product_Selected product : productList) {
                 products.add(new Product_Component(product.getProduct(), this));
             }
