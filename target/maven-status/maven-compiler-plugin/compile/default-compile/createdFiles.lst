@@ -7,6 +7,7 @@ view\component\Product\AddingProduct\AddProduct_Component$3.class
 view\component\Product\SearchBar\SearchBarPanel$2.class
 view\component\Product\AddingProduct\AddNewProduct_Test$4.class
 view\component\Product\SearchSuggestion\SearchSuggestion_Component$1.class
+view\component\Order\OrderDetails\OrderHistory_Component.class
 view\component\Product\SearchSuggestion\Search_Item$3.class
 view\component\Product\Pagination\NewJFrame$1.class
 view\component\Product\Title\ProductNameTitle_Component.class
@@ -40,6 +41,7 @@ view\component\Product\Product_Component\Product_Component$3.class
 controller\Enum\Status.class
 view\component\Product\AddingProduct\AddProduct_Component$9.class
 view\component\Product\AddingProduct\AddNewProduct_Test$3.class
+view\component\Order\OrderDetails\CustomerDetails_Component.class
 view\component\Product\AddingProduct\AddProduct_Component$2.class
 view\component\Navigation\Navigation_Component.class
 view\component\Product\AddingProduct\AddProduct_Component$10.class
@@ -55,6 +57,7 @@ controller\DAOImp\BillsDetailDAOImp.class
 view\component\Btn\MyButton.class
 view\component\Product\SearchBar\SearchBarPanel.class
 controller\DAO\BillsDAO.class
+view\component\Order\OrderDetails\NewJFrame.class
 model\Customer.class
 view\component\Product\SearchBar\NewJFrame.class
 view\component\Product\Feature\ProductName_Component.class
@@ -128,6 +131,7 @@ view\component\Product\Filter\Filter_Component$1.class
 view\component\Product\Filter\FilterItem_Container.class
 view\component\Product\AddingProduct\AddNewProduct_Test$2.class
 controller\DAOImp\InventoryDAOImp.class
+view\component\Order\OrderDetails\NewJFrame$1.class
 view\component\Product\Filter\Content.class
 view\component\Navigation\NewClass.class
 view\component\Product\SearchBar\SearchBarPanel$4.class
@@ -149,9 +153,11 @@ view\component\Btn\RoundedButton.class
 view\component\Product\Sort\SortPopup$1.class
 view\component\Product\Pagination\Pagination_Component$4.class
 controller\DAO\GoodsReceiptDAO.class
+view\component\Order\OrderDetails\DeliveryAddress_Component.class
 controller\DAO\InterfaceDAO.class
 view\component\Navigation\NewJFrame$1.class
 view\component\CustomComponent\CustomFrame$1.class
+view\component\Order\OrderDetails\OrderSumary_Component.class
 model\Brand.class
 view\component\Product\AddingProduct\AddNewProduct_Test.class
 view\component\Product\AddingProduct\AddProduct_Component$4.class

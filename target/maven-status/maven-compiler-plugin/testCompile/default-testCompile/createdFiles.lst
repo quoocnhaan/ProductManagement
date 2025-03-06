@@ -5,6 +5,7 @@ InventoryUI.class
 newpackage\Search_Item$3.class
 Filter\LanguageSelection$1.class
 Filter\LanguageSelection$RoundedToggleButton.class
+InfoPanelApp$1.class
 CustomPaginationWithProducts$1.class
 Main$2.class
 newpackage\EventClick.class
@@ -20,6 +21,7 @@ CustomTabbedPaneExample$CustomTabbedPaneUI$1.class
 RoundedLabel.class
 CustomPaginationWithProducts$Product.class
 newpackage\Main$4.class
+InfoPanelApp.class
 NewJFrame.class
 RoundedButton.class
 newpackage\Main$1.class

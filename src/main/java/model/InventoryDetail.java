@@ -33,6 +33,9 @@ public class InventoryDetail {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Column(nullable = false)
+    private double price;
+
     @Column(name = "amount_start", nullable = false)
     private int amountStart;
 
@@ -45,12 +48,21 @@ public class InventoryDetail {
     public InventoryDetail() {
     }
 
-    public InventoryDetail(Inventory inventory, Product product, int amountStart, int amountEnd, boolean status) {
+    public InventoryDetail(Inventory inventory, Product product, double price, int amountStart, int amountEnd, boolean status) {
         this.inventory = inventory;
         this.product = product;
+        this.price = price;
         this.amountStart = amountStart;
         this.amountEnd = amountEnd;
         this.status = status;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getId() {

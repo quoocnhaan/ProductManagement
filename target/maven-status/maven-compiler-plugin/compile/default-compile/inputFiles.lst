@@ -63,6 +63,11 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Navig
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Navigation\Navigation_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Navigation\NewClass.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Navigation\NewJFrame.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Order\OrderDetails\CustomerDetails_Component.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Order\OrderDetails\DeliveryAddress_Component.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Order\OrderDetails\NewJFrame.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Order\OrderDetails\OrderHistory_Component.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Order\OrderDetails\OrderSumary_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\AddingProduct\AddNewProduct_Test.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\AddingProduct\AddProduct_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\AddingProduct\NewJFrame.java
