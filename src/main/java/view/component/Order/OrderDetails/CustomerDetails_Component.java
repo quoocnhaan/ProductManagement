@@ -4,6 +4,9 @@
  */
 package view.component.Order.OrderDetails;
 
+import java.awt.ComponentOrientation;
+import javax.swing.JTextField;
+
 /**
  *
  * @author PC
@@ -15,6 +18,7 @@ public class CustomerDetails_Component extends javax.swing.JPanel {
      */
     public CustomerDetails_Component() {
         initComponents();
+
     }
 
     /**
@@ -30,9 +34,9 @@ public class CustomerDetails_Component extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        name = new javax.swing.JLabel();
+        phone = new javax.swing.JLabel();
+        clv = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -52,23 +56,23 @@ public class CustomerDetails_Component extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(131, 131, 131));
         jLabel4.setText("CLV");
 
-        jLabel5.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(131, 131, 131));
-        jLabel5.setText("Lam Quoc Nhan");
+        name.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        name.setForeground(new java.awt.Color(131, 131, 131));
+        name.setText("Lam Quoc Nhan");
 
-        jLabel6.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(131, 131, 131));
-        jLabel6.setText("0968270553");
+        phone.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        phone.setForeground(new java.awt.Color(131, 131, 131));
+        phone.setText("0968270553");
 
-        jLabel7.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(131, 131, 131));
-        jLabel7.setText("34000000 VND");
+        clv.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        clv.setForeground(new java.awt.Color(131, 131, 131));
+        clv.setText("34000000 VND");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -77,9 +81,9 @@ public class CustomerDetails_Component extends javax.swing.JPanel {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(name, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(phone, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(clv, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -90,27 +94,27 @@ public class CustomerDetails_Component extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel5))
+                    .addComponent(name))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel6))
+                    .addComponent(phone))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel7))
+                    .addComponent(clv))
                 .addContainerGap(118, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel clv;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel name;
+    private javax.swing.JLabel phone;
     // End of variables declaration//GEN-END:variables
 }

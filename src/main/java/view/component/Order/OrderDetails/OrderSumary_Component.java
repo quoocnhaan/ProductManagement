@@ -34,6 +34,8 @@ public class OrderSumary_Component extends javax.swing.JPanel {
         subtotal = new javax.swing.JLabel();
         discount = new javax.swing.JLabel();
         deliveryFee = new javax.swing.JLabel();
+        otherDiscount = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         total = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -55,12 +57,12 @@ public class OrderSumary_Component extends javax.swing.JPanel {
         jLabel4.setText("Delivery Fee");
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Total");
+        jLabel5.setForeground(new java.awt.Color(131, 131, 131));
+        jLabel5.setText("Other Discount");
 
         subtotal.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         subtotal.setForeground(new java.awt.Color(131, 131, 131));
-        subtotal.setText("40000");
+        subtotal.setText("500000");
 
         discount.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         discount.setForeground(new java.awt.Color(131, 131, 131));
@@ -70,9 +72,17 @@ public class OrderSumary_Component extends javax.swing.JPanel {
         deliveryFee.setForeground(new java.awt.Color(131, 131, 131));
         deliveryFee.setText("50000");
 
+        otherDiscount.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        otherDiscount.setForeground(new java.awt.Color(131, 131, 131));
+        otherDiscount.setText("4000");
+
+        jLabel6.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Total");
+
         total.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         total.setForeground(new java.awt.Color(0, 0, 0));
-        total.setText("40000");
+        total.setText("50000");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -81,17 +91,23 @@ public class OrderSumary_Component extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(discount, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(deliveryFee, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(total, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(subtotal, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(total))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(discount, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(deliveryFee, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(otherDiscount, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(subtotal, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -103,19 +119,23 @@ public class OrderSumary_Component extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(subtotal))
-                .addGap(22, 22, 22)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(discount))
-                .addGap(22, 22, 22)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(deliveryFee))
-                .addGap(22, 22, 22)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
+                    .addComponent(otherDiscount))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
                     .addComponent(total))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -128,6 +148,8 @@ public class OrderSumary_Component extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel otherDiscount;
     private javax.swing.JLabel subtotal;
     private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables

@@ -1,11 +1,12 @@
 CustomTabbedPaneExample$CustomTabbedPaneUI.class
 CustomPaginationWithProducts$4.class
+EditableTextFieldExample.class
 CustomTabbedPaneExample.class
 InventoryUI.class
 newpackage\Search_Item$3.class
 Filter\LanguageSelection$1.class
 Filter\LanguageSelection$RoundedToggleButton.class
-InfoPanelApp$1.class
+EditableTextFieldExample$2.class
 CustomPaginationWithProducts$1.class
 Main$2.class
 newpackage\EventClick.class
@@ -46,4 +47,5 @@ newpackage\MyTextField.class
 Filter\LanguageSelection$CustomScrollBarUI.class
 newpackage\PanelSearch$2.class
 newpackage\Search_Item$1.class
+EditableTextFieldExample$1.class
 CheckboxExample$1.class

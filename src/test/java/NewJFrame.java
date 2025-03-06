@@ -19,13 +19,7 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
-        setLayout(new FlowLayout());
-        RoundedLabel l = new RoundedLabel("hello");
-        RoundedTextField l1 = new RoundedTextField();
-        l.setPreferredSize(new Dimension(120, 40));
-        add(l);
-        l1.setPreferredSize(new Dimension(150,50));
-        add(l1);
+        setLayout(new BorderLayout());
 
     }
 

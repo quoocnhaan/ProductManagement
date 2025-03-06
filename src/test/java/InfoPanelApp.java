@@ -18,28 +18,13 @@ public class InfoPanelApp {
         frame.setSize(1440, 900);
 
         // Main panel that will contain info panels
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout()); // Allows dynamic growing of panels
-        mainPanel.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT)); // Initial size
-
-        // ScrollPane to wrap the mainPanel
-        scrollPane = new JScrollPane(mainPanel);
-        scrollPane.setPreferredSize(new Dimension(800, 600));  // Scroll pane initial size
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        // Add button
-        JButton addButton = new JButton("Add Info Panel");
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addInfoPanel();
-            }
-        });
+        JTextField textField = new JTextField();
+        textField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        textField.setHorizontalAlignment(JTextField.RIGHT);
 
         // Layout the frame
         frame.setLayout(new FlowLayout());
-        frame.add(scrollPane, BorderLayout.CENTER);
-        frame.add(addButton, BorderLayout.SOUTH);
+        frame.add(textField);
 
         frame.setVisible(true);
     }
