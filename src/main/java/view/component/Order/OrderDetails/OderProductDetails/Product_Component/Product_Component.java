@@ -12,11 +12,12 @@ import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import model.Product;
-import view.component.Btn.IconButton;
-import view.component.Order.OrderDetails.OderProductDetails.Feature.ProductName_Component;
-import view.component.Order.OrderDetails.OderProductDetails.Feature.OneFeature_Component;
+import view.component.Order.OrderDetails.OderProductDetails.Product_Component.Feature.ProductName_Component;
+import view.component.Order.OrderDetails.OderProductDetails.Product_Component.Feature.OneFeature_Component;
+import view.component.Order.OrderDetails.OderProductDetails.Product_Component.Feature.QuantityFeature_Component;
+import view.component.Order.OrderDetails.OderProductDetails.Product_Component.Feature.SubFeature_Component;
 
 /**
  *
@@ -24,15 +25,20 @@ import view.component.Order.OrderDetails.OderProductDetails.Feature.OneFeature_C
  */
 public class Product_Component extends javax.swing.JPanel {
 
-    private IconButton deleteBtn;
+    private JButton deleteBtn;
     private Product product;
-    private Color mainColor = Color.WHITE;
+    private QuantityFeature_Component quantityFeature_Component;
+    private SubFeature_Component subFeature_Component;
+    private OneFeature_Component oneFeature_Component;
+    private ProductList_Component parent;
 
-    public Product_Component(Product product) {
+    public Product_Component(Product product, ProductList_Component parent) {
         initComponents();
+        this.parent = parent;
         this.product = product;
         setLayout(new FlowLayout(FlowLayout.LEFT, 15, 0));
         addComponents(product);
+        customComponents();
         addEvents();
     }
 
@@ -46,7 +52,7 @@ public class Product_Component extends javax.swing.JPanel {
     private void initComponents() {
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -57,7 +63,7 @@ public class Product_Component extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1100, Short.MAX_VALUE)
+            .addGap(0, 850, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,24 +84,20 @@ public class Product_Component extends javax.swing.JPanel {
         List<String> features = new ArrayList<>();
         //"Brand", "Quantity", "Sale Price", "Discount", "Type", "Gender"
 
-        features.add(product.getBrand().getName());
-        features.add(product.getAmount() + "");
-        features.add(formatPrice(product.getPrice()));
-        features.add(product.getDiscount() + "");
+        quantityFeature_Component = new QuantityFeature_Component(product.getAmount() + "", this);
+        add(quantityFeature_Component);
 
-        for (int i = 0; i < features.size(); i++) {
-            OneFeature_Component subFeature = new OneFeature_Component(features.get(i));
+        subFeature_Component = new SubFeature_Component(product.getPrice() + "", true);
+        add(subFeature_Component);
 
-            add(subFeature);
-        }
+        oneFeature_Component = new OneFeature_Component(product.getPrice() + "");
+        add(oneFeature_Component);
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
-        deleteBtn = new IconButton("Edit", icon, false);
+        deleteBtn = new JButton();
         add(deleteBtn);
     }
 
     private void addEvents() {
-
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -115,6 +117,36 @@ public class Product_Component extends javax.swing.JPanel {
         }
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(priceValue);
+    }
+
+    private void customComponents() {
+        deleteBtn.setBackground(new java.awt.Color(255, 255, 255));
+        deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/bin.png"))); // NOI18N
+        deleteBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        deleteBtn.setBorderPainted(false);
+        deleteBtn.setContentAreaFilled(false);
+        deleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteBtn.setFocusPainted(false);
+    }
+
+    void setEditable(String str) {
+        quantityFeature_Component.setEditable(str);
+    }
+
+    public void rollback() {
+        parent.rollback();
+    }
+
+    public void storeData() {
+        parent.storeData();
+    }
+    
+    public String getData() {
+        return quantityFeature_Component.getQuantity();
+    }
+
+    void setPrevData(String data) {
+        quantityFeature_Component.setPrevData(data);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

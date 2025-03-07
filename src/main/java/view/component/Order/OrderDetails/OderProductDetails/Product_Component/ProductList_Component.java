@@ -4,8 +4,15 @@
  */
 package view.component.Order.OrderDetails.OderProductDetails.Product_Component;
 
-import java.awt.FlowLayout;
+import controller.DAO.ProductDAO;
+import controller.DAOImp.ProductDAOImp;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.List;
+import model.Product;
+import org.hibernate.Session;
+import util.HibernateUtil;
 
 /**
  *
@@ -13,12 +20,14 @@ import java.util.List;
  */
 public class ProductList_Component extends javax.swing.JPanel {
 
-    //private List<Product_Component> list;
+    private List<Product_Component> list;
+    private List<String> prevData;
+
     public ProductList_Component() {
         initComponents();
-        setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
-        //list = new ArrayList<>();
-        //addComponents();
+        prevData = new ArrayList<>();
+        setLayout(new GridLayout(0, 1, 0, 10));
+        addComponents();
     }
 
     /**
@@ -36,7 +45,7 @@ public class ProductList_Component extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 1030, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -45,15 +54,59 @@ public class ProductList_Component extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public void updateData(List<Product_Component> list) {
+        this.list = list;
         removeAll();
-        //this.list = list;
         for (Product_Component product_Component : list) {
             add(product_Component);
         }
-
         repaint();
         revalidate();
     }
+
+    private void addComponents() {
+        list = new ArrayList<>();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            ProductDAO productDAO = new ProductDAOImp(session);
+            Product product = productDAO.get(1);
+            for (int i = 0; i < 8; i++) {
+                Product_Component product_Component = new Product_Component(product, this);
+                add(product_Component);
+                list.add(product_Component);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public void setEditable(String str) {
+        // Get all components in the panel
+        for (Component component : getComponents()) {
+            // Check if the component is an instance of Product_Component
+            if (component instanceof Product_Component) {
+                Product_Component productComponent = (Product_Component) component;
+                productComponent.setEditable(str);
+            }
+        }
+    }
+
+    void rollback() {
+        removeAll();
+        for (int i = 0; i < list.size(); i++) {
+            Product_Component product_Component = list.get(i);
+            product_Component.setPrevData(prevData.get(i));
+            add(product_Component);
+        }
+        repaint();
+        revalidate();
+    }
+
+    void storeData() {
+        for (Product_Component product_Component : list) {
+            prevData.add(product_Component.getData());
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

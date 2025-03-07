@@ -163,7 +163,7 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // HQL query to search for products with names similar to the search term
 
-            List<Product> products = session.createQuery("FROM Product p WHERE p.name LIKE :search ", Product.class)
+            List<Product> products = session.createQuery("FROM Product p WHERE p.name LIKE :search AND p.status IS TRUE", Product.class)
                     .setParameter("search", "%" + search + "%")
                     .setMaxResults(5)
                     .getResultList();
@@ -205,7 +205,7 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
     public void transferData(String text) {
         parent.transferData(text);
     }
-    
+
     public void reset() {
         txtSearch.setText("");
     }

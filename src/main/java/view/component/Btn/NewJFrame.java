@@ -26,13 +26,11 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new FlowLayout());
-        ImageIcon bin = new ImageIcon(getClass().getResource("/icon/bin.png"));
-        MyButton deleteBtn = new MyButton("");
-        deleteBtn.setIcon(bin);
-        deleteBtn.setEnabled(false);
-        add(deleteBtn);
-        add(deleteBtn);
-        add(deleteBtn);
+
+        add(new RoundedButton("Browse", false, 15, 30));
+        add(new RoundedButton("Browse", false, 15, 30));
+        add(new RoundedButton("Browse", false, 15, 30));
+        add(new RoundedButton("Browse", false, 15, 30));
 
     }
 
