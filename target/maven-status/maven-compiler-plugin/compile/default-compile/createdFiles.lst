@@ -33,6 +33,7 @@ view\component\Product\SearchSuggestion\SearchSuggestion_Component$2.class
 view\component\Product\Filter\Title$1.class
 view\component\CustomComponent\RoundedTextArea$1.class
 view\component\Product\AddingProduct\AddProduct_Component.class
+view\component\Order\OrderDetails\CustomerDetails_Component$3.class
 view\component\Product\AddingProduct\AddProduct_Component$8.class
 view\component\Navigation\NewJFrame.class
 model\Bills.class
@@ -46,6 +47,7 @@ view\component\Product\AddingProduct\AddProduct_Component$2.class
 view\component\Navigation\Navigation_Component.class
 view\component\Product\AddingProduct\AddProduct_Component$10.class
 view\component\Product\SearchSuggestion\NewJFrame.class
+view\component\Order\OrderDetails\CustomerDetails_Component$2.class
 view\component\Product\AddingProduct\NewJFrame$1.class
 view\component\Product\Product_Component\Product_Component.class
 view\component\Product\Filter\FilterItem.class
@@ -149,6 +151,7 @@ view\component\Product\Sort\SortPopup.class
 view\component\Product\SearchSuggestion\MyTextField.class
 model\Product.class
 view\component\Navigation\Navigation.class
+view\component\Order\OrderDetails\CustomerDetails_Component$1.class
 view\component\Btn\RoundedButton.class
 view\component\Product\Sort\SortPopup$1.class
 view\component\Product\Pagination\Pagination_Component$4.class
