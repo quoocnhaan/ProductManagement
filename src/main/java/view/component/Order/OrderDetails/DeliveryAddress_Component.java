@@ -4,17 +4,33 @@
  */
 package view.component.Order.OrderDetails;
 
+import java.awt.Color;
+import java.awt.ComponentOrientation;
+import javax.swing.ImageIcon;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+
 /**
  *
  * @author PC
  */
 public class DeliveryAddress_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form DeliveryAddress_Component
-     */
+    private boolean isEditing = false;
+    private ImageIcon editIcon = new ImageIcon(getClass().getResource("/icon/edit.png"));
+    private ImageIcon checkIcon = new ImageIcon(getClass().getResource("/icon/check.png"));
+    private EmptyBorder emptyBorder = new EmptyBorder(1, 1, 1, 1);
+    private MatteBorder matteBorder = new MatteBorder(0, 0, 1, 0, new Color(60, 63, 65));
+
+    private String prevAddress;
+    private String prevDistrict;
+    private String prevCity;
+    private String prevFlat;
+
     public DeliveryAddress_Component() {
         initComponents();
+        customComponents();
     }
 
     /**
@@ -31,12 +47,19 @@ public class DeliveryAddress_Component extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        address = new javax.swing.JLabel();
-        district = new javax.swing.JLabel();
-        city = new javax.swing.JLabel();
-        flat = new javax.swing.JLabel();
+        accept = new javax.swing.JButton();
+        cancel = new javax.swing.JButton();
+        address = new javax.swing.JTextField();
+        district = new javax.swing.JTextField();
+        city = new javax.swing.JTextField();
+        flat = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -58,21 +81,51 @@ public class DeliveryAddress_Component extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(131, 131, 131));
         jLabel5.setText("Flat Name");
 
+        accept.setBackground(new java.awt.Color(255, 255, 255));
+        accept.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
+        accept.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        accept.setBorderPainted(false);
+        accept.setContentAreaFilled(false);
+        accept.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        accept.setFocusPainted(false);
+        accept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptActionPerformed(evt);
+            }
+        });
+
+        cancel.setBackground(new java.awt.Color(255, 255, 255));
+        cancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/cancel2.png"))); // NOI18N
+        cancel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cancel.setBorderPainted(false);
+        cancel.setContentAreaFilled(false);
+        cancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancel.setFocusPainted(false);
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
+            }
+        });
+
         address.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         address.setForeground(new java.awt.Color(131, 131, 131));
-        address.setText("22 duong 51");
+        address.setText("Lam Quoc Nhan");
+        address.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         district.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         district.setForeground(new java.awt.Color(131, 131, 131));
-        district.setText("Binh Tan");
+        district.setText("Lam Quoc Nhan");
+        district.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         city.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         city.setForeground(new java.awt.Color(131, 131, 131));
-        city.setText("Ho Chi Minh");
+        city.setText("Lam Quoc Nhan");
+        city.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         flat.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         flat.setForeground(new java.awt.Color(131, 131, 131));
-        flat.setText("Aeon Binh Tan");
+        flat.setText("Lam Quoc Nhan");
+        flat.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -86,49 +139,141 @@ public class DeliveryAddress_Component extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(address, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(accept, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(address, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                     .addComponent(district, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(city, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(flat, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(city)
+                    .addComponent(flat))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(accept, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(address))
-                .addGap(25, 25, 25)
+                    .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(district))
-                .addGap(25, 25, 25)
+                    .addComponent(district, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(city))
-                .addGap(25, 25, 25)
+                    .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(flat))
-                .addContainerGap(74, Short.MAX_VALUE))
+                    .addComponent(flat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptActionPerformed
+        isEditing = !isEditing;
+        prevAddress = address.getText();
+        prevDistrict = district.getText();
+        prevCity = city.getText();
+        prevFlat = flat.getText();
+
+        changeStatusComponents();
+    }//GEN-LAST:event_acceptActionPerformed
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+        isEditing = !isEditing;
+        address.setText(prevAddress);
+        district.setText(prevDistrict);
+        city.setText(prevCity);
+        flat.setText(prevFlat);
+
+        changeStatusComponents();
+    }//GEN-LAST:event_cancelActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        this.requestFocusInWindow();
+    }//GEN-LAST:event_formMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel address;
-    private javax.swing.JLabel city;
-    private javax.swing.JLabel district;
-    private javax.swing.JLabel flat;
+    private javax.swing.JButton accept;
+    private javax.swing.JTextField address;
+    private javax.swing.JButton cancel;
+    private javax.swing.JTextField city;
+    private javax.swing.JTextField district;
+    private javax.swing.JTextField flat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
+
+    private void changeStatusComponents() {
+        if (isEditing) {
+            accept.setIcon(checkIcon);
+            cancel.setEnabled(isEditing);
+            setEditable(address, isEditing);
+            setEditable(district, isEditing);
+            setEditable(city, isEditing);
+            setEditable(flat, isEditing);
+            setEditBorder();
+        } else {
+            accept.setIcon(editIcon);
+            cancel.setEnabled(isEditing);
+            setEditable(address, isEditing);
+            setEditable(district, isEditing);
+            setEditable(city, isEditing);
+            setEditable(flat, isEditing);
+            setEditBorder();
+        }
+    }
+
+    private void setEditBorder() {
+        if (isEditing) {
+            address.setBorder(matteBorder);
+            district.setBorder(matteBorder);
+            city.setBorder(matteBorder);
+            flat.setBorder(matteBorder);
+        } else {
+            address.setBorder(emptyBorder);
+            district.setBorder(emptyBorder);
+            city.setBorder(emptyBorder);
+            flat.setBorder(emptyBorder);
+        }
+    }
+
+    private void setEditable(JTextField textField, boolean status) {
+        textField.setEditable(status);
+        if (status) {
+            textField.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT); // Set right-to-left text orientation
+        } else {
+            textField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); // Set right-to-left text orientation
+        }
+    }
+
+    private void customComponents() {
+        settings(address);
+        settings(district);
+        settings(city);
+        settings(flat);
+
+        cancel.setEnabled(false);
+    }
+
+    private void settings(JTextField textField) {
+        textField.setEditable(false); // Initially non-editable to behave like JLabel
+        textField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); // Set right-to-left text orientation
+        textField.setBackground(Color.WHITE); // Ensure the background stays white
+        textField.setDisabledTextColor(Color.BLACK); // Ensure the text is visible when disabled
+    }
 }

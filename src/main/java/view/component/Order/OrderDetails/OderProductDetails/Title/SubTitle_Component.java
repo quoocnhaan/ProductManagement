@@ -2,19 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package view.component.Product.Feature;
+package view.component.Order.OrderDetails.OderProductDetails.Title;
 
 /**
  *
  * @author PC
  */
-public class CheckBox_Component extends javax.swing.JPanel {
+public class SubTitle_Component extends javax.swing.JPanel {
 
     /**
-     * Creates new form CheckBox_Component
+     * Creates new form SubTitle_Component
      */
-    public CheckBox_Component() {
+    public SubTitle_Component(String text) {
         initComponents();
+        title.setText(text);
     }
 
     /**
@@ -26,19 +27,35 @@ public class CheckBox_Component extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        title = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(246, 248, 250));
+
+        title.setBackground(new java.awt.Color(51, 51, 51));
+        title.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        title.setForeground(new java.awt.Color(51, 51, 51));
+        title.setText("Brand");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(title)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

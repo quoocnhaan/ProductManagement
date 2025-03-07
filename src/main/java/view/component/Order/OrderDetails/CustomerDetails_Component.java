@@ -28,7 +28,6 @@ public class CustomerDetails_Component extends javax.swing.JPanel {
 
     public CustomerDetails_Component() {
         initComponents();
-        initData();
         customComponents();
     }
 
@@ -245,10 +244,5 @@ public class CustomerDetails_Component extends javax.swing.JPanel {
             name.setBorder(emptyBorder);
             phone.setBorder(emptyBorder);
         }
-    }
-
-    private void initData() {
-        prevName = name.getText();
-        prevPhone = phone.getText();
     }
 }

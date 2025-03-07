@@ -43,7 +43,7 @@ public class ProductName_Component extends javax.swing.JPanel {
         img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/home_e.png"))); // NOI18N
         img.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
-        name.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        name.setFont(new java.awt.Font("Rotobo", 1, 15)); // NOI18N
         name.setForeground(new java.awt.Color(0, 0, 0));
         name.setText("Nike Air");
 
