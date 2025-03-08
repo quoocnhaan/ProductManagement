@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import model.Product_Selected;
@@ -52,9 +53,11 @@ public class SearchBarPanel extends javax.swing.JPanel {
     private Filter_Component filter_Component;
     private DeleteDialog_Component deleteDialog_Component;
     private Map<String, List<String>> map;
+    private boolean isChoosing;
 
-    public SearchBarPanel(PaginationWithSearchBar parent) {
+    public SearchBarPanel(PaginationWithSearchBar parent, boolean isChoosing) {
         initComponents();
+        this.isChoosing = isChoosing;
         this.parent = parent;
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
@@ -123,11 +126,15 @@ public class SearchBarPanel extends javax.swing.JPanel {
     }
 
     private void customMyComponents() {
+        setBorder(new EmptyBorder(0, 10, 0, 10));
+        
         buttonPanel.setBackground(Color.WHITE);
 
         buttonPanel.add(sortBtn);
         buttonPanel.add(filterBtn);
-        buttonPanel.add(deleteBtn);
+        if (!isChoosing) {
+            buttonPanel.add(deleteBtn);
+        }
 
         add(searchSuggestion_Component, BorderLayout.WEST);
         add(buttonPanel, BorderLayout.EAST);
@@ -146,7 +153,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog addProductDialog = new JDialog((Frame) null, "Filter", true);  // true for modal
-                addProductDialog.setSize(700, 900);
+                addProductDialog.setSize(700, 500);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 addProductDialog.setResizable(false);

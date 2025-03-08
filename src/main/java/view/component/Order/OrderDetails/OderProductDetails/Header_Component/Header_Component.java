@@ -124,11 +124,11 @@ public class Header_Component extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog addProductDialog = new JDialog((Frame) null, "Edit Product", true);  // true for modal
-                addProductDialog.setSize(1250, 700);
+                addProductDialog.setSize(1180, 700);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 //addProductDialog.setResizable(false);
-                addProductDialog.add(new DataTable_Component(null));
+                addProductDialog.add(new PaginationWithSearchBar(null, true));
 
                 addProductDialog.setVisible(true);
             }

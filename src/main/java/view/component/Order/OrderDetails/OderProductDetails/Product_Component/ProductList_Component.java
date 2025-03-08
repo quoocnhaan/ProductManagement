@@ -67,8 +67,8 @@ public class ProductList_Component extends javax.swing.JPanel {
         list = new ArrayList<>();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             ProductDAO productDAO = new ProductDAOImp(session);
-            Product product = productDAO.get(1);
-            for (int i = 0; i < 8; i++) {
+            List<Product> products = productDAO.getAllAvailable();
+            for (Product product : products) {
                 Product_Component product_Component = new Product_Component(product, this);
                 add(product_Component);
                 list.add(product_Component);
@@ -76,7 +76,6 @@ public class ProductList_Component extends javax.swing.JPanel {
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
 
     public void setEditable(String str) {

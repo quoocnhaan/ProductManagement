@@ -237,4 +237,148 @@ public class ProductDAOImp implements ProductDAO {
         return query.getResultList();
     }
 
+    @Override
+    public List<Product> getAllAvailable() {
+        Query<Product> query = session.createQuery("FROM Product p WHERE p.status IS TRUE and p.productStatus IS TRUE", Product.class);
+        return query.list();
+    }
+
+    @Override
+    public List<Product> findByText(String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort) {
+        // Start building the query
+        StringBuilder queryString = new StringBuilder("FROM Product p WHERE p.status IS TRUE");
+
+        // Filter by name (if provided)
+        if (name != null && !name.isEmpty()) {
+            queryString.append(" AND p.name LIKE :searchName");
+        }
+
+        // Filter by brands (if provided)
+        if (brands != null && !brands.isEmpty()) {
+            queryString.append(" AND p.brand.name IN :searchBrands");
+        }
+
+        // Filter by price range (if provided)
+        if (price != null && !price.isEmpty()) {
+            queryString.append(" AND (");
+            boolean first = true;
+            for (String priceRange : price) {
+                if (!first) {
+                    queryString.append(" OR ");
+                }
+                switch (priceRange) {
+                    case "<500k":
+                        queryString.append("p.price < 500000");
+                        break;
+                    case "500k-2000k":
+                        queryString.append("p.price BETWEEN 500000 AND 2000000");
+                        break;
+                    case "2000k-4000k":
+                        queryString.append("p.price BETWEEN 2000000 AND 4000000");
+                        break;
+                    case ">4000k":
+                        queryString.append("p.price > 4000000");
+                        break;
+                    default:
+                        // No price filter applied for unknown values
+                        break;
+                }
+                first = false;
+            }
+            queryString.append(")");
+        }
+
+        // Filter by gender (if provided)
+        if (gender != null && !gender.isEmpty()) {
+            queryString.append(" AND p.gender IN (");
+            boolean first = true;
+            for (String g : gender) {
+                if (!first) {
+                    queryString.append(", ");
+                }
+                switch (g) {
+                    case "Men":
+                        queryString.append("1");
+                        break;
+                    case "Women":
+                        queryString.append("2");
+                        break;
+                    case "Unisex":
+                        queryString.append("3");
+                        break;
+                    default:
+                        break;
+                }
+                first = false;
+            }
+            queryString.append(")");
+        }
+
+        // Filter by type (if provided)
+        if (type != null && !type.isEmpty()) {
+            queryString.append(" AND p.type IN (");
+            boolean first = true;
+            for (String t : type) {
+                if (!first) {
+                    queryString.append(", ");
+                }
+                switch (t) {
+                    case "10ml":
+                        queryString.append("1");
+                        break;
+                    case "20ml":
+                        queryString.append("2");
+                        break;
+                    case "30ml":
+                        queryString.append("3");
+                        break;
+                    case "Full":
+                        queryString.append("4");
+                        break;
+                    default:
+                        break;
+                }
+                first = false;
+            }
+            queryString.append(")");
+        }
+
+        queryString.append(" AND p.productStatus = TRUE");
+
+        // Sorting logic
+        if (sort != null && !sort.isEmpty()) {
+            switch (sort) {
+                case "Product Name A-Z":
+                    queryString.append(" ORDER BY p.name ASC");
+                    break;
+                case "Product Name Z-A":
+                    queryString.append(" ORDER BY p.name DESC");
+                    break;
+                case "Price Low to High":
+                    queryString.append(" ORDER BY p.price ASC");
+                    break;
+                case "Price High to Low":
+                    queryString.append(" ORDER BY p.price DESC");
+                    break;
+                default:
+                    // No sorting applied for unrecognized sort options
+                    break;
+            }
+        }
+
+        // Create query
+        Query<Product> query = session.createQuery(queryString.toString(), Product.class);
+
+        // Set parameters for name and brands (since they use named parameters)
+        if (name != null && !name.isEmpty()) {
+            query.setParameter("searchName", "%" + name + "%");
+        }
+        if (brands != null && !brands.isEmpty()) {
+            query.setParameter("searchBrands", brands);
+        }
+
+        // Return the result list
+        return query.getResultList();
+    }
+
 }

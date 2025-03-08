@@ -71,6 +71,7 @@ model\Customer.class
 view\component\Product\SearchBar\NewJFrame.class
 view\component\Product\Feature\ProductName_Component.class
 view\component\Product\AddingProduct\AddProduct_Component$12.class
+view\component\Order\OrderDetails\NewJFrame$2.class
 view\component\Product\AddingProduct\AddNewProduct_Test$8.class
 view\component\Product\DeleteDialog\DeleteDialog_Component$1.class
 view\component\Order\OrderDetails\OderProductDetails\OrderProductContent_Component.class
@@ -85,6 +86,7 @@ view\component\Order\OrderDetails\OderProductDetails\Product_Component\Title\Tit
 view\component\Product\Title\SubTitle_Component.class
 view\component\Btn\NewJFrame$1.class
 view\component\CustomComponent\CustomCheckBoxIcon.class
+view\component\Order\OrderDetails\OderProductDetails\Product_Component\Feature\QuantityFeature_Component$1.class
 view\component\Btn\IconButton$2.class
 controller\DAOImp\GoodsReceiptDetailDAOImp.class
 view\component\Product\DeleteDialog\DeleteDialog_Component$2.class

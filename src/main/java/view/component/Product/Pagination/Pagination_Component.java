@@ -57,6 +57,7 @@ public class Pagination_Component extends javax.swing.JPanel {
     private JLabel totalSelected;
     private CustomCheckbox checkbox;
     private int totalPages;
+    private boolean isChoosing;
     private PaginationWithSearchBar parent;
 
     private String status;
@@ -70,9 +71,10 @@ public class Pagination_Component extends javax.swing.JPanel {
 
     private String sort;
 
-    public Pagination_Component(PaginationWithSearchBar parent) {
+    public Pagination_Component(PaginationWithSearchBar parent, boolean isChoosing) {
         initComponents();
         this.parent = parent;
+        this.isChoosing = isChoosing;
         setLayout(new BorderLayout());
         initMyComponents();
         customMyComponents();
@@ -244,10 +246,14 @@ public class Pagination_Component extends javax.swing.JPanel {
         products.clear();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             ProductDAO productDAO = new ProductDAOImp(session);
-            List<Product> productList = productDAO.getAll();
-            //productList.sort(Comparator.comparing(Product::getId));
+            List<Product> productList = null;
+            if (isChoosing) {
+                productList = productDAO.getAllAvailable();
+            } else {
+                productList = productDAO.getAll();
+            }
             for (Product product : productList) {
-                products.add(new Product_Component(product, this));
+                products.add(new Product_Component(product, this, isChoosing));
             }
 
         } catch (Exception e) {
@@ -270,11 +276,16 @@ public class Pagination_Component extends javax.swing.JPanel {
         products.clear();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             ProductDAO productDAO = new ProductDAOImp(session);
-            List<Product> productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
+            List<Product> productList = null;
+            if (isChoosing) {
+                productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort);
+            } else {
+                productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
+            }
             //productList.sort(Comparator.comparing(Product::getId));
 
             for (Product product : productList) {
-                products.add(new Product_Component(product, this));
+                products.add(new Product_Component(product, this, isChoosing));
             }
 
         } catch (Exception e) {
@@ -446,7 +457,7 @@ public class Pagination_Component extends javax.swing.JPanel {
             List<Product_Selected> productList = productDAO.getAll();
             Collections.sort(productList, (Product_Selected ps1, Product_Selected ps2) -> Integer.compare(ps1.getProduct().getId(), ps2.getProduct().getId()));
             for (Product_Selected product : productList) {
-                products.add(new Product_Component(product.getProduct(), this));
+                products.add(new Product_Component(product.getProduct(), this, isChoosing));
             }
 
         } catch (Exception e) {
@@ -461,7 +472,7 @@ public class Pagination_Component extends javax.swing.JPanel {
             List<Product_Selected> productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
             Collections.sort(productList, (Product_Selected ps1, Product_Selected ps2) -> Integer.compare(ps1.getProduct().getId(), ps2.getProduct().getId()));
             for (Product_Selected product : productList) {
-                products.add(new Product_Component(product.getProduct(), this));
+                products.add(new Product_Component(product.getProduct(), this, isChoosing));
             }
 
         } catch (Exception e) {

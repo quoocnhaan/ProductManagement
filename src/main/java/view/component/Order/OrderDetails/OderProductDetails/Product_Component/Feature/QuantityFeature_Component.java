@@ -5,6 +5,9 @@
 package view.component.Order.OrderDetails.OderProductDetails.Product_Component.Feature;
 
 import java.awt.Color;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import view.component.Order.OrderDetails.OderProductDetails.Product_Component.Product_Component;
@@ -14,12 +17,12 @@ import view.component.Order.OrderDetails.OderProductDetails.Product_Component.Pr
  * @author PC
  */
 public class QuantityFeature_Component extends javax.swing.JPanel {
-    
+
     private boolean isEditing = false;
     private EmptyBorder emptyBorder = new EmptyBorder(1, 1, 1, 1);
     private MatteBorder matteBorder = new MatteBorder(0, 0, 1, 0, new Color(60, 63, 65));
     private Product_Component parent;
-    
+
     public QuantityFeature_Component(String text, Product_Component parent) {
         initComponents();
         this.parent = parent;
@@ -73,7 +76,7 @@ public class QuantityFeature_Component extends javax.swing.JPanel {
         quantity.setBackground(Color.WHITE); // Ensure the background stays white
         quantity.setDisabledTextColor(Color.BLACK); // Ensure the text is visible when disabled
     }
-    
+
     public void setEditable(String str) {
         if (str.equals("Edit")) {
             if (!isEditing) {
@@ -82,6 +85,8 @@ public class QuantityFeature_Component extends javax.swing.JPanel {
                 setEditBorder(true);
             } else {
                 //to-do: save to database
+                
+                
                 quantity.setEditable(false);
                 setEditBorder(false);
             }
@@ -92,7 +97,7 @@ public class QuantityFeature_Component extends javax.swing.JPanel {
         }
         isEditing = !isEditing;
     }
-    
+
     private void setEditBorder(boolean editing) {
         if (editing) {
             quantity.setBorder(matteBorder);
@@ -100,12 +105,38 @@ public class QuantityFeature_Component extends javax.swing.JPanel {
             quantity.setBorder(emptyBorder);
         }
     }
-    
+
     public String getQuantity() {
         return quantity.getText();
     }
-    
+
     public void setPrevData(String data) {
         quantity.setText(data);
+    }
+
+    public void setMaximumQuantity(int quantity) {
+        this.quantity.setInputVerifier(new InputVerifier() {
+            @Override
+            public boolean verify(JComponent input) {
+                String text = ((JTextField) input).getText();
+                try {
+                    int value = Integer.parseInt(text);
+
+                    // Adjust value if it's out of bounds
+                    if (value < 1) {
+                        ((JTextField) input).setText("1");
+                    } else if (value > quantity) {
+                        ((JTextField) input).setText(String.valueOf(quantity));
+                    }
+                } catch (NumberFormatException e) {
+                    // If it's not a valid number, set the field to 1
+                    ((JTextField) input).setText("1");
+                }
+                int quantityValue = Integer.parseInt(((JTextField) input).getText());
+                parent.updateTotal(quantityValue);
+                return true;
+            }
+
+        });
     }
 }

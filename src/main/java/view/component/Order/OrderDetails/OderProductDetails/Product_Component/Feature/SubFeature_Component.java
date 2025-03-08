@@ -4,6 +4,8 @@
  */
 package view.component.Order.OrderDetails.OderProductDetails.Product_Component.Feature;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author PC
@@ -13,10 +15,9 @@ public class SubFeature_Component extends javax.swing.JPanel {
     /**
      * Creates new form ProductName_Component
      */
-    public SubFeature_Component(String text, boolean hasDiscount) {
+    public SubFeature_Component(double price, double discount) {
         initComponents();
-        this.finalPrice.setText(text);
-        settings(hasDiscount);
+        settings(price, discount);
     }
 
     /**
@@ -69,12 +70,26 @@ public class SubFeature_Component extends javax.swing.JPanel {
     private javax.swing.JLabel origin;
     // End of variables declaration//GEN-END:variables
 
-    private void settings(boolean hasDiscount) {
-        origin.setVisible(hasDiscount);
-        if (hasDiscount) {
-            String text = "<html><s> " + origin.getText() + "</s></html>";
+    private void settings(double price, double discount) {
+        if (discount > 0) {
+            String text = "<html><s> " + formatPrice(price) + "</s></html>";
             origin.setText(text);
+            finalPrice.setText(formatPrice(price * (1 - discount / 100)));
+        } else {
+            origin.setVisible(false);
+            finalPrice.setText(formatPrice(price));
         }
     }
-
+    
+    public int getData() {
+        return Integer.parseInt(finalPrice.getText().replace(",", ""));
+    }
+    
+    private String formatPrice(double priceValue) {
+        if (priceValue == 0) {
+            return "0";
+        }
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(priceValue);
+    }
 }

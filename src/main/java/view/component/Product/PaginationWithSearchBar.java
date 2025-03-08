@@ -20,14 +20,14 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     private Pagination_Component pagination_Component;
     private DataTable_Component parent;
 
-    public PaginationWithSearchBar(DataTable_Component parent) {
+    public PaginationWithSearchBar(DataTable_Component parent, boolean isChoosing) {
         initComponents();
         this.parent = parent;
 
         setLayout(new BorderLayout(0, 15));
 
-        searchBarPanel = new SearchBarPanel(this);
-        pagination_Component = new Pagination_Component(this);
+        searchBarPanel = new SearchBarPanel(this, isChoosing);
+        pagination_Component = new Pagination_Component(this, isChoosing);
 
         add(searchBarPanel, BorderLayout.NORTH);
         add(pagination_Component, BorderLayout.CENTER);
@@ -136,11 +136,15 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     }
 
     public void reset() {
-        parent.reset();
+        if (parent != null) {
+            parent.reset();
+        }
     }
 
     public void updateData() {
-        parent.updateData();
+        if (parent != null) {
+            parent.updateData();
+        }
     }
 
 

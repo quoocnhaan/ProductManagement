@@ -4,6 +4,8 @@
  */
 package view.component.Order.OrderDetails.OderProductDetails.Product_Component.Feature;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author PC
@@ -13,9 +15,9 @@ public class OneFeature_Component extends javax.swing.JPanel {
     /**
      * Creates new form ProductName_Component
      */
-    public OneFeature_Component(String text) {
+    public OneFeature_Component(double value) {
         initComponents();
-        this.feature.setText(text);
+        this.feature.setText(formatPrice(value));
     }
 
     /**
@@ -58,4 +60,16 @@ public class OneFeature_Component extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel feature;
     // End of variables declaration//GEN-END:variables
+
+    public void updateTotal(double d) {
+        feature.setText(formatPrice(d));
+    }
+    
+    private String formatPrice(double priceValue) {
+        if (priceValue == 0) {
+            return "0";
+        }
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(priceValue);
+    }
 }

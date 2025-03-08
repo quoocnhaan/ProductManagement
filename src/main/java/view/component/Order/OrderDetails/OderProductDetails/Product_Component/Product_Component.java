@@ -5,11 +5,9 @@
 package view.component.Order.OrderDetails.OderProductDetails.Product_Component;
 
 import controller.Functional.Functional;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -27,9 +25,9 @@ public class Product_Component extends javax.swing.JPanel {
 
     private JButton deleteBtn;
     private Product product;
-    private QuantityFeature_Component quantityFeature_Component;
-    private SubFeature_Component subFeature_Component;
-    private OneFeature_Component oneFeature_Component;
+    private QuantityFeature_Component quantity;
+    private SubFeature_Component price;
+    private OneFeature_Component total;
     private ProductList_Component parent;
 
     public Product_Component(Product product, ProductList_Component parent) {
@@ -83,15 +81,22 @@ public class Product_Component extends javax.swing.JPanel {
 
         List<String> features = new ArrayList<>();
         //"Brand", "Quantity", "Sale Price", "Discount", "Type", "Gender"
+        int quantityValue = product.getAmount();
 
-        quantityFeature_Component = new QuantityFeature_Component(product.getAmount() + "", this);
-        add(quantityFeature_Component);
+        quantity = new QuantityFeature_Component(quantityValue + "", this);
+        quantity.setMaximumQuantity(product.getAmount());
+        add(quantity);
 
-        subFeature_Component = new SubFeature_Component(product.getPrice() + "", true);
-        add(subFeature_Component);
+        double priceValue = product.getPrice();
+        double discountValue = product.getDiscount();
 
-        oneFeature_Component = new OneFeature_Component(product.getPrice() + "");
-        add(oneFeature_Component);
+        price = new SubFeature_Component(priceValue, discountValue);
+        add(price);
+
+        double totalValue = priceValue * (1 - discountValue / 100) * quantityValue;
+
+        total = new OneFeature_Component(totalValue);
+        add(total);
 
         deleteBtn = new JButton();
         add(deleteBtn);
@@ -111,14 +116,6 @@ public class Product_Component extends javax.swing.JPanel {
         return product;
     }
 
-    private String formatPrice(double priceValue) {
-        if (priceValue == 0) {
-            return "0";
-        }
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        return formatter.format(priceValue);
-    }
-
     private void customComponents() {
         deleteBtn.setBackground(new java.awt.Color(255, 255, 255));
         deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/bin.png"))); // NOI18N
@@ -130,7 +127,7 @@ public class Product_Component extends javax.swing.JPanel {
     }
 
     void setEditable(String str) {
-        quantityFeature_Component.setEditable(str);
+        quantity.setEditable(str);
     }
 
     public void rollback() {
@@ -140,13 +137,18 @@ public class Product_Component extends javax.swing.JPanel {
     public void storeData() {
         parent.storeData();
     }
-    
+
     public String getData() {
-        return quantityFeature_Component.getQuantity();
+        return quantity.getQuantity();
     }
 
     void setPrevData(String data) {
-        quantityFeature_Component.setPrevData(data);
+        quantity.setPrevData(data);
+    }
+
+    public void updateTotal(int quantityValue) {
+        double discountPrice = price.getData();
+        total.updateTotal(discountPrice * quantityValue);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
