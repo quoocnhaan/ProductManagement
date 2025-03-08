@@ -13,8 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import view.component.Btn.IconButton;
 import view.component.Order.OrderDetails.OderProductDetails.OrderProductContent_Component;
-import view.component.Product.AddingProduct.AddProduct_Component;
-import view.component.Product.DataTable_Component;
+
 import view.component.Product.PaginationWithSearchBar;
 
 /**

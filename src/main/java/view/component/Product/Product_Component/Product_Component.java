@@ -29,7 +29,7 @@ import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.Btn.IconButton;
 import view.component.CustomComponent.CustomCheckbox;
-import view.component.Product.AddingProduct.AddProduct_Component;
+import view.component.Product.AddingProduct.EditProduct_Component;
 import view.component.Product.Pagination.Pagination_Component;
 import view.component.Product.Feature.SubFeature_Component;
 import view.component.Product.Feature.ProductName_Component;
@@ -323,7 +323,7 @@ public class Product_Component extends javax.swing.JPanel {
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 addProductDialog.setResizable(false);
-                addProductDialog.add(new AddProduct_Component(parent, product, addProductDialog));
+                addProductDialog.add(new EditProduct_Component(parent, product, addProductDialog));
 
                 addProductDialog.setVisible(true);
             }

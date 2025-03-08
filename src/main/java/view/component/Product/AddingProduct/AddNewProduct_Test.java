@@ -62,22 +62,16 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         code = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        price = new javax.swing.JTextField();
+        importPrice = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        discount = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        label12 = new javax.swing.JLabel();
+        salePrice = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        quantity = new javax.swing.JTextField();
         brand = new javax.swing.JComboBox<>();
-        label13 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         description = new javax.swing.JTextArea();
-        status = new javax.swing.JComboBox<>();
         cancelBtn = new javax.swing.JButton();
         confirmBtn = new javax.swing.JButton();
-        finalPrice = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         imagePanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -125,46 +119,29 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Sale Price");
+        jLabel5.setText("Import Price");
 
-        price.setBackground(new java.awt.Color(255, 255, 255));
-        price.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        price.setForeground(new java.awt.Color(102, 102, 102));
-        price.setText("100000 VND");
+        importPrice.setBackground(new java.awt.Color(255, 255, 255));
+        importPrice.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        importPrice.setForeground(new java.awt.Color(102, 102, 102));
+        importPrice.setText("100000 VND");
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Discount %");
+        jLabel6.setText("Sale Price");
 
-        discount.setBackground(new java.awt.Color(255, 255, 255));
-        discount.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        discount.setForeground(new java.awt.Color(102, 102, 102));
-        discount.setText("0");
-
-        jLabel7.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("Final Price");
-
-        label12.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        label12.setForeground(new java.awt.Color(0, 0, 0));
-        label12.setText("Quantity");
+        salePrice.setBackground(new java.awt.Color(255, 255, 255));
+        salePrice.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        salePrice.setForeground(new java.awt.Color(102, 102, 102));
+        salePrice.setText("0");
 
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Brand");
 
-        quantity.setBackground(new java.awt.Color(255, 255, 255));
-        quantity.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        quantity.setForeground(new java.awt.Color(102, 102, 102));
-        quantity.setText("1");
-
         brand.setBackground(new java.awt.Color(255, 255, 255));
         brand.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         brand.setForeground(new java.awt.Color(102, 102, 102));
-
-        label13.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
-        label13.setForeground(new java.awt.Color(0, 0, 0));
-        label13.setText("Status");
 
         jLabel11.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
@@ -177,15 +154,11 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
         description.setRows(5);
         jScrollPane1.setViewportView(description);
 
-        status.setBackground(new java.awt.Color(255, 255, 255));
-        status.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        status.setForeground(new java.awt.Color(102, 102, 102));
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "In stock", "Out of stock", "In transit" }));
-
         cancelBtn.setBackground(new java.awt.Color(255, 255, 255));
         cancelBtn.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         cancelBtn.setForeground(new java.awt.Color(51, 51, 51));
         cancelBtn.setText("Cancel");
+        cancelBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelBtnActionPerformed(evt);
@@ -196,16 +169,12 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
         confirmBtn.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         confirmBtn.setForeground(new java.awt.Color(255, 255, 255));
         confirmBtn.setText("Save");
+        confirmBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         confirmBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmBtnActionPerformed(evt);
             }
         });
-
-        finalPrice.setBackground(new java.awt.Color(51, 51, 51));
-        finalPrice.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        finalPrice.setForeground(new java.awt.Color(102, 102, 102));
-        finalPrice.setText("jLabel10");
 
         javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
         contentPanel.setLayout(contentPanelLayout);
@@ -215,17 +184,14 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
                 .addGap(14, 14, 14)
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(contentPanelLayout.createSequentialGroup()
-                        .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel2))
+                        .addComponent(jLabel11)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(contentPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contentPanelLayout.createSequentialGroup()
                         .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(contentPanelLayout.createSequentialGroup()
-                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, contentPanelLayout.createSequentialGroup()
                                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,22 +201,19 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
                                     .addComponent(code, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)))
                             .addGroup(contentPanelLayout.createSequentialGroup()
-                                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(price, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(importPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel7)
-                                    .addComponent(brand, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(finalPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel8))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(label13)
-                                    .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(discount, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                                        .addComponent(jLabel6)
-                                        .addComponent(label12)
-                                        .addComponent(quantity, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
-                                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(salePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)))
+                            .addComponent(brand, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, contentPanelLayout.createSequentialGroup()
+                                .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(17, 17, 17))))
         );
         contentPanelLayout.setVerticalGroup(
@@ -273,36 +236,24 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
                     .addGroup(contentPanelLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(importPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(contentPanelLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(discount, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(salePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(26, 26, 26)
-                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label12))
+                .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(quantity, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(finalPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(26, 26, 26)
-                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(label13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(brand, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(brand, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addGap(76, 76, 76)
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54))
+                .addGap(60, 60, 60))
         );
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
@@ -321,6 +272,7 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
         uploadBtn.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         uploadBtn.setForeground(new java.awt.Color(255, 255, 255));
         uploadBtn.setText("Upload");
+        uploadBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         uploadBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadBtnActionPerformed(evt);
@@ -439,12 +391,12 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(categoryPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addComponent(categoryPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -498,13 +450,12 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
                     brandDAO.add(brand);
                 }
 
-                double price = Double.parseDouble(this.price.getText());
+                double price = Double.parseDouble(this.importPrice.getText());
 
-                double discount = Double.parseDouble(this.discount.getText());
+                double discount = Double.parseDouble(this.salePrice.getText());
 
                 int type = this.type.getSelectedIndex() + 1;
                 int gender = this.type.getSelectedIndex() + 1;
-                int productStatus = status.getSelectedIndex() + 1;
                 String description = this.description.getText();
 
                 ImageIcon newImg = (ImageIcon) img.getIcon();
@@ -587,8 +538,8 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
     private void setting() {
         setPlaceholder(name);
         setPlaceholder(code);
-        setPlaceholder(price);
-        setPlaceholder(discount);
+        setPlaceholder(importPrice);
+        setPlaceholder(salePrice);
     }
 
     private void removeFocus() {
@@ -674,11 +625,10 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
     private javax.swing.JButton confirmBtn;
     private javax.swing.JPanel contentPanel;
     private javax.swing.JTextArea description;
-    private javax.swing.JTextField discount;
-    private javax.swing.JLabel finalPrice;
     private javax.swing.JComboBox<String> gender;
     private javax.swing.JPanel imagePanel;
     private javax.swing.JLabel img;
+    private javax.swing.JTextField importPrice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -690,16 +640,11 @@ public class AddNewProduct_Test extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel label12;
-    private javax.swing.JLabel label13;
     private javax.swing.JTextField name;
-    private javax.swing.JTextField price;
-    private javax.swing.JTextField quantity;
-    private javax.swing.JComboBox<String> status;
+    private javax.swing.JTextField salePrice;
     private javax.swing.JComboBox<String> type;
     private javax.swing.JButton uploadBtn;
     // End of variables declaration//GEN-END:variables

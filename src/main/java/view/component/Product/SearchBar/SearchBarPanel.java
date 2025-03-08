@@ -4,19 +4,22 @@
  */
 package view.component.Product.SearchBar;
 
+import com.toedter.calendar.JDateChooser;
 import controller.DAO.ProductDAO;
 import controller.DAO.Product_SelectedDAO;
 import controller.DAOImp.ProductDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
-import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
@@ -53,6 +56,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
     private Filter_Component filter_Component;
     private DeleteDialog_Component deleteDialog_Component;
     private Map<String, List<String>> map;
+    private JDateChooser date;
     private boolean isChoosing;
 
     public SearchBarPanel(PaginationWithSearchBar parent, boolean isChoosing) {
@@ -98,9 +102,11 @@ public class SearchBarPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_formMouseClicked
 
     private void initMyComponents() {
-        buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+        buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
 
         popupSort = new JPopupMenu();
+
+        date = new JDateChooser();
 
         popupSort.setBackground(Color.WHITE);
         popupSort.setPreferredSize(new Dimension(200, 200));
@@ -127,9 +133,17 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
     private void customMyComponents() {
         setBorder(new EmptyBorder(0, 10, 0, 10));
-        
+
         buttonPanel.setBackground(Color.WHITE);
 
+        date.setBackground(Color.white);
+        date.setFont(new Font("Rotobo", Font.PLAIN, 14));
+        date.setDate(new Date());
+        date.setPreferredSize(new Dimension(150, 35));
+
+        if (!isChoosing) {
+            buttonPanel.add(date);
+        }
         buttonPanel.add(sortBtn);
         buttonPanel.add(filterBtn);
         if (!isChoosing) {
@@ -192,6 +206,16 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
                 addProductDialog.setVisible(true);
 
+            }
+        });
+
+        date.addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("date")) {
+                    Date selectedDate = (Date) evt.getNewValue();
+
+                }
             }
         });
 

@@ -105,8 +105,6 @@ public class ProductList_Component extends javax.swing.JPanel {
             prevData.add(product_Component.getData());
         }
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

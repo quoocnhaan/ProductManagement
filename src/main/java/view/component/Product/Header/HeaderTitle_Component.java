@@ -28,7 +28,7 @@ import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.Btn.IconButton;
 import view.component.Btn.RoundedButton;
-import view.component.Product.AddingProduct.AddProduct_Component;
+import view.component.Product.ImportProduct.ImportDetails_Component;
 
 /**
  *
@@ -85,7 +85,7 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
         buttonPanel.setBackground(Color.WHITE);
 
         // Add button
-        createBtn = new RoundedButton("Create product", true, 15, 35);
+        createBtn = new RoundedButton("Import product", true, 15, 35);
         ImageIcon icon = new ImageIcon(getClass().getResource("/icon/export.png"));
         exportBtn = new IconButton("Export", icon, true);
 
@@ -99,18 +99,17 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
     }
 
     private void addEvents() {
-        HeaderTitle_Component headerTitle_Component = this;
         createBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Create a JDialog for the popup
-                JDialog addProductDialog = new JDialog((Frame) null, "Add New Product", true);  // true for modal
-                addProductDialog.setSize(1250, 900);
+                JDialog addProductDialog = new JDialog((Frame) null, "Import Product", true);  // true for modal
+                addProductDialog.setSize(1280, 650);
                 addProductDialog.setResizable(false);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
 
-                addProductDialog.add(new AddProduct_Component(headerTitle_Component, addProductDialog));
+                addProductDialog.add(new ImportDetails_Component());
 
                 addProductDialog.setVisible(true);
             }
