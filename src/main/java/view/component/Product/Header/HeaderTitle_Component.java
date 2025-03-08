@@ -28,6 +28,7 @@ import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.Btn.IconButton;
 import view.component.Btn.RoundedButton;
+import view.component.Product.ImportProduct.ImportDetailsPage_Component;
 import view.component.Product.ImportProduct.ImportDetails_Component;
 
 /**
@@ -104,12 +105,12 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Create a JDialog for the popup
                 JDialog addProductDialog = new JDialog((Frame) null, "Import Product", true);  // true for modal
-                addProductDialog.setSize(1280, 650);
+                addProductDialog.setSize(1280, 730);
                 addProductDialog.setResizable(false);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
 
-                addProductDialog.add(new ImportDetails_Component());
+                addProductDialog.add(new ImportDetailsPage_Component());
 
                 addProductDialog.setVisible(true);
             }

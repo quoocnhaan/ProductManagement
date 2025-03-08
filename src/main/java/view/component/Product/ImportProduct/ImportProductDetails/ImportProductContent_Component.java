@@ -6,6 +6,7 @@ package view.component.Product.ImportProduct.ImportProductDetails;
 
 import java.awt.BorderLayout;
 import model.Product;
+import view.component.Product.ImportProduct.ImportDetails_Component;
 import view.component.Product.ImportProduct.ImportProductDetails.Header_Component.Header_Component;
 
 /**
@@ -16,9 +17,11 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
 
     private Header_Component header_Component;
     private ImportProductPage_Component orderProductPage_Component;
+    private ImportDetails_Component parent;
 
-    public ImportProductContent_Component() {
+    public ImportProductContent_Component(ImportDetails_Component parent) {
         initComponents();
+        this.parent = parent;
         setLayout(new BorderLayout(0, 15));
         initData();
         addComponents();
@@ -63,6 +66,11 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
 
     public void transferData(Product newProduct, double importPriceValue) {
         orderProductPage_Component.addNewProduct(newProduct, importPriceValue);
+        updateSumaryData(importPriceValue);
+    }
+
+    private void updateSumaryData(double price) {
+        parent.updateSumaryData(price);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

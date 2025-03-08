@@ -10,6 +10,7 @@ view\component\Product\SearchBar\SearchBarPanel$2.class
 view\component\Product\AddingProduct\AddNewProduct_Test$4.class
 view\component\Order\OrderDetails\OderProductDetails\OrderProductPage_Component.class
 view\component\Product\SearchSuggestion\SearchSuggestion_Component$1.class
+view\component\Product\SelectingProduct\SelectingProduct_Component.class
 view\component\Product\SearchSuggestion\Search_Item$3.class
 view\component\Order\OrderDetails\OrderOtherConent\DeliveryAddress_Component$3.class
 view\component\Product\Title\ProductNameTitle_Component.class
@@ -141,6 +142,7 @@ view\component\Product\AddingProduct\EditProduct_Component$14.class
 view\component\Product\ImportProduct\ImportSumary_Component$1.class
 view\component\Navigation\Navigation_Component$1.class
 view\component\Product\Header\NewJFrame.class
+view\component\Product\ImportProduct\Footer.class
 view\component\Order\OrderDetails\OrderOtherConent\CustomerDetails_Component.class
 view\component\Order\OrderDetails\OrderOtherConent\OrderHistory_Component.class
 view\component\Product\DeleteDialog\DeleteDialog_Component.class
@@ -151,6 +153,7 @@ view\component\Product\Filter\Filter_Component$2.class
 view\component\Product\SearchBar\SearchBarPanel$5.class
 view\component\Product\AddingProduct\NewJFrame.class
 controller\DAOImp\BillsPerDayDAOImp.class
+view\component\Product\ImportProduct\ImportDetailsPage_Component.class
 controller\DAO\GoodsReceiptDetailDAO.class
 view\component\Product\AddingProduct\AddNewProduct_Test$7.class
 view\component\Product\ImportProduct\ImportProductDetails\Product_Component\Feature\OneFeature_Component.class
@@ -172,6 +175,7 @@ view\component\Product\Header\HeaderTitle_Component.class
 view\component\Product\Filter\Title.class
 view\component\Product\Pagination\Pagination_Component$3.class
 model\Product_Selected.class
+view\component\Product\SelectingProduct\Footer.class
 view\component\Product\Product_Component\Product_Component$1.class
 view\component\Product\AddingProduct\EditProduct_Component$6.class
 view\component\Product\ImportProduct\NewJFrame$1.class

@@ -20,12 +20,11 @@ import util.HibernateUtil;
  */
 public class ProductList_Component extends javax.swing.JPanel {
 
-    private List<Product_Component> list;
+    private List<Product_Component> list = new ArrayList<>();
 
     public ProductList_Component() {
         initComponents();
         setLayout(new GridLayout(0, 1, 0, 10));
-        addComponents();
     }
 
     /**
@@ -50,31 +49,6 @@ public class ProductList_Component extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    public void updateData(List<Product_Component> list) {
-        this.list = list;
-        removeAll();
-        for (Product_Component product_Component : list) {
-            add(product_Component);
-        }
-        repaint();
-        revalidate();
-    }
-
-    private void addComponents() {
-        list = new ArrayList<>();
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            ProductDAO productDAO = new ProductDAOImp(session);
-            List<Product> products = productDAO.getAllAvailable();
-            for (Product product : products) {
-                Product_Component product_Component = new Product_Component(product, this);
-                add(product_Component);
-                list.add(product_Component);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
 
     public void setEditable(String str) {
         // Get all components in the panel

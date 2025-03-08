@@ -5,29 +5,21 @@
 package view.component.Product.ImportProduct;
 
 import java.awt.BorderLayout;
-import javax.swing.border.EmptyBorder;
-import model.Product;
-import view.component.Product.ImportProduct.ImportProductDetails.ImportProductContent_Component;
 
 /**
  *
  * @author PC
  */
-public class ImportDetails_Component extends javax.swing.JPanel {
+public class ImportDetailsPage_Component extends javax.swing.JPanel {
 
-    private ImportProductContent_Component importProductContent_Component;
-    private ImportSumary_Component importSumary_Component;
-
-    public ImportDetails_Component() {
+    /**
+     * Creates new form ImportDetailsPage_Component
+     */
+    public ImportDetailsPage_Component() {
         initComponents();
-        setLayout(new BorderLayout(20, 0));
-        setBorder(new EmptyBorder(15, 15, 15, 15));
-
-        importProductContent_Component = new ImportProductContent_Component(this);
-        importSumary_Component = new ImportSumary_Component(this);
-
-        add(importProductContent_Component, BorderLayout.CENTER);
-        add(importSumary_Component, BorderLayout.EAST);
+        setLayout(new BorderLayout());
+        add(new ImportDetails_Component(), BorderLayout.CENTER);
+        add(new Footer(), BorderLayout.SOUTH);
     }
 
     /**
@@ -38,8 +30,6 @@ public class ImportDetails_Component extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        setBackground(new java.awt.Color(248, 248, 248));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -52,10 +42,6 @@ public class ImportDetails_Component extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    public void updateSumaryData(double price) {
-        importSumary_Component.updateSumaryData(price);
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

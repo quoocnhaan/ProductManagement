@@ -6,6 +6,7 @@ package view.component.Product.ImportProduct;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -16,19 +17,27 @@ import javax.swing.border.MatteBorder;
  * @author PC
  */
 public class ImportSumary_Component extends javax.swing.JPanel {
-
+    
     private boolean isEditing = false;
     private ImageIcon editIcon = new ImageIcon(getClass().getResource("/icon/edit.png"));
     private ImageIcon checkIcon = new ImageIcon(getClass().getResource("/icon/check.png"));
     private EmptyBorder emptyBorder = new EmptyBorder(1, 1, 1, 1);
     private MatteBorder matteBorder = new MatteBorder(0, 0, 1, 0, new Color(60, 63, 65));
-
+    
+    private double subtotalValue;
+    private double totalValue;
+    
     private String prevDiscount;
     private String prevDeliveryFee;
     private String prevOtherDiscount;
-
-    public ImportSumary_Component() {
+    
+    private ImportDetails_Component parent;
+    
+    public ImportSumary_Component(ImportDetails_Component parent) {
         initComponents();
+        totalValue = 0;
+        subtotalValue = 0;
+        this.parent = parent;
         customComponents();
     }
 
@@ -84,7 +93,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
         subtotal.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         subtotal.setForeground(new java.awt.Color(131, 131, 131));
-        subtotal.setText("500000");
+        subtotal.setText("0");
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -92,7 +101,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
         total.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         total.setForeground(new java.awt.Color(0, 0, 0));
-        total.setText("50000");
+        total.setText("0");
 
         accept.setBackground(new java.awt.Color(255, 255, 255));
         accept.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
@@ -122,17 +131,17 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
         discount.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         discount.setForeground(new java.awt.Color(131, 131, 131));
-        discount.setText("Lam Quoc Nhan");
+        discount.setText("0");
         discount.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         deliveryFee.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         deliveryFee.setForeground(new java.awt.Color(131, 131, 131));
-        deliveryFee.setText("Lam Quoc Nhan");
+        deliveryFee.setText("0");
         deliveryFee.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         otherDiscount.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         otherDiscount.setForeground(new java.awt.Color(131, 131, 131));
-        otherDiscount.setText("Lam Quoc Nhan");
+        otherDiscount.setText("0");
         otherDiscount.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -204,7 +213,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         prevDiscount = discount.getText();
         prevDeliveryFee = deliveryFee.getText();
         prevOtherDiscount = otherDiscount.getText();
-
+        
         changeStatusComponents();
     }//GEN-LAST:event_acceptActionPerformed
 
@@ -254,7 +263,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
             setEditBorder();
         }
     }
-
+    
     private void setEditBorder() {
         if (isEditing) {
             discount.setBorder(matteBorder);
@@ -266,7 +275,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
             otherDiscount.setBorder(emptyBorder);
         }
     }
-
+    
     private void setEditable(JTextField textField, boolean status) {
         textField.setEditable(status);
         if (status) {
@@ -275,19 +284,32 @@ public class ImportSumary_Component extends javax.swing.JPanel {
             textField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); // Set right-to-left text orientation
         }
     }
-
+    
     private void customComponents() {
         settings(discount);
         settings(deliveryFee);
         settings(otherDiscount);
-
+        
         cancel.setEnabled(false);
     }
-
+    
     private void settings(JTextField textField) {
         textField.setEditable(false); // Initially non-editable to behave like JLabel
         textField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); // Set right-to-left text orientation
         textField.setBackground(Color.WHITE); // Ensure the background stays white
         textField.setDisabledTextColor(Color.BLACK); // Ensure the text is visible when disabled
+    }
+    
+    void updateSumaryData(double price) {
+        subtotalValue += price;
+        subtotal.setText(formatPrice(price));
+    }
+    
+    private String formatPrice(double priceValue) {
+        if (priceValue == 0) {
+            return "0";
+        }
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(priceValue);
     }
 }

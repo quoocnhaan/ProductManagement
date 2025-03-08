@@ -4,6 +4,8 @@
  */
 package view.component.Product.ImportProduct.ImportProductDetails.Header_Component;
 
+import controller.Functional.Functional;
+import controller.Session.SharedData;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -15,6 +17,7 @@ import view.component.Btn.RoundedButton;
 import view.component.Product.AddingProduct.AddProduct_Component;
 import view.component.Product.ImportProduct.ImportProductDetails.ImportProductContent_Component;
 import view.component.Product.PaginationWithSearchBar;
+import view.component.Product.SelectingProduct.SelectingProduct_Component;
 
 /**
  *
@@ -78,14 +81,15 @@ public class Header_Component extends javax.swing.JPanel {
         browseBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog addProductDialog = new JDialog((Frame) null, "Edit Product", true);  // true for modal
-                addProductDialog.setSize(1180, 700);
+                JDialog addProductDialog = new JDialog((Frame) null, "Choose Product", true);  // true for modal
+                addProductDialog.setSize(1180, 780);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 //addProductDialog.setResizable(false);
-                addProductDialog.add(new PaginationWithSearchBar(null, true));
+                addProductDialog.add(new SelectingProduct_Component());
 
                 addProductDialog.setVisible(true);
+                Functional.clearDataTemp();
             }
         });
         create.addActionListener(new ActionListener() {
@@ -96,9 +100,7 @@ public class Header_Component extends javax.swing.JPanel {
                 addProductDialog.setResizable(false);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
-
                 addProductDialog.add(new AddProduct_Component(parent));
-
                 addProductDialog.setVisible(true);
             }
         });

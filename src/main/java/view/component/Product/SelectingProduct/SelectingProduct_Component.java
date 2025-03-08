@@ -2,32 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package view.component.Product.ImportProduct;
+package view.component.Product.SelectingProduct;
 
 import java.awt.BorderLayout;
-import javax.swing.border.EmptyBorder;
-import model.Product;
-import view.component.Product.ImportProduct.ImportProductDetails.ImportProductContent_Component;
+import view.component.Product.PaginationWithSearchBar;
 
 /**
  *
  * @author PC
  */
-public class ImportDetails_Component extends javax.swing.JPanel {
+public class SelectingProduct_Component extends javax.swing.JPanel {
 
-    private ImportProductContent_Component importProductContent_Component;
-    private ImportSumary_Component importSumary_Component;
-
-    public ImportDetails_Component() {
+    /**
+     * Creates new form SelectingProduct_Component
+     */
+    public SelectingProduct_Component() {
         initComponents();
-        setLayout(new BorderLayout(20, 0));
-        setBorder(new EmptyBorder(15, 15, 15, 15));
+        setLayout(new BorderLayout(0, 15));
+        add(new PaginationWithSearchBar(null, true), BorderLayout.CENTER);
+        add(new Footer(), BorderLayout.SOUTH);
 
-        importProductContent_Component = new ImportProductContent_Component(this);
-        importSumary_Component = new ImportSumary_Component(this);
-
-        add(importProductContent_Component, BorderLayout.CENTER);
-        add(importSumary_Component, BorderLayout.EAST);
     }
 
     /**
@@ -52,10 +46,6 @@ public class ImportDetails_Component extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    public void updateSumaryData(double price) {
-        importSumary_Component.updateSumaryData(price);
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

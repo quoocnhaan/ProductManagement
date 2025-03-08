@@ -5,17 +5,13 @@
 package view.component.Product.AddingProduct;
 
 import controller.DAO.BrandDAO;
-import controller.DAO.ProductDAO;
 import controller.DAOImp.BrandDAOImp;
-import controller.DAOImp.ProductDAOImp;
 import controller.Functional.Functional;
 import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -23,7 +19,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;

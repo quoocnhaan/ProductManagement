@@ -102,7 +102,9 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Produ
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Header\Header_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Header\HeaderTitle_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Header\NewJFrame.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\ImportProduct\Footer.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\ImportProduct\ImportDetails_Component.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\ImportProduct\ImportDetailsPage_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\ImportProduct\ImportProductDetails\Header_Component\Header_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\ImportProduct\ImportProductDetails\ImportProductContent_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\ImportProduct\ImportProductDetails\ImportProductPage_Component.java
@@ -132,6 +134,8 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Produ
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\SearchSuggestion\PanelSearch.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\SearchSuggestion\Search_Item.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\SearchSuggestion\SearchSuggestion_Component.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\SelectingProduct\Footer.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\SelectingProduct\SelectingProduct_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Sort\SortPopup.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Title\ProductNameTitle_Component.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Product\Title\SubTitle_Component.java
