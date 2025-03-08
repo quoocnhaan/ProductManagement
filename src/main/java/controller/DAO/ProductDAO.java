@@ -4,6 +4,7 @@
  */
 package controller.DAO;
 
+import java.sql.Date;
 import java.util.List;
 import model.Product;
 
@@ -13,9 +14,16 @@ import model.Product;
  */
 public interface ProductDAO extends InterfaceDAO<Product> {
 
-    List<Product> findByText(String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus);
+    List<Product> findByFilter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus);
 
-    List<Product> findByText(String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort);
+    List<Product> findByFilter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort);
 
     List<Product> getAllAvailable();
+
+    List<Product> getProductsByDate(Date date);
+
+    List<Product> getAvailableProductsByDate(Date date);
+
+    Double findPriceByProductAndDate(int productId, Date receiptDate);
+
 }

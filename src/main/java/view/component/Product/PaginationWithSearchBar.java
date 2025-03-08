@@ -5,6 +5,7 @@
 package view.component.Product;
 
 import java.awt.BorderLayout;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import view.component.Product.Pagination.Pagination_Component;
@@ -145,6 +146,11 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
         if (parent != null) {
             parent.updateData();
         }
+    }
+
+    public void sortByDate(Date sqlDate) {
+        pagination_Component.setToday(sqlDate);
+        pagination_Component.updateData();
     }
 
 

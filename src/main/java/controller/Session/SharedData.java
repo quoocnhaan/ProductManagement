@@ -6,6 +6,8 @@ package controller.Session;
 
 //import java.util.ArrayList;
 import java.awt.Color;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import view.component.Product.Product_Component.Product_Component;
@@ -26,4 +28,5 @@ public class SharedData {
     public static int selectedAmount = 0;
     public static List<Product_Component> selectedProduct = new ArrayList<>();
     public static boolean beingSelected = false;
+    public static Date date = Date.valueOf(LocalDate.now());
 }

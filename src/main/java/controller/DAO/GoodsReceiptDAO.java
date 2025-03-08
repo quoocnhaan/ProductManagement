@@ -4,6 +4,7 @@
  */
 package controller.DAO;
 
+import java.sql.Date;
 import model.GoodsReceipt;
 
 /**
@@ -11,5 +12,5 @@ import model.GoodsReceipt;
  * @author PC
  */
 public interface GoodsReceiptDAO extends InterfaceDAO<GoodsReceipt>{
-    
+    GoodsReceipt findByDate(Date date);
 }

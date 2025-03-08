@@ -77,7 +77,7 @@ public class Header_Component extends javax.swing.JPanel {
     }
 
     private void addEvents() {
-
+        Header_Component header_Component = this;
         browseBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,10 +86,9 @@ public class Header_Component extends javax.swing.JPanel {
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 //addProductDialog.setResizable(false);
-                addProductDialog.add(new SelectingProduct_Component());
+                addProductDialog.add(new SelectingProduct_Component(addProductDialog, header_Component));
 
                 addProductDialog.setVisible(true);
-                Functional.clearDataTemp();
             }
         });
         create.addActionListener(new ActionListener() {
@@ -105,6 +104,10 @@ public class Header_Component extends javax.swing.JPanel {
             }
         });
 
+    }
+
+    public void updateDataWhenBrowse() {
+        parent.updateDataWhenBrowse();
     }
 
 

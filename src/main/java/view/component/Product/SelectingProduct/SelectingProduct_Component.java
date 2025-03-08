@@ -5,6 +5,8 @@
 package view.component.Product.SelectingProduct;
 
 import java.awt.BorderLayout;
+import javax.swing.JDialog;
+import view.component.Product.ImportProduct.ImportProductDetails.Header_Component.Header_Component;
 import view.component.Product.PaginationWithSearchBar;
 
 /**
@@ -13,15 +15,22 @@ import view.component.Product.PaginationWithSearchBar;
  */
 public class SelectingProduct_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form SelectingProduct_Component
-     */
-    public SelectingProduct_Component() {
-        initComponents();
-        setLayout(new BorderLayout(0, 15));
-        add(new PaginationWithSearchBar(null, true), BorderLayout.CENTER);
-        add(new Footer(), BorderLayout.SOUTH);
+    private PaginationWithSearchBar paginationWithSearchBar;
+    private Footer footer;
+    private JDialog jDialog;
+    private Header_Component parent;
 
+    public SelectingProduct_Component(JDialog jDialog, Header_Component parent) {
+        initComponents();
+
+        this.jDialog = jDialog;
+        this.parent = parent;
+        paginationWithSearchBar = new PaginationWithSearchBar(null, true);
+        footer = new Footer(this);
+
+        setLayout(new BorderLayout(0, 15));
+        add(paginationWithSearchBar, BorderLayout.CENTER);
+        add(footer, BorderLayout.SOUTH);
     }
 
     /**
@@ -46,6 +55,16 @@ public class SelectingProduct_Component extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    public void updateDataWhenBrowse() {
+        parent.updateDataWhenBrowse();
+    }
+
+    public void close() {
+        if (jDialog != null) {
+            jDialog.dispose();
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

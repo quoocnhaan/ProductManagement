@@ -110,7 +110,7 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
 
-                addProductDialog.add(new ImportDetailsPage_Component());
+                addProductDialog.add(new ImportDetailsPage_Component(addProductDialog));
 
                 addProductDialog.setVisible(true);
             }

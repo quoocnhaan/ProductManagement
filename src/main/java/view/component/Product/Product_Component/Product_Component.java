@@ -18,6 +18,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -319,7 +320,7 @@ public class Product_Component extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog addProductDialog = new JDialog((Frame) null, "Edit Product", true);  // true for modal
-                addProductDialog.setSize(1250, 900);
+                addProductDialog.setSize(1250, 850);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 addProductDialog.setResizable(false);

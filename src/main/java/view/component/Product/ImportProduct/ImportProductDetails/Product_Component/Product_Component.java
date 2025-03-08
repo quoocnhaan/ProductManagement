@@ -29,13 +29,15 @@ public class Product_Component extends javax.swing.JPanel {
     private SubFeature_Component price;
     private OneFeature_Component total;
     private ProductList_Component parent;
+    private double importPriceValue;
 
-    public Product_Component(Product product, ProductList_Component parent) {
+    public Product_Component(Product product, double importPriceValue, ProductList_Component parent) {
         initComponents();
         this.parent = parent;
         this.product = product;
+        this.importPriceValue = importPriceValue;
         setLayout(new FlowLayout(FlowLayout.LEFT, 15, 0));
-        addComponents(product);
+        addComponents(product, importPriceValue);
         customComponents();
         addEvents();
     }
@@ -73,27 +75,20 @@ public class Product_Component extends javax.swing.JPanel {
         this.requestFocusInWindow();
     }//GEN-LAST:event_formMouseClicked
 
-    private void addComponents(Product product) {
+    private void addComponents(Product product, double importPriceValue) {
 
         ProductName_Component productName = new ProductName_Component(product.getName(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
 
         add(productName);
 
-        List<String> features = new ArrayList<>();
-        //"Brand", "Quantity", "Sale Price", "Discount", "Type", "Gender"
-        int quantityValue = product.getAmount();
-
         quantity = new QuantityFeature_Component(this);
         quantity.setMaximumQuantity(product.getAmount());
         add(quantity);
 
-        double priceValue = product.getPrice();
-        double discountValue = product.getDiscount();
-
-        price = new SubFeature_Component(priceValue, discountValue);
+        price = new SubFeature_Component(importPriceValue, 0);
         add(price);
 
-        total = new OneFeature_Component(priceValue * (1 - discountValue / 100));
+        total = new OneFeature_Component(importPriceValue);
         add(total);
 
         deleteBtn = new JButton();
@@ -124,8 +119,12 @@ public class Product_Component extends javax.swing.JPanel {
         deleteBtn.setFocusPainted(false);
     }
 
-    public String getData() {
+    public String getQuantity() {
         return quantity.getQuantity();
+    }
+
+    public double getImportPriceValue() {
+        return importPriceValue;
     }
 
     public void updateTotal(int quantityValue) {

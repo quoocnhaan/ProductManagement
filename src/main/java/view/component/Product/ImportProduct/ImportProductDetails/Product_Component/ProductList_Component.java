@@ -4,12 +4,19 @@
  */
 package view.component.Product.ImportProduct.ImportProductDetails.Product_Component;
 
+import controller.DAO.GoodsReceiptDAO;
+import controller.DAO.GoodsReceiptDetailDAO;
 import controller.DAO.ProductDAO;
+import controller.DAOImp.GoodsReceiptDAOImp;
+import controller.DAOImp.GoodsReceiptDetailDAOImp;
 import controller.DAOImp.ProductDAOImp;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import model.GoodsReceipt;
+import model.GoodsReceiptDetail;
 import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -50,22 +57,65 @@ public class ProductList_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setEditable(String str) {
-        // Get all components in the panel
-        for (Component component : getComponents()) {
-            // Check if the component is an instance of Product_Component
-            if (component instanceof Product_Component) {
-                Product_Component productComponent = (Product_Component) component;
-            }
-        }
-    }
-
     public void addNewProduct(Product newProduct, double importPriceValue) {
-        Product_Component product_Component = new Product_Component(newProduct, this);
+        Product_Component product_Component = new Product_Component(newProduct, importPriceValue, this);
         list.add(product_Component);
         add(product_Component);
         repaint();
         revalidate();
+    }
+
+    public void saveImportProducts() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            int totalQuantity = 0;
+            double totalPrice = 0;
+
+            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
+            GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
+            ProductDAO productDAO = new ProductDAOImp(session);
+
+            Date curDate = new java.sql.Date(System.currentTimeMillis());
+            GoodsReceipt goodsReceipt = goodsReceiptDAO.findByDate(curDate);
+
+            if (goodsReceipt == null) {
+                // Create a new GoodsReceipt and save it before creating GoodsReceiptDetail
+                goodsReceipt = new GoodsReceipt(curDate, 0, 0, true);
+                goodsReceiptDAO.add(goodsReceipt);  // Save the new GoodsReceipt first
+            }
+
+            for (Product_Component product_Component : list) {
+                Product product = product_Component.getProduct();
+
+                int quantity = Integer.parseInt(product_Component.getQuantity());
+                totalQuantity += quantity;
+
+                double importPrice = product_Component.getImportPriceValue();
+                totalPrice += importPrice * quantity;
+
+                Product existingProduct = productDAO.get(product.getId());
+                if (existingProduct != null) {
+                    // Update product quantity
+                    int curQuantity = existingProduct.getAmount();
+                    existingProduct.setAmount(curQuantity + quantity);
+                    productDAO.update(existingProduct);
+                } else {
+                    product.setAmount(quantity);
+                    productDAO.add(product);
+                }
+
+                // Now that goodsReceipt has been saved or updated, you can safely create GoodsReceiptDetail
+                GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, quantity, importPrice, importPrice * quantity, true);
+                goodsReceiptDetailDAO.add(goodsReceiptDetail);
+            }
+
+            // Update the GoodsReceipt with the total quantity and price after looping through all products
+            goodsReceipt.setAmount(goodsReceipt.getAmount() + totalQuantity);
+            goodsReceipt.setTotalPrices(goodsReceipt.getTotalPrices() + totalPrice);
+            goodsReceiptDAO.update(goodsReceipt);  // Update the existing GoodsReceipt
+
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
+        }
     }
 
 

@@ -9,6 +9,7 @@ import controller.DAO.ProductDAO;
 import controller.DAO.Product_SelectedDAO;
 import controller.DAOImp.ProductDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
+import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,7 +20,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
@@ -58,6 +60,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
     private Map<String, List<String>> map;
     private JDateChooser date;
     private boolean isChoosing;
+    private boolean isProgrammaticChange = false;
 
     public SearchBarPanel(PaginationWithSearchBar parent, boolean isChoosing) {
         initComponents();
@@ -138,7 +141,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
         date.setBackground(Color.white);
         date.setFont(new Font("Rotobo", Font.PLAIN, 14));
-        date.setDate(new Date());
+        date.setDate(Date.valueOf(LocalDate.now()));
         date.setPreferredSize(new Dimension(150, 35));
 
         if (!isChoosing) {
@@ -212,9 +215,15 @@ public class SearchBarPanel extends javax.swing.JPanel {
         date.addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals("date")) {
-                    Date selectedDate = (Date) evt.getNewValue();
+                if (evt.getPropertyName().equals("date") && !isProgrammaticChange) {
+                    // This block will only run if the date was changed by the user
+                    java.util.Date selectedDate = ((com.toedter.calendar.JDateChooser) evt.getSource()).getDate();
 
+                    if (selectedDate != null) {
+                        java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
+                        SharedData.date = sqlDate;
+                        parent.sortByDate(sqlDate);
+                    }
                 }
             }
         });
@@ -280,6 +289,11 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
     public void resetSearchOptions() {
         searchSuggestion_Component.reset();
+
+        isProgrammaticChange = true;
+        date.setDate(Date.valueOf(LocalDate.now()));
+        isProgrammaticChange = false;
+
         filter_Component.reset();
         filterBtn.changeColor(false);
         sortPopup.reset();

@@ -17,9 +17,12 @@ public class ImportDetails_Component extends javax.swing.JPanel {
 
     private ImportProductContent_Component importProductContent_Component;
     private ImportSumary_Component importSumary_Component;
+    private ImportDetailsPage_Component parent;
 
-    public ImportDetails_Component() {
+    public ImportDetails_Component(ImportDetailsPage_Component parent) {
         initComponents();
+
+        this.parent = parent;
         setLayout(new BorderLayout(20, 0));
         setBorder(new EmptyBorder(15, 15, 15, 15));
 
@@ -56,6 +59,11 @@ public class ImportDetails_Component extends javax.swing.JPanel {
     public void updateSumaryData(double price) {
         importSumary_Component.updateSumaryData(price);
     }
+
+    public void saveImportProducts() {
+        importProductContent_Component.saveImportProducts();
+    }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

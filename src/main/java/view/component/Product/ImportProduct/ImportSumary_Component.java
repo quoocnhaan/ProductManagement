@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
@@ -17,28 +19,32 @@ import javax.swing.border.MatteBorder;
  * @author PC
  */
 public class ImportSumary_Component extends javax.swing.JPanel {
-    
+
     private boolean isEditing = false;
     private ImageIcon editIcon = new ImageIcon(getClass().getResource("/icon/edit.png"));
     private ImageIcon checkIcon = new ImageIcon(getClass().getResource("/icon/check.png"));
     private EmptyBorder emptyBorder = new EmptyBorder(1, 1, 1, 1);
     private MatteBorder matteBorder = new MatteBorder(0, 0, 1, 0, new Color(60, 63, 65));
-    
+    private double discountValue;
+    private double deliveryFeeValue;
+    private double otherDiscountValue;
+
     private double subtotalValue;
     private double totalValue;
-    
+
     private String prevDiscount;
     private String prevDeliveryFee;
     private String prevOtherDiscount;
-    
+
     private ImportDetails_Component parent;
-    
+
     public ImportSumary_Component(ImportDetails_Component parent) {
         initComponents();
         totalValue = 0;
         subtotalValue = 0;
         this.parent = parent;
         customComponents();
+        addEvents();
     }
 
     /**
@@ -213,7 +219,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         prevDiscount = discount.getText();
         prevDeliveryFee = deliveryFee.getText();
         prevOtherDiscount = otherDiscount.getText();
-        
+
         changeStatusComponents();
     }//GEN-LAST:event_acceptActionPerformed
 
@@ -263,7 +269,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
             setEditBorder();
         }
     }
-    
+
     private void setEditBorder() {
         if (isEditing) {
             discount.setBorder(matteBorder);
@@ -275,7 +281,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
             otherDiscount.setBorder(emptyBorder);
         }
     }
-    
+
     private void setEditable(JTextField textField, boolean status) {
         textField.setEditable(status);
         if (status) {
@@ -284,32 +290,129 @@ public class ImportSumary_Component extends javax.swing.JPanel {
             textField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); // Set right-to-left text orientation
         }
     }
-    
+
     private void customComponents() {
         settings(discount);
         settings(deliveryFee);
         settings(otherDiscount);
-        
+
         cancel.setEnabled(false);
     }
-    
+
     private void settings(JTextField textField) {
         textField.setEditable(false); // Initially non-editable to behave like JLabel
         textField.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); // Set right-to-left text orientation
         textField.setBackground(Color.WHITE); // Ensure the background stays white
         textField.setDisabledTextColor(Color.BLACK); // Ensure the text is visible when disabled
     }
-    
+
     void updateSumaryData(double price) {
         subtotalValue += price;
-        subtotal.setText(formatPrice(price));
+        subtotal.setText(formatPrice(subtotalValue));
+
+        updateTotal();
     }
-    
+
     private String formatPrice(double priceValue) {
         if (priceValue == 0) {
             return "0";
         }
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(priceValue);
+    }
+
+    private void updateTotal() {
+        double total = ((subtotalValue + deliveryFeeValue) * (1 - discountValue / 100)) - otherDiscountValue;
+        totalValue = total;
+        this.total.setText(formatPrice(total));
+    }
+
+    private void addEvents() {
+        discount.setInputVerifier(new InputVerifier() {
+            @Override
+            public boolean verify(JComponent input) {
+                String text = ((JTextField) input).getText().replace(",", "");
+                double value;
+
+                try {
+                    value = Double.parseDouble(text);
+
+                    // Adjust value if it's out of bounds
+                    if (value < 0) {
+                        value = 0;
+                        ((JTextField) input).setText("0");
+                    } else if (value > 100) {
+                        value = 100;
+                        ((JTextField) input).setText("100");
+                    } else {
+                        ((JTextField) input).setText(formatPrice(value));
+                    }
+                    discountValue = value;
+                } catch (NumberFormatException e) {
+                    // If it's not a valid number, set the field to 1
+                    discountValue = 0;
+                    ((JTextField) input).setText("0");
+                }
+                updateTotal();
+                return true; // Allow the input after correction
+            }
+        });
+
+        deliveryFee.setInputVerifier(new InputVerifier() {
+            @Override
+            public boolean verify(JComponent input) {
+                String text = ((JTextField) input).getText().replace(",", "");
+                double value;
+
+                try {
+                    value = Double.parseDouble(text);
+
+                    // Adjust value if it's out of bounds
+                    if (value < 0) {
+                        value = 0;
+                        ((JTextField) input).setText("0");
+                    } else {
+                        ((JTextField) input).setText(formatPrice(value));
+                    }
+                    deliveryFeeValue = value;
+                } catch (NumberFormatException e) {
+                    // If it's not a valid number, set the field to 1
+                    deliveryFeeValue = 0;
+                    ((JTextField) input).setText("0");
+                }
+
+                // Call your action here after verifying
+                updateTotal();
+                return true; // Allow the input after correction
+            }
+        });
+
+        otherDiscount.setInputVerifier(new InputVerifier() {
+            @Override
+            public boolean verify(JComponent input) {
+                String text = ((JTextField) input).getText().replace(",", "");
+                double value;
+
+                try {
+                    value = Double.parseDouble(text);
+
+                    if (value < 0) {
+                        value = 0;
+                        ((JTextField) input).setText("0");
+                    } else {
+                        ((JTextField) input).setText(formatPrice(value));
+                    }
+                    otherDiscountValue = value;
+                } catch (NumberFormatException e) {
+                    // If it's not a valid number, set the field to 1
+                    otherDiscountValue = 0;
+                    ((JTextField) input).setText("0");
+                }
+
+                // Call your action here after verifying
+                updateTotal();
+                return true; // Allow the input after correction
+            }
+        });
     }
 }

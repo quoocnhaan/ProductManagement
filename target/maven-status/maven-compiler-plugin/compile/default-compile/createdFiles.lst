@@ -36,7 +36,6 @@ view\component\Order\OrderDetails\OrderOtherConent\CustomerDetails_Component$2.c
 controller\DAO\BrandDAO.class
 controller\Session\ExcelExporter.class
 view\component\Product\ImportProduct\ImportSumary_Component$3.class
-view\component\Product\AddingProduct\EditProduct_Component$10.class
 controller\DAOImp\BrandDAOImp.class
 view\component\Product\Product_Component\Product_Component$4.class
 view\component\Product\SearchSuggestion\SearchSuggestion_Component$2.class
@@ -51,7 +50,6 @@ view\component\Navigation\NewJFrame.class
 view\component\Order\OrderDetails\OrderOtherConent\DeliveryAddress_Component$2.class
 model\Bills.class
 view\component\Btn\NewJPanel.class
-view\component\Product\AddingProduct\EditProduct_Component$11.class
 view\component\Product\ImportProduct\ImportProductDetails\Product_Component\Product_Component$2.class
 view\component\Product\Product_Component\Product_Component$3.class
 controller\Enum\Status.class
@@ -66,7 +64,6 @@ view\component\Product\AddingProduct\EditProduct_Component$7.class
 view\component\Product\SearchSuggestion\NewJFrame.class
 view\component\Order\OrderDetails\OrderDetails_Components.class
 view\component\Product\AddingProduct\NewJFrame$1.class
-view\component\Product\AddingProduct\EditProduct_Component$12.class
 view\component\Product\Product_Component\Product_Component.class
 view\component\Product\Filter\FilterItem.class
 view\component\Product\AddingProduct\EditProduct_Component$1.class
@@ -93,7 +90,6 @@ view\component\Order\OrderDetails\OderProductDetails\OrderProductContent_Compone
 view\component\Product\ImportProduct\ImportProductDetails\Product_Component\ProductList_Component.class
 view\component\Product\AddingProduct\AddProduct_Component$1.class
 view\component\CustomComponent\CustomFrame.class
-view\component\Product\AddingProduct\EditProduct_Component$15.class
 view\component\Product\ImportProduct\ImportProductDetails\Product_Component\Feature\QuantityFeature_Component$1.class
 view\component\Product\SearchSuggestion\SearchSuggestion_Component$3.class
 controller\DAOImp\GoodsReceiptDAOImp.class
@@ -125,7 +121,6 @@ view\component\Product\AddingProduct\EditProduct_Component$3.class
 view\component\Order\OrderDetails\OderProductDetails\OrderProductPage_Component$1.class
 controller\DAOImp\CustomerDAOImp.class
 view\component\Product\Title\Title_Component.class
-view\component\Product\AddingProduct\EditProduct_Component$13.class
 model\Inventory.class
 controller\Session\SharedData.class
 model\BillsPerDay.class
@@ -138,7 +133,6 @@ view\component\Product\Feature\SubFeature_Component.class
 controller\DAO\BillsPerDayDAO.class
 util\HibernateUtil.class
 view\component\Order\OrderDetails\OderProductDetails\Product_Component\Feature\OneFeature_Component.class
-view\component\Product\AddingProduct\EditProduct_Component$14.class
 view\component\Product\ImportProduct\ImportSumary_Component$1.class
 view\component\Navigation\Navigation_Component$1.class
 view\component\Product\Header\NewJFrame.class
@@ -147,6 +141,7 @@ view\component\Order\OrderDetails\OrderOtherConent\CustomerDetails_Component.cla
 view\component\Order\OrderDetails\OrderOtherConent\OrderHistory_Component.class
 view\component\Product\DeleteDialog\DeleteDialog_Component.class
 view\component\Product\Product_Component\ProductList_Component.class
+view\component\Product\ImportProduct\ImportSumary_Component$5.class
 view\component\Product\ImportProduct\NewJFrame.class
 model\GoodsReceiptDetail.class
 view\component\Product\Filter\Filter_Component$2.class
@@ -167,6 +162,7 @@ model\InventoryDetail.class
 view\component\Product\AddingProduct\EditProduct_Component$5.class
 view\component\Btn\MyButton$1.class
 view\component\Order\OrderDetails\OrderOtherConent\OrderSumary_Component$1.class
+view\component\Product\SelectingProduct\Footer$1.class
 view\component\Order\OrderDetails\OderProductDetails\Header_Component\Header_Component.class
 view\component\CustomComponent\CustomTabbedPaneUI$1.class
 view\component\Product\Header\NewJFrame$1.class
@@ -193,6 +189,7 @@ controller\DAOImp\InventoryDAOImp.class
 view\component\Order\OrderDetails\NewJFrame$1.class
 view\component\Product\Filter\Content.class
 view\component\Order\OrderDetails\OderProductDetails\Product_Component\Feature\SubFeature_Component.class
+view\component\Product\ImportProduct\ImportSumary_Component$4.class
 view\component\Navigation\NewClass.class
 view\component\Product\SearchBar\SearchBarPanel$4.class
 view\component\Order\OrderDetails\OrderOtherConent\CustomerDetails_Component$1.class
@@ -217,6 +214,7 @@ view\component\Product\ImportProduct\ImportProductDetails\Product_Component\Titl
 view\component\Product\SearchSuggestion\MyTextField.class
 model\Product.class
 view\component\Navigation\Navigation.class
+view\component\Product\SelectingProduct\Footer$2.class
 view\component\Btn\RoundedButton.class
 view\component\Product\Sort\SortPopup$1.class
 view\component\Product\Pagination\Pagination_Component$4.class
@@ -225,6 +223,7 @@ controller\DAO\InterfaceDAO.class
 view\component\Navigation\NewJFrame$1.class
 view\component\CustomComponent\CustomFrame$1.class
 model\Brand.class
+view\component\Product\ImportProduct\ImportSumary_Component$6.class
 view\component\Product\ImportProduct\ImportProductDetails\Product_Component\Title\Title_Component.class
 view\component\Product\ImportProduct\ImportProductDetails\ImportProductContent_Component.class
 view\component\Product\AddingProduct\AddNewProduct_Test.class
@@ -233,6 +232,7 @@ view\component\Product\AddingProduct\AddProduct_Component$4.class
 view\component\Product\AddingProduct\AddProduct_Component$7.class
 controller\DAO\ProductDAO.class
 view\component\Product\SearchSuggestion\Search_Item$2.class
+view\component\Product\ImportProduct\Footer$1.class
 view\component\CustomComponent\CustomScrollBarUI.class
 view\component\Navigation\Navigation$1.class
 view\component\Product\AddingProduct\AddProduct_Component$5.class
@@ -246,6 +246,7 @@ view\component\Btn\NewJPanel$1.class
 view\component\Product\Pagination\Pagination_Component$5.class
 view\component\Product\AddingProduct\AddProduct_Component$6.class
 controller\DAOImp\NavigationItemDAOImp.class
+view\component\Product\ImportProduct\Footer$2.class
 view\component\Product\ImportProduct\ImportProductDetails\Product_Component\Title\ProductNameTitle_Component.class
 controller\DAO\Product_SelectedDAO.class
 view\component\Product\ButtonGroupPanel.class

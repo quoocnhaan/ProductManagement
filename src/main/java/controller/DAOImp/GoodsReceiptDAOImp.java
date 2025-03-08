@@ -5,6 +5,7 @@
 package controller.DAOImp;
 
 import controller.DAO.GoodsReceiptDAO;
+import java.sql.Date;
 import java.util.List;
 import model.GoodsReceipt;
 import org.hibernate.Session;
@@ -15,8 +16,9 @@ import org.hibernate.query.Query;
  *
  * @author PC
  */
-public class GoodsReceiptDAOImp implements GoodsReceiptDAO{
-        private Session session;
+public class GoodsReceiptDAOImp implements GoodsReceiptDAO {
+
+    private Session session;
 
     public GoodsReceiptDAOImp(Session session) {
         this.session = session;
@@ -79,5 +81,19 @@ public class GoodsReceiptDAOImp implements GoodsReceiptDAO{
     public List<GoodsReceipt> getAll() {
         Query<GoodsReceipt> query = session.createQuery("FROM GoodsReceipt", GoodsReceipt.class);
         return query.list();
+    }
+
+    @Override
+    public GoodsReceipt findByDate(Date date) {
+        String hql = "FROM GoodsReceipt g WHERE g.date = :date";
+
+        // Create the query
+        Query<GoodsReceipt> query = session.createQuery(hql, GoodsReceipt.class);
+
+        // Set the parameter for the Product
+        query.setParameter("date", date);
+
+        // Get the single result (assuming there's only one matching entry due to the @OneToOne relationship)
+        return query.uniqueResult();
     }
 }

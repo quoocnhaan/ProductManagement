@@ -10,10 +10,10 @@ package view.component.Product.ImportProduct;
  */
 public class Footer extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Footer
-     */
-    public Footer() {
+    private ImportDetailsPage_Component parent;
+
+    public Footer(ImportDetailsPage_Component parent) {
+        this.parent = parent;
         initComponents();
     }
 
@@ -36,6 +36,11 @@ public class Footer extends javax.swing.JPanel {
         save.setForeground(new java.awt.Color(255, 255, 255));
         save.setText("Save");
         save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
 
         cancel.setBackground(new java.awt.Color(255, 255, 255));
         cancel.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
@@ -43,6 +48,11 @@ public class Footer extends javax.swing.JPanel {
         cancel.setText("Cancel");
         cancel.setToolTipText("");
         cancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -65,6 +75,15 @@ public class Footer extends javax.swing.JPanel {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        parent.saveImportProducts();
+        parent.close();
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+
+    }//GEN-LAST:event_cancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

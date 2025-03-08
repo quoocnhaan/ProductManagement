@@ -5,6 +5,7 @@
 package controller.DAOImp;
 
 import controller.DAO.Product_SelectedDAO;
+import java.sql.Date;
 import java.util.List;
 import model.Product;
 import model.Product_Selected;
@@ -84,18 +85,28 @@ public class Product_SelectedDAOImp implements Product_SelectedDAO {
     }
 
     @Override
-    public List<Product_Selected> findByText(String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus) {
+    public List<Product_Selected> findByFilter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus) {
         // Start building the query
-        StringBuilder queryString = new StringBuilder("FROM Product_Selected p WHERE 1=1");
+        StringBuilder queryString = new StringBuilder("SELECT ps FROM Product_Selected ps ");
+
+        // Joining manually based on foreign keys
+        queryString.append("JOIN Product p ON ps.product.id = p.id ");
+        queryString.append("JOIN GoodsReceiptDetail grd ON grd.product.id = p.id ");
+        queryString.append("JOIN GoodsReceipt gr ON grd.goodsReceipt.id = gr.id WHERE 1=1");
+
+        // Filter by date (if provided)
+        if (date != null) {
+            queryString.append(" AND gr.date = :searchDate");
+        }
 
         // Filter by name (if provided)
         if (name != null && !name.isEmpty()) {
-            queryString.append(" AND p.product.name LIKE :searchName");
+            queryString.append(" AND ps.product.name LIKE :searchName");
         }
 
         // Filter by brands (if provided)
         if (brands != null && !brands.isEmpty()) {
-            queryString.append(" AND p.product.brand.name IN :searchBrands");
+            queryString.append(" AND ps.product.brand.name IN :searchBrands");
         }
 
         // Filter by price range (if provided)
@@ -109,19 +120,18 @@ public class Product_SelectedDAOImp implements Product_SelectedDAO {
                 }
                 switch (priceRange) {
                     case "<500k":
-                        queryString.append("p.product.price < 500000");
+                        queryString.append("ps.product.price < 500000");
                         break;
                     case "500k-2000k":
-                        queryString.append("p.product.price BETWEEN 500000 AND 2000000");
+                        queryString.append("ps.product.price BETWEEN 500000 AND 2000000");
                         break;
                     case "2000k-4000k":
-                        queryString.append("p.product.price BETWEEN 2000000 AND 4000000");
+                        queryString.append("ps.product.price BETWEEN 2000000 AND 4000000");
                         break;
                     case ">4000k":
-                        queryString.append("p.product.price > 4000000");
+                        queryString.append("ps.product.price > 4000000");
                         break;
                     default:
-                        // No price filter applied
                         break;
                 }
                 first = false;
@@ -131,7 +141,7 @@ public class Product_SelectedDAOImp implements Product_SelectedDAO {
 
         // Filter by gender (if provided)
         if (gender != null && !gender.isEmpty()) {
-            queryString.append(" AND p.product.gender IN (");
+            queryString.append(" AND ps.product.gender IN (");
             boolean first = true;
             for (String g : gender) {
                 if (!first) {
@@ -157,7 +167,7 @@ public class Product_SelectedDAOImp implements Product_SelectedDAO {
 
         // Filter by type (if provided)
         if (type != null && !type.isEmpty()) {
-            queryString.append(" AND p.product.type IN (");
+            queryString.append(" AND ps.product.type IN (");
             boolean first = true;
             for (String t : type) {
                 if (!first) {
@@ -188,16 +198,16 @@ public class Product_SelectedDAOImp implements Product_SelectedDAO {
         if (productStatus != null && !productStatus.isEmpty()) {
             switch (productStatus) {
                 case "In-Stock":
-                    queryString.append(" AND p.product.productStatus = TRUE");
+                    queryString.append(" AND ps.product.productStatus = TRUE");
                     break;
                 case "Out-of-Stock":
-                    queryString.append(" AND p.product.productStatus = FALSE");
+                    queryString.append(" AND ps.product.productStatus = FALSE");
                     break;
                 case "All":
                     // No filter for "All" status, we don't need to add any condition here
                     break;
                 default:
-                    // If the status is unrecognized, no filter is applied
+                    // No filter applied for unrecognized status
                     break;
             }
         }
@@ -206,16 +216,16 @@ public class Product_SelectedDAOImp implements Product_SelectedDAO {
         if (sort != null && !sort.isEmpty()) {
             switch (sort) {
                 case "Product Name A-Z":
-                    queryString.append(" ORDER BY p.product.name ASC");
+                    queryString.append(" ORDER BY ps.product.name ASC");
                     break;
                 case "Product Name Z-A":
-                    queryString.append(" ORDER BY p.product.name DESC");
+                    queryString.append(" ORDER BY ps.product.name DESC");
                     break;
                 case "Price Low to High":
-                    queryString.append(" ORDER BY p.product.price ASC");
+                    queryString.append(" ORDER BY ps.product.price ASC");
                     break;
                 case "Price High to Low":
-                    queryString.append(" ORDER BY p.product.price DESC");
+                    queryString.append(" ORDER BY ps.product.price DESC");
                     break;
                 default:
                     // No sort applied if sort is not provided or recognized
@@ -223,10 +233,13 @@ public class Product_SelectedDAOImp implements Product_SelectedDAO {
             }
         }
 
-        // Create query
+        // Create the query
         Query<Product_Selected> query = session.createQuery(queryString.toString(), Product_Selected.class);
 
-        // Set parameters for name and brands (since they use named parameters)
+        // Set parameters for date, name, and brands
+        if (date != null) {
+            query.setParameter("searchDate", date);
+        }
         if (name != null && !name.isEmpty()) {
             query.setParameter("searchName", "%" + name + "%");
         }

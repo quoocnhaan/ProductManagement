@@ -4,6 +4,8 @@
  */
 package view.component.Product.ImportProduct.ImportProductDetails;
 
+import controller.DAO.GoodsReceiptDAO;
+import controller.DAOImp.GoodsReceiptDAOImp;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
@@ -11,9 +13,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import model.Product;
+import org.hibernate.Session;
+import util.HibernateUtil;
 import view.component.CustomComponent.CustomScrollBarUI;
 import view.component.Product.ImportProduct.ImportProductDetails.Product_Component.ProductList_Component;
 import view.component.Product.ImportProduct.ImportProductDetails.Product_Component.Title.Title_Component;
+
 ;
 
 /**
@@ -107,14 +112,23 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setEditable(String str) {
-        productList_Component.setEditable(str);
-    }
-
     void addNewProduct(Product newProduct, double importPriceValue) {
         productList_Component.addNewProduct(newProduct, importPriceValue);
     }
-    
+
+    void addBrowsedProducts() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
+
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
+        }
+    }
+
+    public void saveImportProducts() {
+        productList_Component.saveImportProducts();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

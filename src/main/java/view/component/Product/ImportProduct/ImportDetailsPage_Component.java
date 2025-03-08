@@ -5,6 +5,7 @@
 package view.component.Product.ImportProduct;
 
 import java.awt.BorderLayout;
+import javax.swing.JDialog;
 
 /**
  *
@@ -12,14 +13,20 @@ import java.awt.BorderLayout;
  */
 public class ImportDetailsPage_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ImportDetailsPage_Component
-     */
-    public ImportDetailsPage_Component() {
+    private ImportDetails_Component importDetails_Component;
+    private Footer footer;
+    private JDialog dialog;
+
+    public ImportDetailsPage_Component(JDialog jDialog) {
         initComponents();
+
+        this.dialog = jDialog;
+        importDetails_Component = new ImportDetails_Component(this);
+        footer = new Footer(this);
+
         setLayout(new BorderLayout());
-        add(new ImportDetails_Component(), BorderLayout.CENTER);
-        add(new Footer(), BorderLayout.SOUTH);
+        add(importDetails_Component, BorderLayout.CENTER);
+        add(footer, BorderLayout.SOUTH);
     }
 
     /**
@@ -42,6 +49,16 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    public void saveImportProducts() {
+        importDetails_Component.saveImportProducts();
+    }
+
+    public void close() {
+        if (dialog != null) {
+            dialog.dispose();
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -20,6 +20,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +45,7 @@ import view.component.Product.Product_Component.Product_Component;
  */
 public class Pagination_Component extends javax.swing.JPanel {
 
+    private Date today = Date.valueOf(LocalDate.now());
     private int currentPage = 1;
     private int itemsPerPage = 6;
     private int maxVisiblePages = 3; // Only show 3 page buttons at once
@@ -247,9 +250,9 @@ public class Pagination_Component extends javax.swing.JPanel {
             ProductDAO productDAO = new ProductDAOImp(session);
             List<Product> productList = null;
             if (isChoosing) {
-                productList = productDAO.getAllAvailable();
+                productList = productDAO.getAvailableProductsByDate(today);
             } else {
-                productList = productDAO.getAll();
+                productList = productDAO.getProductsByDate(today);
             }
             for (Product product : productList) {
                 products.add(new Product_Component(product, this, isChoosing));
@@ -277,11 +280,10 @@ public class Pagination_Component extends javax.swing.JPanel {
             ProductDAO productDAO = new ProductDAOImp(session);
             List<Product> productList = null;
             if (isChoosing) {
-                productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort);
+                productList = productDAO.findByFilter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort);
             } else {
-                productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
+                productList = productDAO.findByFilter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
             }
-            //productList.sort(Comparator.comparing(Product::getId));
 
             for (Product product : productList) {
                 products.add(new Product_Component(product, this, isChoosing));
@@ -468,7 +470,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         products.clear();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Product_SelectedDAO productDAO = new Product_SelectedDAOImp(session);
-            List<Product_Selected> productList = productDAO.findByText(name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
+            List<Product_Selected> productList = productDAO.findByFilter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
             Collections.sort(productList, (Product_Selected ps1, Product_Selected ps2) -> Integer.compare(ps1.getProduct().getId(), ps2.getProduct().getId()));
             for (Product_Selected product : productList) {
                 products.add(new Product_Component(product.getProduct(), this, isChoosing));
@@ -513,6 +515,10 @@ public class Pagination_Component extends javax.swing.JPanel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setToday(Date sqlDate) {
+        today = sqlDate;
     }
 
 

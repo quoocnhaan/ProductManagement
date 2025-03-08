@@ -4,6 +4,7 @@
  */
 package controller.DAO;
 
+import java.sql.Date;
 import java.util.List;
 import model.Product;
 import model.Product_Selected;
@@ -14,11 +15,11 @@ import model.Product_Selected;
  */
 public interface Product_SelectedDAO extends InterfaceDAO<Product_Selected> {
 
-    List<Product_Selected> findByText(String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus);
+    List<Product_Selected> findByFilter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus);
 
     Product_Selected findByProduct(Product product);
 
     void deleteByStatusFalse();
-    
+
     boolean deleteAll();
 }

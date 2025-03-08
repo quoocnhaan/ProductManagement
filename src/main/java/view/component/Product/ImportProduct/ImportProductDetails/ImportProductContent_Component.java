@@ -60,10 +60,6 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
         add(orderProductPage_Component, BorderLayout.CENTER);
     }
 
-    public void setEditable(String str) {
-        orderProductPage_Component.setEditable(str);
-    }
-
     public void transferData(Product newProduct, double importPriceValue) {
         orderProductPage_Component.addNewProduct(newProduct, importPriceValue);
         updateSumaryData(importPriceValue);
@@ -71,6 +67,14 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
 
     private void updateSumaryData(double price) {
         parent.updateSumaryData(price);
+    }
+
+    public void updateDataWhenBrowse() {
+        orderProductPage_Component.addBrowsedProducts();
+    }
+
+    public void saveImportProducts() {
+        orderProductPage_Component.saveImportProducts();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

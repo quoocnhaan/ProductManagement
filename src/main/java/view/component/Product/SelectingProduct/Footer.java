@@ -4,17 +4,19 @@
  */
 package view.component.Product.SelectingProduct;
 
+import controller.Functional.Functional;
+
 /**
  *
  * @author PC
  */
 public class Footer extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Footer
-     */
-    public Footer() {
+    private SelectingProduct_Component parent;
+
+    public Footer(SelectingProduct_Component parent) {
         initComponents();
+        this.parent = parent;
     }
 
     /**
@@ -36,12 +38,22 @@ public class Footer extends javax.swing.JPanel {
         save.setForeground(new java.awt.Color(255, 255, 255));
         save.setText("Save");
         save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
 
         cancel.setBackground(new java.awt.Color(255, 255, 255));
         cancel.setFont(new java.awt.Font("Roboto", 1, 15)); // NOI18N
         cancel.setForeground(new java.awt.Color(51, 51, 51));
-        cancel.setText("Save");
+        cancel.setText("Cancel");
         cancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -64,6 +76,17 @@ public class Footer extends javax.swing.JPanel {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        Functional.clearDataTemp();
+        parent.updateDataWhenBrowse();
+        parent.close();
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+        Functional.clearDataTemp();
+        parent.close();
+    }//GEN-LAST:event_cancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

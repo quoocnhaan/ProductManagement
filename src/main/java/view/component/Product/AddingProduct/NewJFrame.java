@@ -18,7 +18,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new BorderLayout());
-        add(new AddProduct_Component(null));
+        add(new AddNewProduct_Test());
     }
 
     /**
