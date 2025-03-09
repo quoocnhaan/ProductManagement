@@ -23,6 +23,8 @@ public interface ProductDAO extends InterfaceDAO<Product> {
     List<Product> getProductsByDate(Date date);
 
     List<Product> getAvailableProductsByDate(Date date);
+    
+    Product getByCodeAndPrice(String code, double price);
 
     Double findPriceByProductAndDate(int productId, Date receiptDate);
 

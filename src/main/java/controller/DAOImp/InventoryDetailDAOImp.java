@@ -5,8 +5,10 @@
 package controller.DAOImp;
 
 import controller.DAO.InventoryDetailDAO;
+import java.sql.Date;
 import java.util.List;
 import model.InventoryDetail;
+import model.Product;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -80,5 +82,21 @@ public class InventoryDetailDAOImp implements InventoryDetailDAO {
     public List<InventoryDetail> getAll() {
         Query<InventoryDetail> query = session.createQuery("FROM InventoryDetail", InventoryDetail.class);
         return query.list();
+    }
+
+    @Override
+    public InventoryDetail findByProduct(int productId, Date inventoryDate) {
+        String queryString = "SELECT id "
+                + "FROM InventoryDetail id "
+                + "JOIN id.product p "
+                + "JOIN id.inventory i "
+                + "WHERE p.id = :productId AND i.date = :inventoryDate AND p.status IS TRUE";
+
+        Query<InventoryDetail> query = session.createQuery(queryString, InventoryDetail.class);
+        query.setParameter("productId", productId);
+        query.setParameter("inventoryDate", inventoryDate);
+
+        // Return the result list
+        return query.uniqueResultOptional().orElse(null);
     }
 }

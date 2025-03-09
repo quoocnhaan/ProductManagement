@@ -77,7 +77,7 @@ public class Product_Component extends javax.swing.JPanel {
 
     private void addComponents(Product product, double importPriceValue) {
 
-        ProductName_Component productName = new ProductName_Component(product.getName(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
+        ProductName_Component productName = new ProductName_Component(product.getName(), product.getType(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
 
         add(productName);
 
@@ -130,6 +130,7 @@ public class Product_Component extends javax.swing.JPanel {
     public void updateTotal(int quantityValue) {
         double discountPrice = price.getData();
         total.updateTotal(discountPrice * quantityValue);
+        parent.updateTotal(discountPrice * quantityValue);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

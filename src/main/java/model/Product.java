@@ -47,6 +47,9 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
+    @Column(nullable = false)
+    private double importPrice;
+
     private String description;
 
     @Column(nullable = false)
@@ -64,7 +67,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String code, Brand brand, double discount, int gender, byte[] img, double price, String description, int amount, boolean productStatus, int type, boolean status) {
+    public Product(String name, String code, Brand brand, double discount, int gender, byte[] img, double price, double importPrice, String description, int amount, boolean productStatus, int type, boolean status) {
         this.name = name;
         this.code = code;
         this.brand = brand;
@@ -72,11 +75,20 @@ public class Product {
         this.gender = gender;
         this.img = img;
         this.price = price;
+        this.importPrice = importPrice;
         this.description = description;
         this.amount = amount;
         this.productStatus = productStatus;
         this.type = type;
         this.status = status;
+    }
+
+    public double getImportPrice() {
+        return importPrice;
+    }
+
+    public void setImportPrice(double importPrice) {
+        this.importPrice = importPrice;
     }
 
     public int getId() {

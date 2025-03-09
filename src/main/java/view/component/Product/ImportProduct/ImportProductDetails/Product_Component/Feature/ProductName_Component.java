@@ -17,9 +17,28 @@ public class ProductName_Component extends javax.swing.JPanel {
     /**
      * Creates new form SubFeature_Component
      */
-    public ProductName_Component(String name, String code, ImageIcon icon) {
+    public ProductName_Component(String name, int type, String code, ImageIcon icon) {
         initComponents();
-        this.name.setText(name);
+
+        String typeStr = "";
+        switch (type) {
+            case 1:
+                typeStr = "10ml";
+                break;
+            case 2:
+                typeStr = "20ml";
+
+                break;
+            case 3:
+                typeStr = "30ml";
+                break;
+            case 4:
+                typeStr = "Full";
+                break;
+            default:
+                break;
+        }
+        this.name.setText(name + " (" + typeStr + ")");
         this.code.setText(code);
         img.setIcon(Functional.scaleImg(img, icon));
     }

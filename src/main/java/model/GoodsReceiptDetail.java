@@ -37,9 +37,6 @@ public class GoodsReceiptDetail {
     private int amount;
 
     @Column(nullable = false)
-    private double price;
-
-    @Column(nullable = false)
     private double total;
 
     @Column(nullable = false)
@@ -48,15 +45,13 @@ public class GoodsReceiptDetail {
     public GoodsReceiptDetail() {
     }
 
-    public GoodsReceiptDetail(GoodsReceipt goodsReceipt, Product product, int amount, double price, double total, boolean status) {
+    public GoodsReceiptDetail(GoodsReceipt goodsReceipt, Product product, int amount, double total, boolean status) {
         this.goodsReceipt = goodsReceipt;
         this.product = product;
         this.amount = amount;
-        this.price = price;
         this.total = total;
         this.status = status;
     }
-
 
     public int getId() {
         return id;
@@ -88,14 +83,6 @@ public class GoodsReceiptDetail {
 
     public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public double getTotal() {

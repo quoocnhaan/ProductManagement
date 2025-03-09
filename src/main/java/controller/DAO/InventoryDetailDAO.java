@@ -4,12 +4,15 @@
  */
 package controller.DAO;
 
+import java.sql.Date;
+import java.util.List;
 import model.InventoryDetail;
+import model.Product;
 
 /**
  *
  * @author PC
  */
 public interface InventoryDetailDAO extends InterfaceDAO<InventoryDetail>{
-    
+    InventoryDetail findByProduct(int productId, Date date);
 }

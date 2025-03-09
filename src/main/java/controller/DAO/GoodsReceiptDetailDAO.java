@@ -4,12 +4,15 @@
  */
 package controller.DAO;
 
+import java.sql.Date;
 import model.GoodsReceiptDetail;
 
 /**
  *
  * @author PC
  */
-public interface GoodsReceiptDetailDAO extends InterfaceDAO<GoodsReceiptDetail>{
-    
+public interface GoodsReceiptDetailDAO extends InterfaceDAO<GoodsReceiptDetail> {
+
+    GoodsReceiptDetail findByProduct(int productId, Date date);
+
 }

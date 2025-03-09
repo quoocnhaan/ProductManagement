@@ -29,7 +29,6 @@ import util.HibernateUtil;
 import view.component.Btn.IconButton;
 import view.component.Btn.RoundedButton;
 import view.component.Product.ImportProduct.ImportDetailsPage_Component;
-import view.component.Product.ImportProduct.ImportDetails_Component;
 
 /**
  *
@@ -100,6 +99,8 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
     }
 
     private void addEvents() {
+        HeaderTitle_Component headerTitle_Component = this;
+        
         createBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,7 +111,7 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
 
-                addProductDialog.add(new ImportDetailsPage_Component(addProductDialog));
+                addProductDialog.add(new ImportDetailsPage_Component(addProductDialog, headerTitle_Component));
 
                 addProductDialog.setVisible(true);
             }

@@ -4,8 +4,10 @@
  */
 package view.component.Product.Pagination;
 
+import controller.DAO.InventoryDAO;
 import controller.DAO.ProductDAO;
 import controller.DAO.Product_SelectedDAO;
+import controller.DAOImp.InventoryDAOImp;
 import controller.DAOImp.ProductDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Session.SharedData;
@@ -244,15 +246,34 @@ public class Pagination_Component extends javax.swing.JPanel {
         status = "All";
     }
 
+//    private void fetchData() {
+//        products.clear();
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            ProductDAO productDAO = new ProductDAOImp(session);
+//            List<Product> productList = null;
+//            if (isChoosing) {
+//                productList = productDAO.getAvailableProductsByDate(today);
+//            } else {
+//                productList = productDAO.getProductsByDate(today);
+//            }
+//            for (Product product : productList) {
+//                products.add(new Product_Component(product, this, isChoosing));
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println(e + getClass().getName());
+//        }
+//    }
     private void fetchData() {
         products.clear();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            ProductDAO productDAO = new ProductDAOImp(session);
+            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
             List<Product> productList = null;
+            
             if (isChoosing) {
-                productList = productDAO.getAvailableProductsByDate(today);
+                productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort);
             } else {
-                productList = productDAO.getProductsByDate(today);
+                productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
             }
             for (Product product : productList) {
                 products.add(new Product_Component(product, this, isChoosing));
@@ -386,6 +407,7 @@ public class Pagination_Component extends javax.swing.JPanel {
                 checkbox.doClick();
                 SharedData.selectedAmount = 0;
                 updateSelectedAmount();
+                parent.updateData();
                 return;
             }
         } else {
@@ -395,7 +417,7 @@ public class Pagination_Component extends javax.swing.JPanel {
             } catch (Exception e) {
                 System.out.println(e + getClass().getName());
             }
-            fetchDataWithOptions();
+            fetchData();
         }
         computePages();
 
@@ -410,7 +432,7 @@ public class Pagination_Component extends javax.swing.JPanel {
 
     public void resetDataWhenAdded() {
         if (!SharedData.beingSelected) {
-            fetchDataWithOptions();
+            fetchData();
             computePages();
             updateProductPages();
             updatePaginationControls();
@@ -419,7 +441,7 @@ public class Pagination_Component extends javax.swing.JPanel {
 
     public void resetDataWhenEdit() {
         if (!SharedData.beingSelected) {
-            fetchDataWithOptions();
+            fetchData();
         } else {
             fetchDataInSelectedProductWithOptions();
         }
@@ -444,7 +466,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         if (SharedData.beingSelected) {
             fetchDataInSelectedProductWithOptions();
         } else {
-            fetchDataWithOptions();
+            fetchData();
         }
         computePages();
         updateProductPages();

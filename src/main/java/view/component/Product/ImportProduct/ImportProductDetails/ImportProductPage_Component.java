@@ -40,7 +40,7 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
 
     private void addComponents() {
         title_Component = new Title_Component();
-        productList_Component = new ProductList_Component();
+        productList_Component = new ProductList_Component(this);
 
         JScrollPane scrollPane = new JScrollPane(productList_Component);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -128,6 +128,10 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
 
     public void saveImportProducts() {
         productList_Component.saveImportProducts();
+    }
+    
+    public void updateTotal(double price) {
+        parent.updateTotal(price);
     }
 
 

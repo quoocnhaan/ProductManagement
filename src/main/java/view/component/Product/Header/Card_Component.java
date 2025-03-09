@@ -4,11 +4,16 @@
  */
 package view.component.Product.Header;
 
+import controller.DAO.InventoryDAO;
 import controller.DAO.ProductDAO;
+import controller.DAOImp.InventoryDAOImp;
 import controller.DAOImp.ProductDAOImp;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+import model.Inventory;
 import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -26,7 +31,7 @@ public class Card_Component extends javax.swing.JPanel {
     private RoundedCard outStock;
     private RoundedCard quantity;
     private int totalValue;
-    private int quantityValue;
+    private int quantityValue = 0;
     private int inStockValue = 0;
     private int outStockValue = 0;
     private int soldValue;
@@ -95,14 +100,16 @@ public class Card_Component extends javax.swing.JPanel {
     }
 
     public void updateData() {
+        Date date = Date.valueOf(LocalDate.now());
         inStockValue = 0;
         quantityValue = 0;
         outStockValue = 0;
         soldValue = 0;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            ProductDAO productDAO = new ProductDAOImp(session);
-            List<Product> products = productDAO.getAll();
+            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+            List<Product> products = inventoryDAO.getAllProducts(date);
+            Inventory inventory = inventoryDAO.findByDate(date);
 
             for (Product product : products) {
                 if (product.getProductStatus()) {
@@ -117,7 +124,8 @@ public class Card_Component extends javax.swing.JPanel {
             sold.updateValue(soldValue);
             inStock.updateValue(inStockValue);
             outStock.updateValue(outStockValue);
-            quantity.updateValue(quantityValue);;
+            quantity.updateValue(quantityValue);
+            inventory.setAmount(quantityValue);
 
         } catch (Exception e) {
             System.out.println(e + getClass().getName());

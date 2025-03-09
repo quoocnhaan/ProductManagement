@@ -415,4 +415,14 @@ public class ImportSumary_Component extends javax.swing.JPanel {
             }
         });
     }
+
+    void updateTotal(double price) {
+        subtotalValue += price;
+        subtotal.setText(formatPrice(subtotalValue));
+        
+        
+        double total = ((subtotalValue + deliveryFeeValue) * (1 - discountValue / 100)) - otherDiscountValue;
+        totalValue = total;
+        this.total.setText(formatPrice(total));
+    }
 }

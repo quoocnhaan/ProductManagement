@@ -5,6 +5,7 @@
 package controller.DAOImp;
 
 import controller.DAO.GoodsReceiptDetailDAO;
+import java.sql.Date;
 import java.util.List;
 import model.GoodsReceiptDetail;
 import org.hibernate.Session;
@@ -81,4 +82,14 @@ public class GoodsReceiptDetailDAOImp implements GoodsReceiptDetailDAO {
         Query<GoodsReceiptDetail> query = session.createQuery("FROM GoodsReceiptDetail", GoodsReceiptDetail.class);
         return query.list();
     }
+
+    @Override
+    public GoodsReceiptDetail findByProduct(int productId, Date date) {
+        String hql = "FROM GoodsReceiptDetail grd WHERE grd.product.id = :productId AND grd.goodsReceipt.date = :date AND grd.product.status IS TRUE";
+        Query<GoodsReceiptDetail> query = session.createQuery(hql, GoodsReceiptDetail.class);
+        query.setParameter("productId", productId);
+        query.setParameter("date", date);
+        return query.uniqueResult();
+    }
+
 }

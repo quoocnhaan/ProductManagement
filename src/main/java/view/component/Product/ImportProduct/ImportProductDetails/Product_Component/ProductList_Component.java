@@ -6,20 +6,26 @@ package view.component.Product.ImportProduct.ImportProductDetails.Product_Compon
 
 import controller.DAO.GoodsReceiptDAO;
 import controller.DAO.GoodsReceiptDetailDAO;
+import controller.DAO.InventoryDAO;
+import controller.DAO.InventoryDetailDAO;
 import controller.DAO.ProductDAO;
 import controller.DAOImp.GoodsReceiptDAOImp;
 import controller.DAOImp.GoodsReceiptDetailDAOImp;
+import controller.DAOImp.InventoryDAOImp;
+import controller.DAOImp.InventoryDetailDAOImp;
 import controller.DAOImp.ProductDAOImp;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import model.GoodsReceipt;
 import model.GoodsReceiptDetail;
+import model.Inventory;
+import model.InventoryDetail;
 import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
+import view.component.Product.ImportProduct.ImportProductDetails.ImportProductPage_Component;
 
 /**
  *
@@ -28,9 +34,11 @@ import util.HibernateUtil;
 public class ProductList_Component extends javax.swing.JPanel {
 
     private List<Product_Component> list = new ArrayList<>();
+    private ImportProductPage_Component parent;
 
-    public ProductList_Component() {
+    public ProductList_Component(ImportProductPage_Component parent) {
         initComponents();
+        this.parent = parent;
         setLayout(new GridLayout(0, 1, 0, 10));
     }
 
@@ -73,9 +81,17 @@ public class ProductList_Component extends javax.swing.JPanel {
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
             GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
             ProductDAO productDAO = new ProductDAOImp(session);
+            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+            InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
 
             Date curDate = new java.sql.Date(System.currentTimeMillis());
             GoodsReceipt goodsReceipt = goodsReceiptDAO.findByDate(curDate);
+            Inventory inventory = inventoryDAO.findByDate(curDate);
+
+            if (inventory == null) {
+                inventory = new Inventory(curDate, 0, true);
+                inventoryDAO.add(inventory);
+            }
 
             if (goodsReceipt == null) {
                 // Create a new GoodsReceipt and save it before creating GoodsReceiptDetail
@@ -92,20 +108,42 @@ public class ProductList_Component extends javax.swing.JPanel {
                 double importPrice = product_Component.getImportPriceValue();
                 totalPrice += importPrice * quantity;
 
-                Product existingProduct = productDAO.get(product.getId());
+                Product existingProduct = productDAO.getByCodeAndPrice(product.getCode(), product.getImportPrice());
                 if (existingProduct != null) {
                     // Update product quantity
-                    int curQuantity = existingProduct.getAmount();
-                    existingProduct.setAmount(curQuantity + quantity);
+                    existingProduct.setAmount(existingProduct.getAmount() + quantity);
                     productDAO.update(existingProduct);
+
+                    InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(existingProduct.getId(), curDate);
+                    if (inventoryDetail == null) {
+                        inventoryDetail = new InventoryDetail(inventory, existingProduct, existingProduct.getImportPrice() * quantity, quantity, 0, true);
+                        inventoryDetailDAO.add(inventoryDetail);
+                    } else {
+                        inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() + quantity);
+                        inventoryDetail.setPrice(inventoryDetail.getAmountStart() * existingProduct.getImportPrice());
+                    }
+
+                    GoodsReceiptDetail goodsReceiptDetail = goodsReceiptDetailDAO.findByProduct(existingProduct.getId(), curDate);
+                    goodsReceiptDetail.setAmount(goodsReceiptDetail.getAmount() + quantity);
+                    goodsReceiptDetail.setTotal(goodsReceiptDetail.getAmount() * importPrice);
+
+                    goodsReceiptDetailDAO.add(goodsReceiptDetail);
+
                 } else {
                     product.setAmount(quantity);
                     productDAO.add(product);
-                }
 
-                // Now that goodsReceipt has been saved or updated, you can safely create GoodsReceiptDetail
-                GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, quantity, importPrice, importPrice * quantity, true);
-                goodsReceiptDetailDAO.add(goodsReceiptDetail);
+                    InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(product.getId(), curDate);
+                    if (inventoryDetail == null) {
+                        inventoryDetail = new InventoryDetail(inventory, product, product.getImportPrice() * quantity, quantity, 0, true);
+                        inventoryDetailDAO.add(inventoryDetail);
+                    } else {
+                        inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() + quantity);
+                        inventoryDetail.setPrice(inventoryDetail.getAmountStart() * product.getImportPrice());
+                    }
+                    GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, quantity, importPrice * quantity, true);
+                    goodsReceiptDetailDAO.add(goodsReceiptDetail);
+                }
             }
 
             // Update the GoodsReceipt with the total quantity and price after looping through all products
@@ -113,9 +151,16 @@ public class ProductList_Component extends javax.swing.JPanel {
             goodsReceipt.setTotalPrices(goodsReceipt.getTotalPrices() + totalPrice);
             goodsReceiptDAO.update(goodsReceipt);  // Update the existing GoodsReceipt
 
+            inventory.setAmount(inventory.getAmount() + totalQuantity);
+            inventoryDAO.update(inventory);
+
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
+    }
+
+    void updateTotal(double quantityValue) {
+        parent.updateTotal(quantityValue);
     }
 
 

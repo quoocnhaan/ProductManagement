@@ -716,4 +716,12 @@ public class ProductDAOImp implements ProductDAO {
         return query.uniqueResult();
     }
 
+    @Override
+    public Product getByCodeAndPrice(String code, double price) {
+        Query<Product> query = session.createQuery("FROM Product p WHERE p.code = :code AND p.importPrice = :importPrice AND p.status IS TRUE", Product.class);
+        query.setParameter("code", code);
+        query.setParameter("importPrice", price);  // No space after the colon
+        return query.uniqueResult();
+    }
+
 }

@@ -6,6 +6,7 @@ package view.component.Product.ImportProduct;
 
 import java.awt.BorderLayout;
 import javax.swing.JDialog;
+import view.component.Product.Header.HeaderTitle_Component;
 
 /**
  *
@@ -16,10 +17,12 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
     private ImportDetails_Component importDetails_Component;
     private Footer footer;
     private JDialog dialog;
+    private HeaderTitle_Component parent;
 
-    public ImportDetailsPage_Component(JDialog jDialog) {
+    public ImportDetailsPage_Component(JDialog jDialog, HeaderTitle_Component parent) {
         initComponents();
 
+        this.parent = parent;
         this.dialog = jDialog;
         importDetails_Component = new ImportDetails_Component(this);
         footer = new Footer(this);
@@ -52,6 +55,7 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
 
     public void saveImportProducts() {
         importDetails_Component.saveImportProducts();
+        parent.resetDataWhenAdded();
     }
 
     public void close() {
