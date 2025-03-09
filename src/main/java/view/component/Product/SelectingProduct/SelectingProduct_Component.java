@@ -22,7 +22,6 @@ public class SelectingProduct_Component extends javax.swing.JPanel {
 
     public SelectingProduct_Component(JDialog jDialog, Header_Component parent) {
         initComponents();
-
         this.jDialog = jDialog;
         this.parent = parent;
         paginationWithSearchBar = new PaginationWithSearchBar(null, true);

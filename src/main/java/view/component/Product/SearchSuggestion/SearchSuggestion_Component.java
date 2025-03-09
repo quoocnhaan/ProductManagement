@@ -214,4 +214,8 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private view.component.Product.SearchSuggestion.MyTextField txtSearch;
     // End of variables declaration//GEN-END:variables
+
+    public void updateSearchData() {
+        search.setData(search(""));
+    }
 }

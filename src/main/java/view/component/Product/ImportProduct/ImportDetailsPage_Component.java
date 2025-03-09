@@ -4,6 +4,7 @@
  */
 package view.component.Product.ImportProduct;
 
+import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import javax.swing.JDialog;
 import view.component.Product.Header.HeaderTitle_Component;
@@ -60,6 +61,7 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
 
     public void close() {
         if (dialog != null) {
+            SharedData.browsedProduct.clear();
             dialog.dispose();
         }
     }

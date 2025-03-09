@@ -60,9 +60,9 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
         add(orderProductPage_Component, BorderLayout.CENTER);
     }
 
-    public void transferData(Product newProduct, double importPriceValue) {
-        orderProductPage_Component.addNewProduct(newProduct, importPriceValue);
-        updateSumaryData(importPriceValue);
+    public void transferData(Product newProduct) {
+        orderProductPage_Component.addNewProduct(newProduct);
+        updateSumaryData(newProduct.getImportPrice());
     }
 
     private void updateSumaryData(double price) {
@@ -73,8 +73,8 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
         orderProductPage_Component.addBrowsedProducts();
     }
 
-    public void saveImportProducts() {
-        orderProductPage_Component.saveImportProducts();
+    public void saveImportProducts(double totalPrice) {
+        orderProductPage_Component.saveImportProducts(totalPrice);
     }
 
     void updateTotal(double price) {

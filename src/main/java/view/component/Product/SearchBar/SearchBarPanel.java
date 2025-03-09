@@ -321,6 +321,10 @@ public class SearchBarPanel extends javax.swing.JPanel {
         }
         parent.resetDataWhenDeleted();
     }
+
+    public void updateSearchData() {
+        searchSuggestion_Component.updateSearchData();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

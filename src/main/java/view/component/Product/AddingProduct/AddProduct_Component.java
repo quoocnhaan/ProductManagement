@@ -513,7 +513,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
                 }
 
                 Product newProduct = new Product(productName, productCode, brand, 0, gender, imgByte, salePriceValue, importPriceValue, description, 100, true, type, true);
-                parent.transferData(newProduct, importPriceValue);
+                parent.transferData(newProduct);
 
                 close();
 

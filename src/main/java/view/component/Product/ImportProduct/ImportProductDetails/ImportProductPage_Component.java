@@ -5,14 +5,20 @@
 package view.component.Product.ImportProduct.ImportProductDetails;
 
 import controller.DAO.GoodsReceiptDAO;
+import controller.DAO.ProductDAO;
+import controller.DAO.Product_SelectedDAO;
 import controller.DAOImp.GoodsReceiptDAOImp;
+import controller.DAOImp.ProductDAOImp;
+import controller.DAOImp.Product_SelectedDAOImp;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import model.Product;
+import model.Product_Selected;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.CustomComponent.CustomScrollBarUI;
@@ -112,29 +118,36 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    void addNewProduct(Product newProduct, double importPriceValue) {
-        productList_Component.addNewProduct(newProduct, importPriceValue);
+    void addNewProduct(Product newProduct) {
+        productList_Component.addNewProduct(newProduct);
     }
 
     void addBrowsedProducts() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
+            Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
+            ProductDAO productDAO = new ProductDAOImp(session);
+
+            List<Product_Selected> products = product_SelectedDAO.getAll();
+            
+            for (Product_Selected product : products) {
+                Product product1 = productDAO.get(product.getProduct().getId());
+                addNewProduct(product1);
+                updateTotal(product1.getImportPrice());
+            }       
 
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
     }
 
-    public void saveImportProducts() {
-        productList_Component.saveImportProducts();
+    public void saveImportProducts(double totalPrice) {
+        productList_Component.saveImportProducts(totalPrice);
     }
-    
+
     public void updateTotal(double price) {
         parent.updateTotal(price);
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

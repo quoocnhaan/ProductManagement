@@ -4,7 +4,11 @@
  */
 package view.component.Product.Header;
 
+import controller.DAO.InventoryDAO;
+import controller.DAO.InventoryDetailDAO;
 import controller.DAO.ProductDAO;
+import controller.DAOImp.InventoryDAOImp;
+import controller.DAOImp.InventoryDetailDAOImp;
 import controller.DAOImp.ProductDAOImp;
 import controller.Session.ExcelExporter;
 import java.awt.BorderLayout;
@@ -15,6 +19,8 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -23,6 +29,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import model.Inventory;
+import model.InventoryDetail;
 import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -39,6 +47,7 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
     private RoundedButton createBtn;
     private IconButton exportBtn;
     private Header_Component parent;
+    private IconButton transferBtn;
 
     public HeaderTitle_Component(Header_Component parent) {
         initComponents();
@@ -81,15 +90,20 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
 
         // Panel to hold buttons on the right
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT)); // Align buttons to the right
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 0)); // Align buttons to the right
         buttonPanel.setBackground(Color.WHITE);
 
         // Add button
         createBtn = new RoundedButton("Import product", true, 15, 35);
+
         ImageIcon icon = new ImageIcon(getClass().getResource("/icon/export.png"));
         exportBtn = new IconButton("Export", icon, true);
 
+        ImageIcon icon2 = new ImageIcon(getClass().getResource("/icon/transfer.png"));
+        transferBtn = new IconButton("Close Day & Transfer", icon2, true);
+
         // Add buttons to the panel
+        buttonPanel.add(transferBtn);
         buttonPanel.add(exportBtn);
         buttonPanel.add(createBtn);
 
@@ -100,7 +114,7 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
 
     private void addEvents() {
         HeaderTitle_Component headerTitle_Component = this;
-        
+
         createBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -159,6 +173,98 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                     System.out.println(exception + getClass().getName());
                 }
 
+            }
+        });
+
+        transferBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Show a confirmation dialog
+                int result = JOptionPane.showConfirmDialog(
+                        null,
+                        "Are you sure you want to transfer the inventory data to the next day?",
+                        "Confirm Transfer",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (result == JOptionPane.YES_OPTION) {
+                    try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                        // Get today's and next day's dates
+                        Date today = Date.valueOf(LocalDate.now());
+                        LocalDate nextDay = LocalDate.now().plusDays(1);
+                        Date nextDayDate = Date.valueOf(nextDay);
+
+                        // Fetch today's inventory
+                        InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+                        Inventory inventory = inventoryDAO.findByDate(today);
+
+                        // Fetch all inventory details for today's inventory
+                        InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
+                        List<InventoryDetail> details = inventoryDetailDAO.findDetailsByInventory(inventory);
+
+                        int totalAmount = 0;
+
+                        // Loop through inventory details, update amount_end where necessary
+                        for (InventoryDetail detail : details) {
+                            totalAmount += detail.getAmountEnd();  // Compute total amount for today's inventory
+                            inventoryDetailDAO.update(detail);  // Save changes to detail
+                        }
+
+                        // Check if inventory for the next day already exists
+                        Inventory nextDayInventory = inventoryDAO.findByDate(nextDayDate);
+
+                        if (nextDayInventory != null) {
+                            // Update the next day's inventory if it exists
+                            nextDayInventory.setAmount(totalAmount);  // Update total amount for the next day
+                            inventoryDAO.update(nextDayInventory);
+
+                            // Update existing InventoryDetail records for the next day
+                            List<InventoryDetail> nextDayDetails = inventoryDetailDAO.findDetailsByInventory(nextDayInventory);
+
+                            for (InventoryDetail nextDayDetail : nextDayDetails) {
+                                // Find the corresponding detail from today
+                                for (InventoryDetail detail : details) {
+                                    if (detail.getProduct().equals(nextDayDetail.getProduct())) {
+                                        // Update amount_start with today's amount_end
+                                        nextDayDetail.setAmountStart(detail.getAmountEnd());
+                                        nextDayDetail.setAmountEnd(detail.getAmountEnd());
+                                        nextDayDetail.setPrice(detail.getPrice());  // Carry over price if needed
+                                        nextDayDetail.setStatus(detail.isStatus());  // Carry over status if needed
+                                        inventoryDetailDAO.update(nextDayDetail);  // Save changes to detail
+                                        break;
+                                    }
+                                }
+                            }
+                        } else {
+                            // If the next day's inventory does not exist, create it
+                            Inventory newInventory = new Inventory();
+                            newInventory.setDate(nextDayDate);
+                            newInventory.setStatus(inventory.isStatus());  // Carry over the same status
+                            newInventory.setAmount(totalAmount);  // Total amount computed above
+                            inventoryDAO.add(newInventory);
+
+                            // Create new InventoryDetail records for the next day
+                            for (InventoryDetail detail : details) {
+                                InventoryDetail newDetail = new InventoryDetail();
+                                newDetail.setInventory(newInventory);
+                                newDetail.setProduct(detail.getProduct());
+                                newDetail.setPrice(detail.getPrice());
+                                newDetail.setAmountStart(detail.getAmountEnd());  // Carry over amount_end as amount_start
+                                newDetail.setAmountEnd(detail.getAmountEnd());  // Initialize amount_end to 0 for the new day
+                                newDetail.setStatus(detail.isStatus());
+
+                                inventoryDetailDAO.add(newDetail);  // Save new inventory detail
+                            }
+                        }
+
+                        JOptionPane.showMessageDialog(null, "Transfer data successfully!");
+
+                    } catch (Exception exception) {
+                        exception.printStackTrace();  // Handle exception
+                    }
+                } else {
+                    System.out.println("Transfer canceled by the user.");
+                }
             }
         });
 

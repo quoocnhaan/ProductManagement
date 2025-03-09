@@ -95,9 +95,9 @@ public class Functional {
 
     public static void clearDataTemp() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
             Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
             product_SelectedDAO.deleteAll();
+            SharedData.selectedAmount = 0;
         } catch (Exception e) {
         }
     }

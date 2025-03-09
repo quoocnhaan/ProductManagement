@@ -266,12 +266,14 @@ public class InventoryDAOImp implements InventoryDAO {
         return query.getResultList();
     }
 
+
+
     @Override
-    public List<Product> findByFiter(Date date, String name, List<String> brands, List<String> priceRanges, List<String> gender, List<String> type, String sort) {
+    public List<Product> findByFiter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, List<Product> products) {
         // Start building the query string
         StringBuilder queryString = new StringBuilder("SELECT id.product FROM InventoryDetail id "
                 + "JOIN id.inventory i "
-                + "WHERE i.date = :searchDate AND id.product.status IS TRUE");
+                + "WHERE i.date = :searchDate AND id.product.status = TRUE");
 
         // Filter by name (if provided)
         if (name != null && !name.isEmpty()) {
@@ -284,10 +286,10 @@ public class InventoryDAOImp implements InventoryDAO {
         }
 
         // Filter by price range (if provided)
-        if (priceRanges != null && !priceRanges.isEmpty()) {
+        if (price != null && !price.isEmpty()) {
             queryString.append(" AND (");
             boolean first = true;
-            for (String priceRange : priceRanges) {
+            for (String priceRange : price) {
                 if (!first) {
                     queryString.append(" OR ");
                 }
@@ -314,61 +316,21 @@ public class InventoryDAOImp implements InventoryDAO {
 
         // Filter by gender (if provided)
         if (gender != null && !gender.isEmpty()) {
-            queryString.append(" AND id.product.gender IN (");
-            boolean first = true;
-            for (String g : gender) {
-                if (!first) {
-                    queryString.append(", ");
-                }
-                switch (g) {
-                    case "Men":
-                        queryString.append("1");
-                        break;
-                    case "Women":
-                        queryString.append("2");
-                        break;
-                    case "Unisex":
-                        queryString.append("3");
-                        break;
-                    default:
-                        break;
-                }
-                first = false;
-            }
-            queryString.append(")");
+            queryString.append(" AND id.product.gender IN :searchGender");
         }
 
         // Filter by type (if provided)
         if (type != null && !type.isEmpty()) {
-            queryString.append(" AND id.product.type IN (");
-            boolean first = true;
-            for (String t : type) {
-                if (!first) {
-                    queryString.append(", ");
-                }
-                switch (t) {
-                    case "10ml":
-                        queryString.append("1");
-                        break;
-                    case "20ml":
-                        queryString.append("2");
-                        break;
-                    case "30ml":
-                        queryString.append("3");
-                        break;
-                    case "Full":
-                        queryString.append("4");
-                        break;
-                    default:
-                        break;
-                }
-                first = false;
-            }
-            queryString.append(")");
+            queryString.append(" AND id.product.type IN :searchType");
         }
 
         // Filter by product status
         queryString.append(" AND id.product.productStatus = TRUE");
+
+        // Exclude products already in the provided list
+        if (products != null && !products.isEmpty()) {
+            queryString.append(" AND id.product NOT IN :excludedProducts");
+        }
 
         // Sorting logic
         if (sort != null && !sort.isEmpty()) {
@@ -389,6 +351,7 @@ public class InventoryDAOImp implements InventoryDAO {
                     break;
             }
         }
+
         // Create the query
         Query<Product> query = session.createQuery(queryString.toString(), Product.class);
 
@@ -399,6 +362,15 @@ public class InventoryDAOImp implements InventoryDAO {
         }
         if (brands != null && !brands.isEmpty()) {
             query.setParameter("searchBrands", brands);
+        }
+        if (gender != null && !gender.isEmpty()) {
+            query.setParameter("searchGender", gender);
+        }
+        if (type != null && !type.isEmpty()) {
+            query.setParameter("searchType", type);
+        }
+        if (products != null && !products.isEmpty()) {
+            query.setParameter("excludedProducts", products);
         }
 
         // Return the result list

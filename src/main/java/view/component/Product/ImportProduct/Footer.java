@@ -82,7 +82,7 @@ public class Footer extends javax.swing.JPanel {
     }//GEN-LAST:event_saveActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-
+        parent.close();
     }//GEN-LAST:event_cancelActionPerformed
 
 

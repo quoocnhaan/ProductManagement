@@ -145,6 +145,8 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     public void updateData() {
         if (parent != null) {
             parent.updateData();
+        } if (searchBarPanel != null) {
+            searchBarPanel.updateSearchData();
         }
     }
 

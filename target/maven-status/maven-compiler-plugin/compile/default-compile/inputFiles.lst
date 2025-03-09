@@ -9,6 +9,7 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\Inter
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\InventoryDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\InventoryDetailDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\NavigationItemDAO.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\Product_BrowseDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\Product_SelectedDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAO\ProductDAO.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\BillsDAOImp.java
@@ -21,6 +22,7 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\Go
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\InventoryDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\InventoryDetailDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\NavigationItemDAOImp.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\Product_BrowseDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\Product_SelectedDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\DAOImp\ProductDAOImp.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\controller\Enum\Status.java
@@ -38,6 +40,7 @@ C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\Inventory.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\InventoryDetail.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\NavigationItem.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\Product.java
+C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\Product_Browsed.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\model\Product_Selected.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\util\HibernateUtil.java
 C:\Users\PC\Desktop\Project\ProductManagement\src\main\java\view\component\Btn\FilterButton.java

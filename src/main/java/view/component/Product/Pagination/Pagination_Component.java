@@ -271,7 +271,7 @@ public class Pagination_Component extends javax.swing.JPanel {
             List<Product> productList = null;
             
             if (isChoosing) {
-                productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort);
+                productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, SharedData.browsedProduct);
             } else {
                 productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
             }

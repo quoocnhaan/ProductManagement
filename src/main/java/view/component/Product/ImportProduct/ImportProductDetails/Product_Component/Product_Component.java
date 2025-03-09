@@ -5,10 +5,12 @@
 package view.component.Product.ImportProduct.ImportProductDetails.Product_Component;
 
 import controller.Functional.Functional;
+import controller.Session.SharedData;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JButton;
 import model.Product;
@@ -29,15 +31,14 @@ public class Product_Component extends javax.swing.JPanel {
     private SubFeature_Component price;
     private OneFeature_Component total;
     private ProductList_Component parent;
-    private double importPriceValue;
+    private double totalValue;
 
-    public Product_Component(Product product, double importPriceValue, ProductList_Component parent) {
+    public Product_Component(Product product, ProductList_Component parent) {
         initComponents();
         this.parent = parent;
         this.product = product;
-        this.importPriceValue = importPriceValue;
         setLayout(new FlowLayout(FlowLayout.LEFT, 15, 0));
-        addComponents(product, importPriceValue);
+        addComponents(product);
         customComponents();
         addEvents();
     }
@@ -75,20 +76,21 @@ public class Product_Component extends javax.swing.JPanel {
         this.requestFocusInWindow();
     }//GEN-LAST:event_formMouseClicked
 
-    private void addComponents(Product product, double importPriceValue) {
+    private void addComponents(Product product) {
 
         ProductName_Component productName = new ProductName_Component(product.getName(), product.getType(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
 
         add(productName);
 
         quantity = new QuantityFeature_Component(this);
-        quantity.setMaximumQuantity(product.getAmount());
+        quantity.setMaximumQuantity(100);
         add(quantity);
 
-        price = new SubFeature_Component(importPriceValue, 0);
+        price = new SubFeature_Component(product.getImportPrice(), 0);
         add(price);
 
-        total = new OneFeature_Component(importPriceValue);
+        totalValue = product.getImportPrice();
+        total = new OneFeature_Component(product.getImportPrice());
         add(total);
 
         deleteBtn = new JButton();
@@ -96,13 +98,22 @@ public class Product_Component extends javax.swing.JPanel {
     }
 
     private void addEvents() {
+        Product_Component product_Component = this;
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                parent.removeProduct(product_Component);
+                if (!SharedData.browsedProduct.isEmpty()) {
+                    Iterator<Product> iterator = SharedData.browsedProduct.iterator();
+                    while (iterator.hasNext()) {
+                        Product p = iterator.next();
+                        if (p.getId() == product.getId()) {
+                            iterator.remove();  // Safe removal during iteration
+                        }
+                    }
+                }
             }
         });
-
     }
 
     public Product getProduct() {
@@ -124,13 +135,18 @@ public class Product_Component extends javax.swing.JPanel {
     }
 
     public double getImportPriceValue() {
-        return importPriceValue;
+        return product.getImportPrice();
     }
 
     public void updateTotal(int quantityValue) {
-        double discountPrice = price.getData();
-        total.updateTotal(discountPrice * quantityValue);
-        parent.updateTotal(discountPrice * quantityValue);
+        double newTotal = price.getData() * quantityValue;
+        total.updateTotal(newTotal);
+        parent.updateTotal(newTotal - totalValue);
+        totalValue = newTotal;
+    }
+
+    public double getTotalValue() {
+        return totalValue;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

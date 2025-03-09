@@ -15,6 +15,7 @@ import controller.DAOImp.InventoryDAOImp;
 import controller.DAOImp.InventoryDetailDAOImp;
 import controller.DAOImp.ProductDAOImp;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,18 +66,18 @@ public class ProductList_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void addNewProduct(Product newProduct, double importPriceValue) {
-        Product_Component product_Component = new Product_Component(newProduct, importPriceValue, this);
+    public void addNewProduct(Product newProduct) {
+        Product_Component product_Component = new Product_Component(newProduct, this);
         list.add(product_Component);
         add(product_Component);
         repaint();
         revalidate();
     }
 
-    public void saveImportProducts() {
+    public void saveImportProducts(double totalPrice) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             int totalQuantity = 0;
-            double totalPrice = 0;
+            //double totalPrice = 0;
 
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
             GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
@@ -106,7 +107,6 @@ public class ProductList_Component extends javax.swing.JPanel {
                 totalQuantity += quantity;
 
                 double importPrice = product_Component.getImportPriceValue();
-                totalPrice += importPrice * quantity;
 
                 Product existingProduct = productDAO.getByCodeAndPrice(product.getCode(), product.getImportPrice());
                 if (existingProduct != null) {
@@ -116,10 +116,11 @@ public class ProductList_Component extends javax.swing.JPanel {
 
                     InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(existingProduct.getId(), curDate);
                     if (inventoryDetail == null) {
-                        inventoryDetail = new InventoryDetail(inventory, existingProduct, existingProduct.getImportPrice() * quantity, quantity, 0, true);
+                        inventoryDetail = new InventoryDetail(inventory, existingProduct, existingProduct.getImportPrice() * quantity, quantity, quantity, true);
                         inventoryDetailDAO.add(inventoryDetail);
                     } else {
                         inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() + quantity);
+                        inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() + quantity);
                         inventoryDetail.setPrice(inventoryDetail.getAmountStart() * existingProduct.getImportPrice());
                     }
 
@@ -135,10 +136,11 @@ public class ProductList_Component extends javax.swing.JPanel {
 
                     InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(product.getId(), curDate);
                     if (inventoryDetail == null) {
-                        inventoryDetail = new InventoryDetail(inventory, product, product.getImportPrice() * quantity, quantity, 0, true);
+                        inventoryDetail = new InventoryDetail(inventory, product, product.getImportPrice() * quantity, quantity, quantity, true);
                         inventoryDetailDAO.add(inventoryDetail);
                     } else {
                         inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() + quantity);
+                        inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() + quantity);
                         inventoryDetail.setPrice(inventoryDetail.getAmountStart() * product.getImportPrice());
                     }
                     GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, quantity, importPrice * quantity, true);
@@ -161,6 +163,14 @@ public class ProductList_Component extends javax.swing.JPanel {
 
     void updateTotal(double quantityValue) {
         parent.updateTotal(quantityValue);
+    }
+
+    public void removeProduct(Product_Component product_Component) {
+        list.remove(product_Component);
+        remove(product_Component);
+        repaint();
+        revalidate();
+        parent.updateTotal(-product_Component.getTotalValue());
     }
 
 

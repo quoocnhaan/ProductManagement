@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.Product;
 import view.component.Product.Product_Component.Product_Component;
 
 //import java.util.List;
@@ -27,6 +28,7 @@ public class SharedData {
     public static Color btnDefaultColor = new Color(243, 244, 245);
     public static int selectedAmount = 0;
     public static List<Product_Component> selectedProduct = new ArrayList<>();
+    public static List<Product> browsedProduct = new ArrayList<>();
     public static boolean beingSelected = false;
     public static Date date = Date.valueOf(LocalDate.now());
 }
