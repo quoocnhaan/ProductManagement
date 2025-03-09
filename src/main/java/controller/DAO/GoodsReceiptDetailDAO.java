@@ -5,6 +5,8 @@
 package controller.DAO;
 
 import java.sql.Date;
+import java.util.List;
+import model.GoodsReceipt;
 import model.GoodsReceiptDetail;
 
 /**
@@ -14,5 +16,6 @@ import model.GoodsReceiptDetail;
 public interface GoodsReceiptDetailDAO extends InterfaceDAO<GoodsReceiptDetail> {
 
     GoodsReceiptDetail findByProduct(int productId, Date date);
+    List<GoodsReceiptDetail> findAllByGoodsReceipt(GoodsReceipt goodsReceipt);
 
 }

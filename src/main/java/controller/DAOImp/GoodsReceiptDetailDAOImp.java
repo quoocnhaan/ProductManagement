@@ -7,6 +7,7 @@ package controller.DAOImp;
 import controller.DAO.GoodsReceiptDetailDAO;
 import java.sql.Date;
 import java.util.List;
+import model.GoodsReceipt;
 import model.GoodsReceiptDetail;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -92,4 +93,11 @@ public class GoodsReceiptDetailDAOImp implements GoodsReceiptDetailDAO {
         return query.uniqueResult();
     }
 
+    @Override
+    public List<GoodsReceiptDetail> findAllByGoodsReceipt(GoodsReceipt goodsReceipt) {
+        Query<GoodsReceiptDetail> query = session.createQuery(
+                "FROM GoodsReceiptDetail WHERE goodsReceipt = :goodsReceipt", GoodsReceiptDetail.class);
+        query.setParameter("goodsReceipt", goodsReceipt);
+        return query.getResultList();
+    }
 }

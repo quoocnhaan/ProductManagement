@@ -241,10 +241,10 @@ public class InventoryDAOImp implements InventoryDAO {
                     queryString.append(" ORDER BY id.product.name DESC");
                     break;
                 case "Price Low to High":
-                    queryString.append(" ORDER BY id.price ASC");
+                    queryString.append(" ORDER BY id.product.price ASC");
                     break;
                 case "Price High to Low":
-                    queryString.append(" ORDER BY id.price DESC");
+                    queryString.append(" ORDER BY id.product.price DESC");
                     break;
                 default:
                     break;
@@ -265,8 +265,6 @@ public class InventoryDAOImp implements InventoryDAO {
         // Return the result list
         return query.getResultList();
     }
-
-
 
     @Override
     public List<Product> findByFiter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, List<Product> products) {
@@ -342,10 +340,10 @@ public class InventoryDAOImp implements InventoryDAO {
                     queryString.append(" ORDER BY id.product.name DESC");
                     break;
                 case "Price Low to High":
-                    queryString.append(" ORDER BY id.price ASC");
+                    queryString.append(" ORDER BY id.product.price ASC");
                     break;
                 case "Price High to Low":
-                    queryString.append(" ORDER BY id.price DESC");
+                    queryString.append(" ORDER BY id.product.price DESC");
                     break;
                 default:
                     break;

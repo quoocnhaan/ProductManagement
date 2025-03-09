@@ -6,11 +6,13 @@ package controller.DAOImp;
 
 import controller.DAO.GoodsReceiptDAO;
 import java.sql.Date;
+import java.util.Collections;
 import java.util.List;
 import model.GoodsReceipt;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import util.HibernateUtil;
 
 /**
  *
@@ -96,4 +98,33 @@ public class GoodsReceiptDAOImp implements GoodsReceiptDAO {
         // Get the single result (assuming there's only one matching entry due to the @OneToOne relationship)
         return query.uniqueResult();
     }
+
+    @Override
+    public List<GoodsReceipt> findByFilter(String sort) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            StringBuilder queryString = new StringBuilder("FROM GoodsReceipt");
+
+            // Add sorting logic based on the "sort" parameter
+            if (sort != null && !sort.isEmpty()) {
+                switch (sort) {
+                    case "Price Low to High":
+                        queryString.append(" ORDER BY totalPrices ASC");
+                        break;
+                    case "Price High to Low":
+                        queryString.append(" ORDER BY totalPrices DESC");
+                        break;
+                    // Add other cases if needed
+                    default:
+                        // If sort doesn't match any case, leave the query unchanged
+                        break;
+                }
+            }
+            Query<GoodsReceipt> query = session.createQuery(queryString.toString(), GoodsReceipt.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
 }
