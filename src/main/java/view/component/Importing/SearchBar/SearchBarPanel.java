@@ -33,6 +33,7 @@ import view.component.Importing.Sort.SortPopup;
 public class SearchBarPanel extends javax.swing.JPanel {
 
     private IconButton sortBtn;
+    private IconButton resetBtn;
     private JPanel buttonPanel;
     private PaginationWithSearchBar parent;
     private JPopupMenu popupSort;
@@ -102,6 +103,9 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
         ImageIcon sortIcon = new ImageIcon(getClass().getResource("/icon/sort.png"));
         sortBtn = new IconButton("Sort by", sortIcon, true);
+
+        ImageIcon resetIcon = new ImageIcon(getClass().getResource("/icon/reload.png"));
+        resetBtn = new IconButton("Reset", resetIcon, true);
     }
 
     private void customMyComponents() {
@@ -113,6 +117,8 @@ public class SearchBarPanel extends javax.swing.JPanel {
         date.setFont(new Font("Rotobo", Font.PLAIN, 14));
         date.setDate(null);
         date.setPreferredSize(new Dimension(150, 35));
+
+        buttonPanel.add(resetBtn);
 
         buttonPanel.add(date);
 
@@ -135,13 +141,22 @@ public class SearchBarPanel extends javax.swing.JPanel {
                 if (evt.getPropertyName().equals("date") && !isProgrammaticChange) {
                     // This block will only run if the date was changed by the user
                     java.util.Date selectedDate = ((com.toedter.calendar.JDateChooser) evt.getSource()).getDate();
-
                     if (selectedDate != null) {
                         java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
-                        SharedData.date = sqlDate;
+                        //SharedData.date = sqlDate;
                         parent.sortByDate(sqlDate);
+                    } else {
+                        //SharedData.date = null;
+                        parent.sortByDate(null);
                     }
                 }
+            }
+        });
+
+        resetBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                date.setDate(null);
             }
         });
 

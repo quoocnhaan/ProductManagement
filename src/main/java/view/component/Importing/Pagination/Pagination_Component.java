@@ -218,7 +218,6 @@ public class Pagination_Component extends javax.swing.JPanel {
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
 
             List<GoodsReceipt> list = goodsReceiptDAO.getAll();
-
             for (GoodsReceipt goodsReceipt : list) {
                 products.add(new GoodsReceipt_Component(goodsReceipt, this));
             }
@@ -246,12 +245,17 @@ public class Pagination_Component extends javax.swing.JPanel {
 
     private void fetchDataByDate() {
         products.clear();
+        if (today == null) {
+            fetchData();
+            return;
+        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
 
             GoodsReceipt goodsReceipt = goodsReceiptDAO.findByDate(today);
-
-            products.add(new GoodsReceipt_Component(goodsReceipt, this));
+            if (goodsReceipt != null) {
+                products.add(new GoodsReceipt_Component(goodsReceipt, this));
+            }
 
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
@@ -311,18 +315,29 @@ public class Pagination_Component extends javax.swing.JPanel {
     }
 
     public void resetDataWhenAdded() {
-        
+
         // if date is null -> fetch by sort
         // else -> fetch by date
-        
-        fetchData();
+        if (today == null) {
+            fetchDataBySort();
+        } else {
+            fetchDataByDate();
+        }
+        //fetchData();
         computePages();
         updateProductPages();
         updatePaginationControls();
     }
 
     public void resetDataWhenEdit() {
-        fetchData();
+
+        if (today == null) {
+            fetchDataBySort();
+        } else {
+            fetchDataByDate();
+        }
+
+        //fetchData();
         updatePaginationControls();
         parent.updateData();
     }

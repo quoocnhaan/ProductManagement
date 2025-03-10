@@ -19,7 +19,7 @@ public interface InventoryDAO extends InterfaceDAO<Inventory> {
 
     List<Product> findByFiter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus);
 
-    List<Product> findByFiter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, List<Product> products);
+    List<Product> findByFiter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus, List<Product> products);
 
     List<Product> getAllProducts(Date date);
 }

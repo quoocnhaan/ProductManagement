@@ -193,6 +193,7 @@ public class GoodsReceipt_Component extends javax.swing.JPanel {
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 addProductDialog.setResizable(false);
                 //addProductDialog.add(new EditProduct_Component(parent, goodsReceipt, addProductDialog));
+                System.out.println(parent);
                 addProductDialog.add(new ImportDetailsPage_Component(parent, goodsReceipt, addProductDialog));
 
                 addProductDialog.setVisible(true);

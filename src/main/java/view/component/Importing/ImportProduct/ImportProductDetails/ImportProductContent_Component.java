@@ -5,6 +5,7 @@
 package view.component.Importing.ImportProduct.ImportProductDetails;
 
 import java.awt.BorderLayout;
+import model.GoodsReceipt;
 import model.Product;
 import view.component.Importing.ImportProduct.ImportDetails_Component;
 import view.component.Importing.ImportProduct.ImportProductDetails.Header_Component.Header_Component;
@@ -24,6 +25,14 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
         this.parent = parent;
         setLayout(new BorderLayout(0, 15));
         initData();
+        addComponents();
+    }
+
+    public ImportProductContent_Component(ImportDetails_Component parent, GoodsReceipt goodsReceipt) {
+        initComponents();
+        this.parent = parent;
+        setLayout(new BorderLayout(0, 15));
+        initData(goodsReceipt);
         addComponents();
     }
 
@@ -73,12 +82,21 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
         orderProductPage_Component.addBrowsedProducts();
     }
 
-    public void saveImportProducts(double totalPrice) {
-        orderProductPage_Component.saveImportProducts(totalPrice);
+    public void saveImportProducts(double totalPrice, double discount, double deliveryFee, double otherDiscount) {
+        orderProductPage_Component.saveImportProducts(totalPrice, discount, deliveryFee, otherDiscount);
     }
 
     void updateTotal(double price) {
         parent.updateTotal(price);
+    }
+
+    private void initData(GoodsReceipt goodsReceipt) {
+        header_Component = new Header_Component(this);
+        orderProductPage_Component = new ImportProductPage_Component(this, goodsReceipt);
+    }
+
+    public void updateImportProducts(GoodsReceipt goodsReceipt, double discount, int debugGraphicsOptions, double otherDiscount, double totalPrice) {
+        orderProductPage_Component.updateImportProducts(goodsReceipt, discount, debugGraphicsOptions, otherDiscount, totalPrice);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

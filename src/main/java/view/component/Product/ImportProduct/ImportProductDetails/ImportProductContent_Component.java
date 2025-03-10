@@ -73,12 +73,12 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
         orderProductPage_Component.addBrowsedProducts();
     }
 
-    public void saveImportProducts(double totalPrice) {
-        orderProductPage_Component.saveImportProducts(totalPrice);
-    }
-
     void updateTotal(double price) {
         parent.updateTotal(price);
+    }
+
+    public void saveImportProducts(double totalPrice, double discount, double deliveryFee, double otherDiscount) {
+        orderProductPage_Component.saveImportProducts(totalPrice, discount, deliveryFee, otherDiscount);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

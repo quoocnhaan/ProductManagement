@@ -27,6 +27,14 @@ public class QuantityFeature_Component extends javax.swing.JPanel {
         quantity.setText("1");
     }
 
+    public QuantityFeature_Component(Product_Component parent, int amount) {
+        initComponents();
+        this.parent = parent;
+        customComponents();
+        quantity.setText(amount + "");
+        parent.updateTotal(amount);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

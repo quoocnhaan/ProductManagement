@@ -44,7 +44,6 @@ import view.component.Importing.ImportProduct.ImportDetailsPage_Component;
  */
 public class HeaderTitle_Component extends javax.swing.JPanel {
 
-    private RoundedButton createBtn;
     private IconButton exportBtn;
     private Header_Component parent;
     private IconButton transferBtn;
@@ -94,8 +93,6 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
         buttonPanel.setBackground(Color.WHITE);
 
         // Add button
-        createBtn = new RoundedButton("Import product", true, 15, 35);
-
         ImageIcon icon = new ImageIcon(getClass().getResource("/icon/export.png"));
         exportBtn = new IconButton("Export", icon, true);
 
@@ -105,7 +102,6 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
         // Add buttons to the panel
         buttonPanel.add(transferBtn);
         buttonPanel.add(exportBtn);
-        buttonPanel.add(createBtn);
 
         mainPanel.add(buttonPanel, BorderLayout.EAST);
 
@@ -113,24 +109,6 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
     }
 
     private void addEvents() {
-        HeaderTitle_Component headerTitle_Component = this;
-
-        createBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Create a JDialog for the popup
-                JDialog addProductDialog = new JDialog((Frame) null, "Import Product", true);  // true for modal
-                addProductDialog.setSize(1280, 730);
-                addProductDialog.setResizable(false);
-                addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
-                addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
-
-                addProductDialog.add(new ImportDetailsPage_Component(addProductDialog, headerTitle_Component));
-
-                addProductDialog.setVisible(true);
-            }
-        });
-
         exportBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

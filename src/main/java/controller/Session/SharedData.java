@@ -30,5 +30,5 @@ public class SharedData {
     public static List<Product_Component> selectedProduct = new ArrayList<>();
     public static List<Product> browsedProduct = new ArrayList<>();
     public static boolean beingSelected = false;
-    public static Date date = Date.valueOf(LocalDate.now());
+    //public static Date date = Date.valueOf(LocalDate.now());
 }

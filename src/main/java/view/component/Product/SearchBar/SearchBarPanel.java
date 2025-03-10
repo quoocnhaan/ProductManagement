@@ -221,7 +221,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
                     if (selectedDate != null) {
                         java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
-                        SharedData.date = sqlDate;
+                        //SharedData.date = sqlDate;
                         parent.sortByDate(sqlDate);
                     }
                 }

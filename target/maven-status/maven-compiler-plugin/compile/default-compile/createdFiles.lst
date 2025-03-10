@@ -2,6 +2,7 @@ view\component\CustomComponent\ImageLabel.class
 view\component\Product\SearchSuggestion\EventClick.class
 view\component\Importing\AddingProduct\AddProduct_Component$9.class
 view\component\Importing\Feature\GoodsReceiptId_Component.class
+view\component\Importing\ImportProduct\ImportProductDetails\ImportProductPage_Component$2.class
 view\component\Product\AddingProduct\EditProduct_Component$8.class
 view\component\Importing\AddingProduct\EditProduct_Component$7.class
 view\component\Importing\ImportProduct\Footer$2.class
@@ -212,7 +213,6 @@ view\component\Order\OrderDetails\OrderOtherConent\CustomerDetails_Component$3.c
 view\component\Product\AddingProduct\EditProduct_Component$2.class
 view\component\Product\ImportProduct\ImportSumary_Component.class
 view\component\Importing\ImportProduct\ImportProductDetails\Product_Component\Feature\SubFeature_Component.class
-view\component\Importing\Header\HeaderTitle_Component$3.class
 controller\DAO\BrandDAO.class
 view\component\Importing\AddingProduct\AddNewProduct_Test$2.class
 view\component\Product\ImportProduct\ImportSumary_Component$3.class
@@ -280,6 +280,7 @@ view\component\Product\Product_Component\ProductList_Component.class
 view\component\Product\ImportProduct\ImportSumary_Component$5.class
 view\component\Product\ImportProduct\NewJFrame.class
 view\component\Importing\AddingProduct\EditProduct_Component$4.class
+view\component\Importing\SearchBar\SearchBarPanel$4.class
 view\component\Product\SearchBar\SearchBarPanel$5.class
 view\component\Importing\AddingProduct\AddProduct_Component$6.class
 view\component\Product\AddingProduct\NewJFrame.class

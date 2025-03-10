@@ -61,7 +61,7 @@ public class ImportDetails_Component extends javax.swing.JPanel {
     }
 
     public void saveImportProducts() {
-        importProductContent_Component.saveImportProducts(importSumary_Component.getTotalPrice());
+        importProductContent_Component.saveImportProducts(importSumary_Component.getTotalPrice(), importSumary_Component.getDiscount(), importSumary_Component.getDeliveryFee(), importSumary_Component.getOtherDiscount());
     }
 
     public void updateTotal(double price) {

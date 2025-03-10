@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import model.GoodsReceipt;
 
 /**
  *
@@ -25,6 +26,9 @@ public class ImportSumary_Component extends javax.swing.JPanel {
     private ImageIcon checkIcon = new ImageIcon(getClass().getResource("/icon/check.png"));
     private EmptyBorder emptyBorder = new EmptyBorder(1, 1, 1, 1);
     private MatteBorder matteBorder = new MatteBorder(0, 0, 1, 0, new Color(60, 63, 65));
+
+    private GoodsReceipt goodsReceipt;
+
     private double discountValue;
     private double deliveryFeeValue;
     private double otherDiscountValue;
@@ -44,6 +48,17 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         subtotalValue = 0;
         this.parent = parent;
         customComponents();
+        addEvents();
+    }
+
+    public ImportSumary_Component(ImportDetails_Component parent, GoodsReceipt goodsReceipt) {
+        initComponents();
+        this.goodsReceipt = goodsReceipt;
+        totalValue = 0;
+        subtotalValue = 0;
+        this.parent = parent;
+        customComponents();
+        initData();
         addEvents();
     }
 
@@ -426,5 +441,28 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
     public double getTotalPrice() {
         return totalValue;
+    }
+
+    public double getDiscount() {
+        return discountValue;
+    }
+
+    public double getDeliveryFee() {
+        return deliveryFeeValue;
+    }
+
+    public double getOtherDiscount() {
+        return otherDiscountValue;
+    }
+
+    private void initData() {
+        discountValue = goodsReceipt.getDiscount();
+        discount.setText(formatPrice(discountValue));
+
+        deliveryFeeValue = goodsReceipt.getDelivertyFee();
+        deliveryFee.setText(formatPrice(deliveryFeeValue));
+
+        otherDiscountValue = goodsReceipt.getOtherDiscount();
+        otherDiscount.setText(formatPrice(otherDiscountValue));
     }
 }

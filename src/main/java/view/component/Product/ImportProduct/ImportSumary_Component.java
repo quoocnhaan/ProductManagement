@@ -427,4 +427,16 @@ public class ImportSumary_Component extends javax.swing.JPanel {
     public double getTotalPrice() {
         return totalValue;
     }
+
+    public double getDiscount() {
+        return discountValue;
+    }
+
+    public double getDeliveryFee() {
+        return deliveryFeeValue;
+    }
+
+    public double getOtherDiscount() {
+        return otherDiscountValue;
+    }
 }

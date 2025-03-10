@@ -140,16 +140,16 @@ public class InventoryDAOImp implements InventoryDAO {
                 }
                 switch (priceRange) {
                     case "<500k":
-                        queryString.append("id.price < 500000");
+                        queryString.append("id.product.price < 500000");
                         break;
                     case "500k-2000k":
-                        queryString.append("id.price BETWEEN 500000 AND 2000000");
+                        queryString.append("id.product.price BETWEEN 500000 AND 2000000");
                         break;
                     case "2000k-4000k":
-                        queryString.append("id.price BETWEEN 2000000 AND 4000000");
+                        queryString.append("id.product.price BETWEEN 2000000 AND 4000000");
                         break;
                     case ">4000k":
-                        queryString.append("id.price > 4000000");
+                        queryString.append("id.product.price > 4000000");
                         break;
                     default:
                         break;
@@ -267,7 +267,7 @@ public class InventoryDAOImp implements InventoryDAO {
     }
 
     @Override
-    public List<Product> findByFiter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, List<Product> products) {
+    public List<Product> findByFiter(Date date, String name, List<String> brands, List<String> price, List<String> gender, List<String> type, String sort, String productStatus, List<Product> products) {
         // Start building the query string
         StringBuilder queryString = new StringBuilder("SELECT id.product FROM InventoryDetail id "
                 + "JOIN id.inventory i "
@@ -293,16 +293,16 @@ public class InventoryDAOImp implements InventoryDAO {
                 }
                 switch (priceRange) {
                     case "<500k":
-                        queryString.append("id.price < 500000");
+                        queryString.append("id.product.price < 500000");
                         break;
                     case "500k-2000k":
-                        queryString.append("id.price BETWEEN 500000 AND 2000000");
+                        queryString.append("id.product.price BETWEEN 500000 AND 2000000");
                         break;
                     case "2000k-4000k":
-                        queryString.append("id.price BETWEEN 2000000 AND 4000000");
+                        queryString.append("id.product.price BETWEEN 2000000 AND 4000000");
                         break;
                     case ">4000k":
-                        queryString.append("id.price > 4000000");
+                        queryString.append("id.product.price > 4000000");
                         break;
                     default:
                         break;
@@ -323,7 +323,21 @@ public class InventoryDAOImp implements InventoryDAO {
         }
 
         // Filter by product status
-        queryString.append(" AND id.product.productStatus = TRUE");
+        if (productStatus != null && !productStatus.isEmpty()) {
+            switch (productStatus) {
+                case "In-Stock":
+                    queryString.append(" AND id.product.productStatus = TRUE");
+                    break;
+                case "Out-of-Stock":
+                    queryString.append(" AND id.product.productStatus = FALSE");
+                    break;
+                case "All":
+                    // No filter for "All" status
+                    break;
+                default:
+                    break;
+            }
+        }
 
         // Exclude products already in the provided list
         if (products != null && !products.isEmpty()) {

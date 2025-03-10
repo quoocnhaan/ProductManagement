@@ -30,6 +30,15 @@ public class GoodsReceipt {
     @Column(nullable = false)
     private int amount;
 
+    @Column(name = "discount", nullable = false)
+    private double discount;
+
+    @Column(name = "deliverty_fee", nullable = false)
+    private double delivertyFee;
+
+    @Column(name = "other_discount", nullable = false)
+    private double otherDiscount;
+
     @Column(name = "total_prices", nullable = false)
     private double totalPrices;
 
@@ -39,11 +48,38 @@ public class GoodsReceipt {
     public GoodsReceipt() {
     }
 
-    public GoodsReceipt(Date date, int amount, double totalPrices, boolean status) {
+    public GoodsReceipt(Date date, int amount, double discount, double delivertyFee, double otherDiscount, double totalPrices, boolean status) {
         this.date = date;
         this.amount = amount;
+        this.discount = discount;
+        this.delivertyFee = delivertyFee;
+        this.otherDiscount = otherDiscount;
         this.totalPrices = totalPrices;
         this.status = status;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getDelivertyFee() {
+        return delivertyFee;
+    }
+
+    public void setDelivertyFee(double delivertyFee) {
+        this.delivertyFee = delivertyFee;
+    }
+
+    public double getOtherDiscount() {
+        return otherDiscount;
+    }
+
+    public void setOtherDiscount(double otherDiscount) {
+        this.otherDiscount = otherDiscount;
     }
 
     public int getId() {
@@ -86,6 +122,4 @@ public class GoodsReceipt {
         this.status = status;
     }
 
-    
 }
-

@@ -4,7 +4,6 @@
  */
 package view.component.Product;
 
-import view.component.Product.PaginationWithSearchBar;
 import java.awt.BorderLayout;
 import java.util.List;
 
@@ -18,13 +17,13 @@ public class DataTable_Component extends javax.swing.JPanel {
     private PaginationWithSearchBar paginationWithSearchBar;
     private ContentPage_Component parent;
 
-    public DataTable_Component(ContentPage_Component parent) {
+    public DataTable_Component(ContentPage_Component parent, boolean isChoosing) {
         initComponents();
         this.parent = parent;
         setLayout(new BorderLayout(0, 10));
         List<String> buttonLabels = List.of("All", "In stock", "Out of stock");
         card = new ButtonGroupPanel(buttonLabels, this);
-        paginationWithSearchBar = new PaginationWithSearchBar(this, false);
+        paginationWithSearchBar = new PaginationWithSearchBar(this, isChoosing);
 
         add(card, BorderLayout.NORTH);
         add(paginationWithSearchBar, BorderLayout.CENTER);
@@ -66,7 +65,9 @@ public class DataTable_Component extends javax.swing.JPanel {
     }
 
     public void updateData() {
-        parent.updateData();
+        if (parent != null) {
+            parent.updateData();
+        }
     }
 
 

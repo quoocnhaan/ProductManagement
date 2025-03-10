@@ -43,6 +43,16 @@ public class Product_Component extends javax.swing.JPanel {
         addEvents();
     }
 
+    public Product_Component(Product product, ProductList_Component parent, int amount) {
+        initComponents();
+        this.parent = parent;
+        this.product = product;
+        setLayout(new FlowLayout(FlowLayout.LEFT, 15, 0));
+        addComponents(product, amount);
+        customComponents();
+        addEvents();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,6 +150,8 @@ public class Product_Component extends javax.swing.JPanel {
 
     public void updateTotal(int quantityValue) {
         double newTotal = price.getData() * quantityValue;
+        System.out.println("new total: " + newTotal);
+        System.out.println("total: " + totalValue);
         total.updateTotal(newTotal);
         parent.updateTotal(newTotal - totalValue);
         totalValue = newTotal;
@@ -147,6 +159,28 @@ public class Product_Component extends javax.swing.JPanel {
 
     public double getTotalValue() {
         return totalValue;
+    }
+
+    private void addComponents(Product product, int amount) {
+
+        ProductName_Component productName = new ProductName_Component(product.getName(), product.getType(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
+
+        add(productName);
+
+        price = new SubFeature_Component(product.getImportPrice(), 0);
+
+        totalValue = 0;
+        total = new OneFeature_Component(product.getImportPrice() * amount);
+
+        quantity = new QuantityFeature_Component(this, amount);
+        quantity.setMaximumQuantity(100);
+
+        add(quantity);
+        add(price);
+        add(total);
+
+        deleteBtn = new JButton();
+        add(deleteBtn);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import model.GoodsReceipt;
 import model.Product;
 import model.Product_Selected;
 import org.hibernate.Session;
@@ -42,6 +43,13 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
         this.parent = parent;
         setLayout(new BorderLayout());
         addComponents();
+    }
+
+    public ImportProductPage_Component(ImportProductContent_Component parent, GoodsReceipt goodsReceipt) {
+        initComponents();
+        this.parent = parent;
+        setLayout(new BorderLayout());
+        addComponents(goodsReceipt);
     }
 
     private void addComponents() {
@@ -129,24 +137,79 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
             ProductDAO productDAO = new ProductDAOImp(session);
 
             List<Product_Selected> products = product_SelectedDAO.getAll();
-            
+
             for (Product_Selected product : products) {
                 Product product1 = productDAO.get(product.getProduct().getId());
                 addNewProduct(product1);
                 updateTotal(product1.getImportPrice());
-            }       
+            }
 
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
     }
 
-    public void saveImportProducts(double totalPrice) {
-        productList_Component.saveImportProducts(totalPrice);
+    void saveImportProducts(double totalPrice, double discount, double deliveryFee, double otherDiscount) {
+        productList_Component.saveImportProducts(totalPrice, discount, deliveryFee, otherDiscount);
     }
 
     public void updateTotal(double price) {
         parent.updateTotal(price);
+    }
+
+    private void addComponents(GoodsReceipt goodsReceipt) {
+        title_Component = new Title_Component();
+        productList_Component = new ProductList_Component(this, goodsReceipt);
+
+        JScrollPane scrollPane = new JScrollPane(productList_Component);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBorder(null);
+
+        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+
+        CustomScrollBarUI customScrollBarUI = new CustomScrollBarUI();
+        verticalScrollBar.setUI(customScrollBarUI);
+
+        verticalScrollBar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                customScrollBarUI.setHovered(true);  // Set hover to true
+                verticalScrollBar.repaint();  // Repaint to update color
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                customScrollBarUI.setHovered(false);  // Set hover to false
+                verticalScrollBar.repaint();  // Repaint to update color
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {  // Check if it's a left click
+                    customScrollBarUI.setClicked(true);  // Set clicked to true
+                    verticalScrollBar.repaint();  // Repaint to update color
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {  // Check if it's a left click
+                    customScrollBarUI.setClicked(false);  // Set clicked to false
+                    verticalScrollBar.repaint();  // Repaint to update color
+                }
+            }
+        });
+
+        // Set scroll bar width to something smaller
+        verticalScrollBar.setPreferredSize(new Dimension(6, Integer.MAX_VALUE));
+
+        add(title_Component, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public void updateImportProducts(GoodsReceipt goodsReceipt, double discount, int quantity, double otherDiscount, double totalPrice) {
+        productList_Component.updateImportProducts(goodsReceipt, discount, quantity, otherDiscount, totalPrice);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

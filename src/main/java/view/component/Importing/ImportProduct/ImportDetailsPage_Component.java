@@ -21,6 +21,8 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
     private Footer footer;
     private JDialog dialog;
     private HeaderTitle_Component parent;
+    private Pagination_Component paginationParent;
+    private GoodsReceipt goodsReceipt;
 
     public ImportDetailsPage_Component(JDialog jDialog, HeaderTitle_Component parent) {
         initComponents();
@@ -36,7 +38,16 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
     }
 
     public ImportDetailsPage_Component(Pagination_Component parent, GoodsReceipt goodsReceipt, JDialog addProductDialog) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        initComponents();
+        paginationParent = parent;
+        dialog = addProductDialog;
+        importDetails_Component = new ImportDetails_Component(this, goodsReceipt);
+        this.goodsReceipt = goodsReceipt;
+
+        setLayout(new BorderLayout());
+        footer = new Footer(this);
+        add(importDetails_Component);
+        add(footer, BorderLayout.SOUTH);
     }
 
     /**
@@ -61,7 +72,7 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public void saveImportProducts() {
-        importDetails_Component.saveImportProducts();
+        importDetails_Component.updateImportProducts(goodsReceipt);
         parent.resetDataWhenAdded();
     }
 
@@ -71,8 +82,6 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
             dialog.dispose();
         }
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

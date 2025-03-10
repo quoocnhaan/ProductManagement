@@ -91,12 +91,12 @@ public class Product_SelectedDAOImp implements Product_SelectedDAO {
 
         // Joining manually based on foreign keys
         queryString.append("JOIN Product p ON ps.product.id = p.id ");
-        queryString.append("JOIN GoodsReceiptDetail grd ON grd.product.id = p.id ");
-        queryString.append("JOIN GoodsReceipt gr ON grd.goodsReceipt.id = gr.id WHERE 1=1");
+        queryString.append("JOIN InventoryDetail idt ON idt.product.id = p.id ");
+        queryString.append("JOIN Inventory i ON idt.inventory.id = i.id WHERE 1=1");
 
         // Filter by date (if provided)
         if (date != null) {
-            queryString.append(" AND gr.date = :searchDate");
+            queryString.append(" AND i.date = :searchDate");
         }
 
         // Filter by name (if provided)

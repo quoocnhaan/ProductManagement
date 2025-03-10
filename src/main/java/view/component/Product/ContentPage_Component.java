@@ -20,7 +20,7 @@ public class ContentPage_Component extends javax.swing.JPanel {
         initComponents();
         
         header_Component = new Header_Component(this);
-        dataTable_Component = new DataTable_Component(this);
+        dataTable_Component = new DataTable_Component(this, false);
         
         setLayout(new BorderLayout(0, 20));
         add(header_Component, BorderLayout.NORTH);

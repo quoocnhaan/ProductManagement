@@ -6,7 +6,7 @@ package view.component.Importing.ImportProduct;
 
 import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
-import model.Product;
+import model.GoodsReceipt;
 import view.component.Importing.ImportProduct.ImportProductDetails.ImportProductContent_Component;
 
 /**
@@ -26,11 +26,25 @@ public class ImportDetails_Component extends javax.swing.JPanel {
         setLayout(new BorderLayout(20, 0));
         setBorder(new EmptyBorder(15, 15, 15, 15));
 
-        importProductContent_Component = new ImportProductContent_Component(this);
         importSumary_Component = new ImportSumary_Component(this);
+        importProductContent_Component = new ImportProductContent_Component(this);
 
-        add(importProductContent_Component, BorderLayout.CENTER);
         add(importSumary_Component, BorderLayout.EAST);
+        add(importProductContent_Component, BorderLayout.CENTER);
+    }
+
+    public ImportDetails_Component(ImportDetailsPage_Component parent, GoodsReceipt goodsReceipt) {
+        initComponents();
+
+        this.parent = parent;
+        setLayout(new BorderLayout(20, 0));
+        setBorder(new EmptyBorder(15, 15, 15, 15));
+
+        importSumary_Component = new ImportSumary_Component(this, goodsReceipt);
+        importProductContent_Component = new ImportProductContent_Component(this, goodsReceipt);
+
+        add(importSumary_Component, BorderLayout.EAST);
+        add(importProductContent_Component, BorderLayout.CENTER);
     }
 
     /**
@@ -60,14 +74,13 @@ public class ImportDetails_Component extends javax.swing.JPanel {
         importSumary_Component.updateSumaryData(price);
     }
 
-    public void saveImportProducts() {
-        importProductContent_Component.saveImportProducts(importSumary_Component.getTotalPrice());
-    }
-
     public void updateTotal(double price) {
         importSumary_Component.updateTotal(price);
     }
-    
+
+    void updateImportProducts(GoodsReceipt goodsReceipt) {
+        importProductContent_Component.updateImportProducts(goodsReceipt, importSumary_Component.getDiscount(), importSumary_Component.getDebugGraphicsOptions(), importSumary_Component.getOtherDiscount(), importSumary_Component.getTotalPrice());
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

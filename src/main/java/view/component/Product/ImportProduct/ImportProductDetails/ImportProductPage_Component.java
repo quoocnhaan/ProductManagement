@@ -129,24 +129,24 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
             ProductDAO productDAO = new ProductDAOImp(session);
 
             List<Product_Selected> products = product_SelectedDAO.getAll();
-            
+
             for (Product_Selected product : products) {
                 Product product1 = productDAO.get(product.getProduct().getId());
                 addNewProduct(product1);
                 updateTotal(product1.getImportPrice());
-            }       
+            }
 
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
     }
 
-    public void saveImportProducts(double totalPrice) {
-        productList_Component.saveImportProducts(totalPrice);
-    }
-
     public void updateTotal(double price) {
         parent.updateTotal(price);
+    }
+
+    void saveImportProducts(double totalPrice, double discount, double deliveryFee, double otherDiscount) {
+        productList_Component.saveImportProducts(totalPrice, discount, deliveryFee, otherDiscount);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

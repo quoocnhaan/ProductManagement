@@ -4,15 +4,11 @@
  */
 package view.component.Product.SelectingProduct;
 
-import controller.DAO.Product_BrowseDAO;
 import controller.DAO.Product_SelectedDAO;
-import controller.DAOImp.Product_BrowseDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Functional.Functional;
 import controller.Session.SharedData;
 import java.util.List;
-import model.Product;
-import model.Product_Browsed;
 import model.Product_Selected;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -118,6 +114,7 @@ public class Footer extends javax.swing.JPanel {
                 SharedData.browsedProduct.add(product_Selected.getProduct());
             }
         } catch (Exception e) {
+            System.out.println(e + getClass().getName());
         }
     }
 }
