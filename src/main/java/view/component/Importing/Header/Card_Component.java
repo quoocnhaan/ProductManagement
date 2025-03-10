@@ -88,6 +88,7 @@ public class Card_Component extends javax.swing.JPanel {
 
     public void updateData() {
         quantityValue = 0;
+        totalPriceValue = 0;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);

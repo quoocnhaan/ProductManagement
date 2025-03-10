@@ -138,12 +138,16 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
 
             List<Product_Selected> products = product_SelectedDAO.getAll();
 
+            System.out.println("browsed product size: " + products.size());
+
             for (Product_Selected product : products) {
                 Product product1 = productDAO.get(product.getProduct().getId());
                 addNewProduct(product1);
+                System.out.println("added browsed product");
                 updateTotal(product1.getImportPrice());
             }
-
+            repaint();
+            revalidate();
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
@@ -208,8 +212,8 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    public void updateImportProducts(GoodsReceipt goodsReceipt, double discount, int quantity, double otherDiscount, double totalPrice) {
-        productList_Component.updateImportProducts(goodsReceipt, discount, quantity, otherDiscount, totalPrice);
+    public void updateImportProducts(GoodsReceipt goodsReceipt, double discount, double otherDiscount, double totalPrice) {
+        productList_Component.updateImportProducts(goodsReceipt, discount, otherDiscount, totalPrice);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

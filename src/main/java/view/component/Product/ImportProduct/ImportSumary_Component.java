@@ -419,7 +419,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         subtotalValue += price;
         subtotal.setText(formatPrice(subtotalValue));
 
-        double total = ((subtotalValue + deliveryFeeValue) * (1 - discountValue / 100)) - otherDiscountValue;
+        double total = (subtotalValue * (1 - discountValue / 100)) + deliveryFeeValue - otherDiscountValue;
         totalValue = total;
         this.total.setText(formatPrice(total));
     }

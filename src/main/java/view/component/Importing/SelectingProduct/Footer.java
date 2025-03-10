@@ -9,6 +9,7 @@ import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Functional.Functional;
 import controller.Session.SharedData;
 import java.util.List;
+import model.Product;
 import model.Product_Selected;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -85,12 +86,10 @@ public class Footer extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-
         updateBrowsedProduct();
-
         parent.updateDataWhenBrowse();
-        parent.close();
         Functional.clearDataTemp();
+        parent.close();
     }//GEN-LAST:event_saveActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
@@ -111,9 +110,17 @@ public class Footer extends javax.swing.JPanel {
             List<Product_Selected> list = product_SelectedDAO.getAll();
 
             for (Product_Selected product_Selected : list) {
-                SharedData.browsedProduct.add(product_Selected.getProduct());
+                Product product = product_Selected.getProduct();
+
+                // Check if the product ID exists in the deletedProductInImport map
+                SharedData.deletedProductInImport.entrySet().removeIf(entry -> entry.getKey().getId() == product.getId());
+
+                // Add the product to the browsedProduct list
+                SharedData.browsedProduct.add(product);
             }
         } catch (Exception e) {
+            System.out.println(e + getClass().getName());
         }
     }
+
 }

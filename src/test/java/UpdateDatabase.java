@@ -1,9 +1,12 @@
 
 import controller.DAO.InventoryDAO;
+import controller.DAO.ProductDAO;
 import controller.DAOImp.InventoryDAOImp;
+import controller.DAOImp.ProductDAOImp;
 import java.sql.Date;
 import java.time.LocalDate;
 import model.Inventory;
+import model.Product;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
@@ -20,14 +23,17 @@ public class UpdateDatabase {
     public static void main(String[] args) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-//            Date date = Date.valueOf(LocalDate.now());
-//
-//            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
-//            Inventory inventory = new Inventory(date, 0, true);
-//
-//            inventoryDAO.add(inventory);
+            Date date = Date.valueOf(LocalDate.now());
+
+            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+            ProductDAO productDAO = new ProductDAOImp(session);
+            
+            Product product = productDAO.get(88);
+
+            System.out.println(inventoryDAO.getOpeningInventory(product, date));
 
         } catch (Exception e) {
+            
         }
     }
 }

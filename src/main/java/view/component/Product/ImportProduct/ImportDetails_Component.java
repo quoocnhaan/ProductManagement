@@ -6,7 +6,6 @@ package view.component.Product.ImportProduct;
 
 import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
-import model.Product;
 import view.component.Product.ImportProduct.ImportProductDetails.ImportProductContent_Component;
 
 /**

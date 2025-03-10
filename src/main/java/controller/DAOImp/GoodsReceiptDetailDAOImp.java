@@ -18,13 +18,13 @@ import org.hibernate.query.Query;
  * @author PC
  */
 public class GoodsReceiptDetailDAOImp implements GoodsReceiptDetailDAO {
-
+    
     private Session session;
-
+    
     public GoodsReceiptDetailDAOImp(Session session) {
         this.session = session;
     }
-
+    
     @Override
     public boolean add(GoodsReceiptDetail t) {
         Transaction transaction = session.beginTransaction();
@@ -40,12 +40,12 @@ public class GoodsReceiptDetailDAOImp implements GoodsReceiptDetailDAO {
             return false;
         }
     }
-
+    
     @Override
     public GoodsReceiptDetail get(int id) {
         return session.get(GoodsReceiptDetail.class, id);
     }
-
+    
     @Override
     public boolean update(GoodsReceiptDetail t) {
         Transaction transaction = session.beginTransaction();
@@ -61,13 +61,14 @@ public class GoodsReceiptDetailDAOImp implements GoodsReceiptDetailDAO {
             return false;
         }
     }
-
+    
     @Override
     public boolean delete(int id) {
         Transaction transaction = session.beginTransaction();
         try {
             GoodsReceiptDetail user = session.find(GoodsReceiptDetail.class, id);
-            session.delete(user); // Xóa role
+            user.setStatus(false);
+            session.update(user);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -77,26 +78,26 @@ public class GoodsReceiptDetailDAOImp implements GoodsReceiptDetailDAO {
         }
         return true;
     }
-
+    
     @Override
     public List<GoodsReceiptDetail> getAll() {
-        Query<GoodsReceiptDetail> query = session.createQuery("FROM GoodsReceiptDetail", GoodsReceiptDetail.class);
+        Query<GoodsReceiptDetail> query = session.createQuery("FROM GoodsReceiptDetail grd WHERE grd.status IS TRUE", GoodsReceiptDetail.class);
         return query.list();
     }
-
+    
     @Override
     public GoodsReceiptDetail findByProduct(int productId, Date date) {
-        String hql = "FROM GoodsReceiptDetail grd WHERE grd.product.id = :productId AND grd.goodsReceipt.date = :date AND grd.product.status IS TRUE";
+        String hql = "FROM GoodsReceiptDetail grd WHERE grd.product.id = :productId AND grd.goodsReceipt.date = :date AND grd.product.status IS TRUE AND grd.status IS TRUE";
         Query<GoodsReceiptDetail> query = session.createQuery(hql, GoodsReceiptDetail.class);
         query.setParameter("productId", productId);
         query.setParameter("date", date);
         return query.uniqueResult();
     }
-
+    
     @Override
     public List<GoodsReceiptDetail> findAllByGoodsReceipt(GoodsReceipt goodsReceipt) {
         Query<GoodsReceiptDetail> query = session.createQuery(
-                "FROM GoodsReceiptDetail WHERE goodsReceipt = :goodsReceipt", GoodsReceiptDetail.class);
+                "FROM GoodsReceiptDetail grd WHERE grd.goodsReceipt = :goodsReceipt AND grd.status IS TRUE", GoodsReceiptDetail.class);
         query.setParameter("goodsReceipt", goodsReceipt);
         return query.getResultList();
     }

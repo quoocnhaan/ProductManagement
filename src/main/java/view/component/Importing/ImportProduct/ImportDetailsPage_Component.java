@@ -37,9 +37,9 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
         add(footer, BorderLayout.SOUTH);
     }
 
-    public ImportDetailsPage_Component(Pagination_Component parent, GoodsReceipt goodsReceipt, JDialog addProductDialog) {
+    public ImportDetailsPage_Component(Pagination_Component paginationParent, GoodsReceipt goodsReceipt, JDialog addProductDialog) {
         initComponents();
-        paginationParent = parent;
+        this.paginationParent = paginationParent;
         dialog = addProductDialog;
         importDetails_Component = new ImportDetails_Component(this, goodsReceipt);
         this.goodsReceipt = goodsReceipt;
@@ -73,7 +73,11 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
 
     public void saveImportProducts() {
         importDetails_Component.updateImportProducts(goodsReceipt);
-        parent.resetDataWhenAdded();
+        if (parent != null) {
+            parent.resetDataWhenAdded();
+        } else {
+            paginationParent.resetDataWhenEdit();
+        }
     }
 
     public void close() {

@@ -39,7 +39,7 @@ import view.component.Importing.GoodsReceipt_Component.GoodsReceipt_Component;
  */
 public class Pagination_Component extends javax.swing.JPanel {
 
-    private Date today = Date.valueOf(LocalDate.now());
+    private Date today = null;
     private int currentPage = 1;
     private int itemsPerPage = 6;
     private int maxVisiblePages = 3; // Only show 3 page buttons at once
@@ -330,7 +330,6 @@ public class Pagination_Component extends javax.swing.JPanel {
     }
 
     public void resetDataWhenEdit() {
-
         if (today == null) {
             fetchDataBySort();
         } else {

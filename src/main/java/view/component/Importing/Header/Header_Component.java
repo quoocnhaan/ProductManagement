@@ -53,13 +53,11 @@ public class Header_Component extends javax.swing.JPanel {
 
     public void resetDataWhenAdded() {
         parent.resetDataWhenAdded();
-
     }
 
     public void updateData() {
         card_Component.updateData();
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -70,8 +70,8 @@ public class ProductList_Component extends javax.swing.JPanel {
         Product_Component product_Component = new Product_Component(newProduct, this);
         list.add(product_Component);
         add(product_Component);
-        repaint();
-        revalidate();
+//        repaint();
+//        revalidate();
     }
 
     public void saveImportProducts(double totalPrice) {

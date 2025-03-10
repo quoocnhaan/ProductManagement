@@ -112,7 +112,7 @@ public class Product_Component extends javax.swing.JPanel {
                         }
                     }
                 }
-            }
+            }          
         });
     }
 

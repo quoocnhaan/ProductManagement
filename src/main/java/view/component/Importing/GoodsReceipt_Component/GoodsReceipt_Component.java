@@ -5,6 +5,7 @@
 package view.component.Importing.GoodsReceipt_Component;
 
 import controller.Functional.Functional;
+import controller.Session.SharedData;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -197,6 +198,8 @@ public class GoodsReceipt_Component extends javax.swing.JPanel {
                 addProductDialog.add(new ImportDetailsPage_Component(parent, goodsReceipt, addProductDialog));
 
                 addProductDialog.setVisible(true);
+
+                SharedData.browsedProduct.clear();
             }
         });
 

@@ -63,6 +63,7 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
 
     public void resetDataWhenAdded() {
         pagination_Component.resetDataWhenAdded();
+        searchBarPanel.updateSearchData();
     }
 
     public void changeStatusDeleteButton(boolean b) {
@@ -145,7 +146,8 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     public void updateData() {
         if (parent != null) {
             parent.updateData();
-        } if (searchBarPanel != null) {
+        }
+        if (searchBarPanel != null) {
             searchBarPanel.updateSearchData();
         }
     }

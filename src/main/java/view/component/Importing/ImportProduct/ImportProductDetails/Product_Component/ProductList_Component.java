@@ -14,9 +14,11 @@ import controller.DAOImp.GoodsReceiptDetailDAOImp;
 import controller.DAOImp.InventoryDAOImp;
 import controller.DAOImp.InventoryDetailDAOImp;
 import controller.DAOImp.ProductDAOImp;
+import controller.Session.SharedData;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.GoodsReceipt;
@@ -79,8 +81,8 @@ public class ProductList_Component extends javax.swing.JPanel {
         Product_Component product_Component = new Product_Component(newProduct, this);
         list.add(product_Component);
         add(product_Component);
-        repaint();
-        revalidate();
+//        repaint();
+//        revalidate();
     }
 
     public void saveImportProducts(double totalPrice) {
@@ -291,6 +293,7 @@ public class ProductList_Component extends javax.swing.JPanel {
 
         for (GoodsReceiptDetail goodsReceiptDetail : list) {
             addNewProduct(goodsReceiptDetail.getProduct(), goodsReceiptDetail.getAmount());
+            SharedData.browsedProduct.add(goodsReceiptDetail.getProduct());
         }
         session.close();
     }
@@ -303,20 +306,95 @@ public class ProductList_Component extends javax.swing.JPanel {
         revalidate();
     }
 
-    public void updateImportProducts(GoodsReceipt goodsReceipt, double discount, int quantity, double otherDiscount, double totalPrice) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    public void updateImportProducts(GoodsReceipt goodsReceipt, double discount, double otherDiscount, double totalPrice) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            int quantity = 0;
+            int inventoryQuantity = 0;
 
-        GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
-        List<GoodsReceiptDetail> details = goodsReceiptDetailDAO.findAllByGoodsReceipt(goodsReceipt);
+            Date today = Date.valueOf(LocalDate.now());
 
-        //get quantity in each component in this.list
+            GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
+            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
 
-        
-        
-        session.close();
+            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+            InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
+
+            Inventory inventory = inventoryDAO.findByDate(today);
+
+            List<GoodsReceiptDetail> details = goodsReceiptDetailDAO.findAllByGoodsReceipt(goodsReceipt);
+            //InventoryDetail inventoryDetail = null;
+
+            // Get quantity in each component in this.list
+            for (GoodsReceiptDetail detail : details) {
+                for (Product_Component product_Component : list) {
+                    // Compare by product ID to ensure matching products
+                    if (detail.getProduct().getId() == product_Component.getProduct().getId()) {
+                        int amount = Integer.parseInt(product_Component.getQuantity());
+                        quantity += amount;
+                        int diff = detail.getAmount() - amount;
+                        inventoryQuantity += diff;
+                        detail.setAmount(amount);
+                        detail.setTotal(detail.getProduct().getImportPrice() * amount);
+
+                        int prevAmount = detail.getProduct().getAmount();
+                        detail.getProduct().setAmount(prevAmount - diff);
+
+                        // Get the existing inventory detail for the product and update it
+                        InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(detail.getProduct().getId(), today);
+
+                        if (inventoryDetail != null) {
+                            inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() - diff);
+                            inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() - diff);
+                            inventoryDetail.setPrice(inventoryDetail.getProduct().getPrice() * inventoryDetail.getAmountEnd());
+                            inventoryDetailDAO.update(inventoryDetail);
+                        }
+                    }
+                }
+
+                // Check for deleted products and update inventory
+                for (Product prod : SharedData.deletedProductInImport.keySet()) {
+                    if (prod.getId() == detail.getProduct().getId()) {
+                        int amount = SharedData.deletedProductInImport.get(prod);
+                        inventoryQuantity += amount;
+
+                        int prevAmount = detail.getProduct().getAmount();
+                        detail.getProduct().setAmount(prevAmount - amount);
+
+                        // Delete the inventory detail if it exists
+                        InventoryDetail newInventoryDetail = inventoryDetailDAO.findByProduct(detail.getProduct().getId(), today);
+                        if (newInventoryDetail != null) {
+                            newInventoryDetail.setAmountEnd(newInventoryDetail.getAmountEnd() - amount);
+                            newInventoryDetail.setAmountStart(newInventoryDetail.getAmountStart() - amount);
+                            newInventoryDetail.setPrice(newInventoryDetail.getProduct().getPrice() * newInventoryDetail.getAmountEnd());
+                            inventoryDetailDAO.update(newInventoryDetail);
+                        }
+                        goodsReceiptDetailDAO.delete(detail.getId());
+                    }
+                }
+                // Update the goods receipt detail
+                goodsReceiptDetailDAO.update(detail);
+            }
+
+            // Update the inventory
+            inventory.setAmount(inventory.getAmount() - inventoryQuantity);
+            inventoryDAO.update(inventory);
+
+            // Update the goods receipt
+            GoodsReceipt curGoodsReceipt = goodsReceiptDAO.get(goodsReceipt.getId());
+
+            curGoodsReceipt.setAmount(quantity);
+            curGoodsReceipt.setDiscount(discount);
+            curGoodsReceipt.setOtherDiscount(otherDiscount);
+            curGoodsReceipt.setTotalPrices(totalPrice);
+
+            goodsReceiptDAO.update(curGoodsReceipt);
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
+        }
     }
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-}
+

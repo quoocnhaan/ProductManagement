@@ -9,9 +9,7 @@ import controller.Session.SharedData;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import javax.swing.JButton;
 import model.Product;
 import view.component.Importing.ImportProduct.ImportProductDetails.Product_Component.Feature.OneFeature_Component;
@@ -122,6 +120,8 @@ public class Product_Component extends javax.swing.JPanel {
                         }
                     }
                 }
+                int curQuantity = Integer.parseInt(getQuantity());
+                SharedData.deletedProductInImport.put(product, curQuantity);
             }
         });
     }

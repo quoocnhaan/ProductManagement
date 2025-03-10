@@ -5,10 +5,8 @@
 package view.component.Product.Pagination;
 
 import controller.DAO.InventoryDAO;
-import controller.DAO.ProductDAO;
 import controller.DAO.Product_SelectedDAO;
 import controller.DAOImp.InventoryDAOImp;
-import controller.DAOImp.ProductDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Session.SharedData;
 import java.awt.BorderLayout;
@@ -266,23 +264,38 @@ public class Pagination_Component extends javax.swing.JPanel {
 //    }
     private void fetchData() {
         products.clear();
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
-            List<Product> productList = null;
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+//            List<Product> productList = null;
+//
+//            if (isChoosing) {
+//                productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status, SharedData.browsedProduct);
+//            } else {
+//                productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
+//            }
+//            for (Product product : productList) {
+//
+//                products.add(new Product_Component(product, this, isChoosing));
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println(e + getClass().getName());
+//        }
 
-            if (isChoosing) {
-                productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status, SharedData.browsedProduct);
-            } else {
-                productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
-            }
-            for (Product product : productList) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+        List<Product> productList = null;
 
-                products.add(new Product_Component(product, this, isChoosing));
-            }
-
-        } catch (Exception e) {
-            System.out.println(e + getClass().getName());
+        if (isChoosing) {
+            productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status, SharedData.browsedProduct);
+        } else {
+            productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
         }
+        for (Product product : productList) {
+
+            products.add(new Product_Component(product, this, isChoosing));
+        }
+        session.close();
     }
 
     private void resetSearchOptions() {

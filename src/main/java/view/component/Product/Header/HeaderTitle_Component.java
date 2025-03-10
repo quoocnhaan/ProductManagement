@@ -10,7 +10,9 @@ import controller.DAO.ProductDAO;
 import controller.DAOImp.InventoryDAOImp;
 import controller.DAOImp.InventoryDetailDAOImp;
 import controller.DAOImp.ProductDAOImp;
+import controller.Functional.Functional;
 import controller.Session.ExcelExporter;
+import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -119,6 +121,9 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Create a JDialog for the popup
+                             
+                Functional.clearDataTemp();
+                
                 JDialog addProductDialog = new JDialog((Frame) null, "Import Product", true);  // true for modal
                 addProductDialog.setSize(1280, 730);
                 addProductDialog.setResizable(false);
@@ -128,6 +133,9 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                 addProductDialog.add(new ImportDetailsPage_Component(addProductDialog, headerTitle_Component));
 
                 addProductDialog.setVisible(true);
+
+                SharedData.browsedProduct.clear();
+                parent.resetDataWhenAdded();
             }
         });
 

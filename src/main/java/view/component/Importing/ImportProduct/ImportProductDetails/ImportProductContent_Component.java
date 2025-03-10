@@ -95,8 +95,8 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
         orderProductPage_Component = new ImportProductPage_Component(this, goodsReceipt);
     }
 
-    public void updateImportProducts(GoodsReceipt goodsReceipt, double discount, int debugGraphicsOptions, double otherDiscount, double totalPrice) {
-        orderProductPage_Component.updateImportProducts(goodsReceipt, discount, debugGraphicsOptions, otherDiscount, totalPrice);
+    public void updateImportProducts(GoodsReceipt goodsReceipt, double discount, double otherDiscount, double totalPrice) {
+        orderProductPage_Component.updateImportProducts(goodsReceipt, discount, otherDiscount, totalPrice);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

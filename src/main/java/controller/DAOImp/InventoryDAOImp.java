@@ -8,6 +8,7 @@ import controller.DAO.InventoryDAO;
 import java.sql.Date;
 import java.util.List;
 import model.Inventory;
+import model.InventoryDetail;
 import model.Product;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -313,13 +314,64 @@ public class InventoryDAOImp implements InventoryDAO {
         }
 
         // Filter by gender (if provided)
+//        if (gender != null && !gender.isEmpty()) {
+//            queryString.append(" AND id.product.gender IN :searchGender");
+//        }
         if (gender != null && !gender.isEmpty()) {
-            queryString.append(" AND id.product.gender IN :searchGender");
+            queryString.append(" AND id.product.gender IN (");
+            boolean first = true;
+            for (String g : gender) {
+                if (!first) {
+                    queryString.append(", ");
+                }
+                switch (g) {
+                    case "Men":
+                        queryString.append("1");
+                        break;
+                    case "Women":
+                        queryString.append("2");
+                        break;
+                    case "Unisex":
+                        queryString.append("3");
+                        break;
+                    default:
+                        break;
+                }
+                first = false;
+            }
+            queryString.append(")");
         }
 
         // Filter by type (if provided)
+//        if (type != null && !type.isEmpty()) {
+//            queryString.append(" AND id.product.type IN :searchType");
+//        }
         if (type != null && !type.isEmpty()) {
-            queryString.append(" AND id.product.type IN :searchType");
+            queryString.append(" AND id.product.type IN (");
+            boolean first = true;
+            for (String t : type) {
+                if (!first) {
+                    queryString.append(", ");
+                }
+                switch (t) {
+                    case "10ml":
+                        queryString.append("1");
+                        break;
+                    case "20ml":
+                        queryString.append("2");
+                        break;
+                    case "30ml":
+                        queryString.append("3");
+                        break;
+                    case "Full":
+                        queryString.append("4");
+                        break;
+                    default:
+                        break;
+                }
+                first = false;
+            }
+            queryString.append(")");
         }
 
         // Filter by product status
@@ -375,12 +427,12 @@ public class InventoryDAOImp implements InventoryDAO {
         if (brands != null && !brands.isEmpty()) {
             query.setParameter("searchBrands", brands);
         }
-        if (gender != null && !gender.isEmpty()) {
-            query.setParameter("searchGender", gender);
-        }
-        if (type != null && !type.isEmpty()) {
-            query.setParameter("searchType", type);
-        }
+//        if (gender != null && !gender.isEmpty()) {
+//            query.setParameter("searchGender", gender);
+//        }
+//        if (type != null && !type.isEmpty()) {
+//            query.setParameter("searchType", type);
+//        }
         if (products != null && !products.isEmpty()) {
             query.setParameter("excludedProducts", products);
         }
@@ -389,4 +441,21 @@ public class InventoryDAOImp implements InventoryDAO {
         return query.getResultList();
     }
 
+    @Override
+    public int getOpeningInventory(Product product, Date date) {
+        // Define the query string to fetch all products from InventoryDetail based on the provided date
+        String queryString = "SELECT id FROM InventoryDetail id "
+                + "JOIN id.inventory i "
+                + "WHERE i.date = :searchDate AND id.product = :product AND id.product.status IS TRUE";
+
+        // Create the query
+        Query<InventoryDetail> query = session.createQuery(queryString, InventoryDetail.class);
+
+        // Set the search date parameter
+        query.setParameter("searchDate", date);
+        query.setParameter("product", product);
+
+        // Return the list of products
+        return query.uniqueResult().getAmountStart();
+    }
 }
