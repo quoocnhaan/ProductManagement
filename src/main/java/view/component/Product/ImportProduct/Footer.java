@@ -79,7 +79,9 @@ public class Footer extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        SharedData.browsedProduct.clear();
         parent.saveImportProducts();
+        parent.resetPageWhenCloseImport();
         parent.close();
     }//GEN-LAST:event_saveActionPerformed
 

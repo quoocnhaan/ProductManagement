@@ -18,10 +18,10 @@ public class ContentPage_Component extends javax.swing.JPanel {
 
     public ContentPage_Component() {
         initComponents();
-        
+
         header_Component = new Header_Component(this);
         dataTable_Component = new DataTable_Component(this, false);
-        
+
         setLayout(new BorderLayout(0, 20));
         add(header_Component, BorderLayout.NORTH);
         add(dataTable_Component, BorderLayout.CENTER);
@@ -65,6 +65,7 @@ public class ContentPage_Component extends javax.swing.JPanel {
 
     public void resetPageWhenCloseImport() {
         dataTable_Component.resetPageWhenCloseImport();
+        header_Component.updateData();
     }
 
 

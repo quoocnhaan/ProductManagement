@@ -6,6 +6,7 @@ package view.component.Importing.Pagination;
 
 import controller.DAO.GoodsReceiptDAO;
 import controller.DAOImp.GoodsReceiptDAOImp;
+import controller.Functional.Functional;
 import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -58,6 +59,12 @@ public class Pagination_Component extends javax.swing.JPanel {
     public Pagination_Component(PaginationWithSearchBar parent) {
         initComponents();
         this.parent = parent;
+
+        SharedData.deletedProductInImport.clear();
+        SharedData.selectedAmount = 0;
+        SharedData.beingSelected = false;
+        Functional.clearDataTemp();
+
         setLayout(new BorderLayout());
         initMyComponents();
         customMyComponents();

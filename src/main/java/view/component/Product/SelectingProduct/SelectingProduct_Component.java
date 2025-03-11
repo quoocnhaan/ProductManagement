@@ -6,6 +6,7 @@ package view.component.Product.SelectingProduct;
 
 import java.awt.BorderLayout;
 import javax.swing.JDialog;
+import javax.swing.border.EmptyBorder;
 import view.component.Product.DataTable_Component;
 import view.component.Product.ImportProduct.ImportProductDetails.Header_Component.Header_Component;
 
@@ -26,7 +27,8 @@ public class SelectingProduct_Component extends javax.swing.JPanel {
         this.parent = parent;
         dataTable_Component = new DataTable_Component(null, true);
         footer = new Footer(this);
-
+        setBorder(new EmptyBorder(10, 10, 10, 10));
+        System.out.println("van kiet");
         setLayout(new BorderLayout(0, 15));
         add(dataTable_Component, BorderLayout.CENTER);
         add(footer, BorderLayout.SOUTH);

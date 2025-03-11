@@ -78,11 +78,11 @@ public class Pagination_Component extends javax.swing.JPanel {
         initComponents();
         this.parent = parent;
         this.isChoosing = isChoosing;
-        
+
         SharedData.selectedAmount = 0;
         SharedData.beingSelected = false;
         Functional.clearDataTemp();
-        
+
         setLayout(new BorderLayout());
         initMyComponents();
         customMyComponents();
@@ -198,6 +198,7 @@ public class Pagination_Component extends javax.swing.JPanel {
             }
             productPage_Component.updateData(list);
             productPage_Component.checkStatusSelectAllCheckbox();
+            productPage_Component.checkStatusEditButton();
             productPanel.add(productPage_Component);
         } else {
             productPanel.add(new ProductPage_Component(this));

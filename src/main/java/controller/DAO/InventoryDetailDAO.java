@@ -14,7 +14,13 @@ import model.Product;
  *
  * @author PC
  */
-public interface InventoryDetailDAO extends InterfaceDAO<InventoryDetail>{
+public interface InventoryDetailDAO extends InterfaceDAO<InventoryDetail> {
+
     InventoryDetail findByProduct(int productId, Date date);
+
     List<InventoryDetail> findDetailsByInventory(Inventory inventory);
+
+    void deleteAllByInventory(Inventory inventory);
+
+    int getTotalAmountEndByInventory(Inventory inventory);
 }

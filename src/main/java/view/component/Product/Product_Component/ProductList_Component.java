@@ -62,9 +62,10 @@ public class ProductList_Component extends javax.swing.JPanel {
         removeAll();
         //this.list = list;
         for (Product_Component product_Component : list) {
+            boolean isSelected = product_Component.isSelected();
+            product_Component.changeColor(isSelected);
             add(product_Component);
         }
-
         repaint();
         revalidate();
     }
@@ -118,9 +119,13 @@ public class ProductList_Component extends javax.swing.JPanel {
                 }
             }
         }
+        System.out.println(count);
+
         if (count >= 2) {
+            System.out.println("hello");
             changeStatusEditButton(false);
         } else {
+            System.out.println("hii");
             changeStatusEditButton(true);
         }
     }
@@ -131,6 +136,8 @@ public class ProductList_Component extends javax.swing.JPanel {
                 if (!b) {
                     if (((Product_Component) component).isSelected()) {
                         ((Product_Component) component).changeStatusEditBtn(b);
+                    } else {
+                        ((Product_Component) component).changeStatusEditBtn(!b);
                     }
                 } else {
                     ((Product_Component) component).changeStatusEditBtn(b);

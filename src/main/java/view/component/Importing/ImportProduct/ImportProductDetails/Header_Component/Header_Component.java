@@ -4,12 +4,14 @@
  */
 package view.component.Importing.ImportProduct.ImportProductDetails.Header_Component;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.border.LineBorder;
 import view.component.Btn.IconButton;
 import view.component.Btn.RoundedButton;
 import view.component.Importing.AddingProduct.AddProduct_Component;
@@ -83,7 +85,14 @@ public class Header_Component extends javax.swing.JPanel {
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 //addProductDialog.setResizable(false);
-                addProductDialog.add(new SelectingProduct_Component(addProductDialog, header_Component));
+
+                addProductDialog.setResizable(false);
+                addProductDialog.setUndecorated(true);
+                //addProductDialog.add(new ImportDetailsPage_Component(addProductDialog, headerTitle_Component));
+                SelectingProduct_Component selectingProduct_Component = new SelectingProduct_Component(addProductDialog, header_Component);
+
+                selectingProduct_Component.setBorder(new LineBorder(Color.GRAY, 2));
+                addProductDialog.add(selectingProduct_Component);
 
                 addProductDialog.setVisible(true);
             }

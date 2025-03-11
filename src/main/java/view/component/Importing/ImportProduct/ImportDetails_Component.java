@@ -79,7 +79,7 @@ public class ImportDetails_Component extends javax.swing.JPanel {
     }
 
     void updateImportProducts(GoodsReceipt goodsReceipt) {
-        importProductContent_Component.updateImportProducts(goodsReceipt, importSumary_Component.getDiscount(), importSumary_Component.getOtherDiscount(), importSumary_Component.getTotalPrice());
+        importProductContent_Component.updateImportProducts(goodsReceipt, importSumary_Component.getDeliveryFee(), importSumary_Component.getDiscount(), importSumary_Component.getOtherDiscount(), importSumary_Component.getTotalPrice());
     }
 
 

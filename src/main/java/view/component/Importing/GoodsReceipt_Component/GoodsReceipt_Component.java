@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.border.LineBorder;
 import model.GoodsReceipt;
 import view.component.Btn.IconButton;
 import view.component.Importing.Pagination.Pagination_Component;
@@ -194,8 +195,12 @@ public class GoodsReceipt_Component extends javax.swing.JPanel {
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 addProductDialog.setResizable(false);
                 //addProductDialog.add(new EditProduct_Component(parent, goodsReceipt, addProductDialog));
-                System.out.println(parent);
-                addProductDialog.add(new ImportDetailsPage_Component(parent, goodsReceipt, addProductDialog));
+
+                ImportDetailsPage_Component importDetailsPage_Component = new ImportDetailsPage_Component(parent, goodsReceipt, addProductDialog);
+                addProductDialog.setResizable(false);
+                addProductDialog.setUndecorated(true);
+                importDetailsPage_Component.setBorder(new LineBorder(Color.GRAY, 1));
+                addProductDialog.add(importDetailsPage_Component);
 
                 addProductDialog.setVisible(true);
 

@@ -68,7 +68,8 @@ public class InventoryDetailDAOImp implements InventoryDetailDAO {
         Transaction transaction = session.beginTransaction();
         try {
             InventoryDetail user = session.find(InventoryDetail.class, id);
-            session.delete(user); // Xóa role
+            user.setStatus(false);
+            session.update(user); // Xóa role
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -104,8 +105,31 @@ public class InventoryDetailDAOImp implements InventoryDetailDAO {
     @Override
     public List<InventoryDetail> findDetailsByInventory(Inventory inventory) {
         Query<InventoryDetail> query = session.createQuery(
-                "FROM InventoryDetail WHERE inventory = :inventory", InventoryDetail.class);
+                "FROM InventoryDetail id WHERE id.inventory = :inventory AND id.status IS TRUE", InventoryDetail.class);
         query.setParameter("inventory", inventory);
         return query.getResultList();
+    }
+
+    @Override
+    public void deleteAllByInventory(Inventory inventory) {
+        Transaction transaction = session.beginTransaction();
+        try {
+            Query query = session.createQuery("DELETE FROM InventoryDetail WHERE inventory = :inventory");
+            query.setParameter("inventory", inventory);
+            int result = query.executeUpdate();
+            transaction.commit();
+            System.out.println("Deleted " + result + " records for the specified inventory.");
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int getTotalAmountEndByInventory(Inventory inventory) {
+        List<InventoryDetail> inventoryDetails = findDetailsByInventory(inventory);
+        return inventoryDetails.stream().mapToInt(InventoryDetail::getAmountEnd).sum();
     }
 }

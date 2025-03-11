@@ -211,35 +211,34 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
 
                         int totalAmount = 0;
 
-                        // Loop through inventory details, update amount_end where necessary
+                        // Compute total amount for today's inventory
                         for (InventoryDetail detail : details) {
-                            totalAmount += detail.getAmountEnd();  // Compute total amount for today's inventory
-                            inventoryDetailDAO.update(detail);  // Save changes to detail
+                            totalAmount += detail.getAmountEnd();
                         }
 
                         // Check if inventory for the next day already exists
                         Inventory nextDayInventory = inventoryDAO.findByDate(nextDayDate);
 
                         if (nextDayInventory != null) {
-                            // Update the next day's inventory if it exists
-                            nextDayInventory.setAmount(totalAmount);  // Update total amount for the next day
+                            // Delete all InventoryDetail records for the next day
+                            inventoryDetailDAO.deleteAllByInventory(nextDayInventory);
+
+                            // Update the next day's inventory total amount
+                            nextDayInventory.setAmount(totalAmount);
                             inventoryDAO.update(nextDayInventory);
 
-                            // Update existing InventoryDetail records for the next day
-                            List<InventoryDetail> nextDayDetails = inventoryDetailDAO.findDetailsByInventory(nextDayInventory);
+                            // Transfer today's InventoryDetail data to the next day
+                            for (InventoryDetail detail : details) {
+                                if (detail.getProduct().isStatus()) {
+                                    InventoryDetail newDetail = new InventoryDetail();
+                                    newDetail.setInventory(nextDayInventory);
+                                    newDetail.setProduct(detail.getProduct());
+                                    newDetail.setPrice(detail.getPrice());
+                                    newDetail.setAmountStart(detail.getAmountEnd());  // Carry over amount_end as amount_start
+                                    newDetail.setAmountEnd(detail.getAmountEnd());  // Initialize amount_end to 0 for the new day
+                                    newDetail.setStatus(detail.isStatus());
 
-                            for (InventoryDetail nextDayDetail : nextDayDetails) {
-                                // Find the corresponding detail from today
-                                for (InventoryDetail detail : details) {
-                                    if (detail.getProduct().equals(nextDayDetail.getProduct())) {
-                                        // Update amount_start with today's amount_end
-                                        nextDayDetail.setAmountStart(detail.getAmountEnd());
-                                        nextDayDetail.setAmountEnd(detail.getAmountEnd());
-                                        nextDayDetail.setPrice(detail.getPrice());  // Carry over price if needed
-                                        nextDayDetail.setStatus(detail.isStatus());  // Carry over status if needed
-                                        inventoryDetailDAO.update(nextDayDetail);  // Save changes to detail
-                                        break;
-                                    }
+                                    inventoryDetailDAO.add(newDetail);  // Save new inventory detail
                                 }
                             }
                         } else {
@@ -252,15 +251,17 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
 
                             // Create new InventoryDetail records for the next day
                             for (InventoryDetail detail : details) {
-                                InventoryDetail newDetail = new InventoryDetail();
-                                newDetail.setInventory(newInventory);
-                                newDetail.setProduct(detail.getProduct());
-                                newDetail.setPrice(detail.getPrice());
-                                newDetail.setAmountStart(detail.getAmountEnd());  // Carry over amount_end as amount_start
-                                newDetail.setAmountEnd(detail.getAmountEnd());  // Initialize amount_end to 0 for the new day
-                                newDetail.setStatus(detail.isStatus());
+                                if (detail.getProduct().isStatus()) {
+                                    InventoryDetail newDetail = new InventoryDetail();
+                                    newDetail.setInventory(newInventory);
+                                    newDetail.setProduct(detail.getProduct());
+                                    newDetail.setPrice(detail.getPrice());
+                                    newDetail.setAmountStart(detail.getAmountEnd());  // Carry over amount_end as amount_start
+                                    newDetail.setAmountEnd(detail.getAmountEnd());  // Initialize amount_end to 0 for the new day
+                                    newDetail.setStatus(detail.isStatus());
 
-                                inventoryDetailDAO.add(newDetail);  // Save new inventory detail
+                                    inventoryDetailDAO.add(newDetail);  // Save new inventory detail
+                                }
                             }
                         }
 
@@ -274,7 +275,6 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                 }
             }
         });
-
     }
 
     public void resetDataWhenAdded() {

@@ -40,7 +40,7 @@ import view.component.Product.ProductPage_Component;
  * @author PC
  */
 public class Product_Component extends javax.swing.JPanel {
-
+    
     private CustomCheckbox customCheckbox;
     private IconButton editBtn;
     private Pagination_Component parent;
@@ -48,7 +48,7 @@ public class Product_Component extends javax.swing.JPanel {
     private Product product;
     private boolean isChoosing;
     private Color mainColor = Color.WHITE;
-
+    
     public Product_Component(Product product, Pagination_Component parent, boolean isChoosing) {
         initComponents();
         this.parent = parent;
@@ -109,37 +109,37 @@ public class Product_Component extends javax.swing.JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // open detail
     }//GEN-LAST:event_formMouseClicked
-
+    
     private void addComponents(Product product) {
-
+        
         boolean isAvailble = product.getProductStatus();
-
+        
         customCheckbox = new CustomCheckbox(true);
-
+        
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
+            
             Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
-
+            
             Product_Selected product_Selected = product_SelectedDAO.findByProduct(product);
-
+            
             if (product_Selected != null) {
                 customCheckbox.setSelected(product_Selected.isStatus());
             }
-
+            
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
-
+        
         add(customCheckbox);
-
+        
         ProductName_Component productName = new ProductName_Component(product.getName(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
-
+        
         productName.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent evt) {
                 changeColor(true);
             }
-
+            
             @Override
             public void mouseExited(MouseEvent evt) {
                 if (customCheckbox.isSelected()) {
@@ -148,14 +148,14 @@ public class Product_Component extends javax.swing.JPanel {
                     changeColor(false);
                 }
             }
-
+            
             @Override
             public void mouseClicked(MouseEvent evt) {
                 //open view detail
             }
         });
         add(productName);
-
+        
         List<String> features = new ArrayList<>();
         //"Brand", "Quantity", "Sale Price", "Discount", "Type", "Gender"
 
@@ -163,7 +163,7 @@ public class Product_Component extends javax.swing.JPanel {
         features.add(product.getAmount() + "");
         features.add(formatPrice(product.getPrice()));
         features.add(product.getDiscount() + "");
-
+        
         String typeString = "";
         int typeValue = product.getType();
         if (typeValue == 1) {
@@ -175,9 +175,9 @@ public class Product_Component extends javax.swing.JPanel {
         } else if (typeValue == 4) {
             typeString = "Full";
         }
-
+        
         features.add(typeString);
-
+        
         String genderString = "";
         int genderValue = product.getGender();
         if (genderValue == 1) {
@@ -188,16 +188,16 @@ public class Product_Component extends javax.swing.JPanel {
             genderString = "Unisex";
         }
         features.add(genderString);
-
+        
         for (int i = 0; i < features.size(); i++) {
             SubFeature_Component subFeature = new SubFeature_Component(features.get(i));
-
+            
             subFeature.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent evt) {
                     changeColor(true);
                 }
-
+                
                 @Override
                 public void mouseExited(MouseEvent evt) {
                     if (customCheckbox.isSelected()) {
@@ -206,16 +206,17 @@ public class Product_Component extends javax.swing.JPanel {
                         changeColor(false);
                     }
                 }
-
+                
                 @Override
                 public void mouseClicked(MouseEvent evt) {
                     //open view detail
                 }
             });
-
+            
             add(subFeature);
+            
         }
-
+        
         ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
         editBtn = new IconButton("Edit", icon, false);
         if (!isAvailble) {
@@ -224,13 +225,13 @@ public class Product_Component extends javax.swing.JPanel {
         if (!isChoosing) {
             add(editBtn);
         }
-
+        
         if (!isAvailble) {
             mainColor = new Color(255, 207, 207);
             changeOutOfStockColor();
         }
     }
-
+    
     public void changeColor(boolean isInside) {
         Color newColor = isInside ? Functional.adjustColorBrightness(mainColor, 0.97f) : mainColor;
 
@@ -245,7 +246,7 @@ public class Product_Component extends javax.swing.JPanel {
         // Repaint the panel to ensure the new background is applied
         repaint();
     }
-
+    
     public void changeOutOfStockColor() {
         // Change the background of the Product_Component
         setBackground(mainColor);
@@ -258,13 +259,13 @@ public class Product_Component extends javax.swing.JPanel {
         // Repaint the panel to ensure the new background is applied
         repaint();
     }
-
+    
     public void changeStatusCheckbox(boolean isCheck) {
         customCheckbox.setSelected(isCheck);
     }
-
+    
     private void addEvents() {
-
+        
         Product product = this.product;
         customCheckbox.addItemListener(new ItemListener() {
             @Override
@@ -285,11 +286,11 @@ public class Product_Component extends javax.swing.JPanel {
                     } catch (Exception exception) {
                         System.out.println(exception + getClass().getName());
                     }
-
+                    
                     if (customCheckbox.isFocusOwner()) {
                         productPage_Component.checkStatusSelectAllCheckbox();
                     }
-
+                    
                 } else if (e.getStateChange() == ItemEvent.DESELECTED) {
                     formMouseExited();
                     SharedData.selectedAmount--;
@@ -314,7 +315,7 @@ public class Product_Component extends javax.swing.JPanel {
                 productPage_Component.checkStatusEditButton();
             }
         });
-
+        
         editBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -324,37 +325,37 @@ public class Product_Component extends javax.swing.JPanel {
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 addProductDialog.setResizable(false);
                 addProductDialog.add(new EditProduct_Component(parent, product, addProductDialog));
-
+                
                 addProductDialog.setVisible(true);
             }
         });
-
+        
     }
-
+    
     private void formMouseEntered() {
         changeColor(true);
     }
-
+    
     private void formMouseExited() {
         changeColor(false);
     }
-
+    
     public void changeStatusEditBtn(boolean b) {
         editBtn.setEnabled(b);
     }
-
+    
     public boolean isSelected() {
         return customCheckbox.isSelected();
     }
-
+    
     public void setProductPage_Component(ProductPage_Component productPage_Component) {
         this.productPage_Component = productPage_Component;
     }
-
+    
     public Product getProduct() {
         return product;
     }
-
+    
     private String formatPrice(double priceValue) {
         if (priceValue == 0) {
             return "0";

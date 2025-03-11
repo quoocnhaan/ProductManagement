@@ -81,10 +81,8 @@ public class DataTable_Component extends javax.swing.JPanel {
         List<String> buttonLabels = List.of("All", "In stock", "Out of stock");
         card = new ButtonGroupPanel(buttonLabels, this);
         paginationWithSearchBar = new PaginationWithSearchBar(this, isChoosing);
-
         add(card, BorderLayout.NORTH);
         add(paginationWithSearchBar, BorderLayout.CENTER);
-        
         validate();
         repaint();
     }

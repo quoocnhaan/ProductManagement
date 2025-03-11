@@ -5,8 +5,12 @@
 package view.component.Product.SearchBar;
 
 import com.toedter.calendar.JDateChooser;
+import controller.DAO.InventoryDAO;
+import controller.DAO.InventoryDetailDAO;
 import controller.DAO.ProductDAO;
 import controller.DAO.Product_SelectedDAO;
+import controller.DAOImp.InventoryDAOImp;
+import controller.DAOImp.InventoryDetailDAOImp;
 import controller.DAOImp.ProductDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Session.SharedData;
@@ -31,6 +35,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import model.Inventory;
+import model.InventoryDetail;
 import model.Product_Selected;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -305,16 +311,34 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
     public void deleteSelectedItems() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Date date = Date.valueOf(LocalDate.now());
             ProductDAO productDAO = new ProductDAOImp(session);
             Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
-            List<Product_Selected> products = product_SelectedDAO.getAll();
+            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+            InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
 
+            Inventory inventory = inventoryDAO.findByDate(date);
+            List<InventoryDetail> inventoryDetails = inventoryDetailDAO.findDetailsByInventory(inventory);
+
+            List<Product_Selected> products = product_SelectedDAO.getAll();
+            int amount = 0;
             for (Product_Selected product : products) {
                 if (product.isStatus()) {
                     productDAO.delete(product.getProduct().getId());
                     product_SelectedDAO.delete(product.getId());
+
+                    for (InventoryDetail detail : inventoryDetails) {
+                        if (detail.getProduct().getId() == product.getProduct().getId()) {
+                            amount += detail.getAmountEnd();
+                            InventoryDetail inventoryDetail = inventoryDetailDAO.get(detail.getId());
+                            inventoryDetailDAO.delete(inventoryDetail.getId());
+                        }
+                    }
                 }
             }
+            inventory.setAmount(inventory.getAmount() - amount);
+            inventoryDAO.update(inventory);
+
         } catch (Exception exception) {
             System.out.println(exception + getClass().getName());
         }

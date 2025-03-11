@@ -6,12 +6,14 @@ package view.component.Product.ImportProduct.ImportProductDetails.Header_Compone
 
 import controller.Functional.Functional;
 import controller.Session.SharedData;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.border.LineBorder;
 import view.component.Btn.IconButton;
 import view.component.Btn.RoundedButton;
 import view.component.Product.AddingProduct.AddProduct_Component;
@@ -77,11 +79,16 @@ public class Header_Component extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog addProductDialog = new JDialog((Frame) null, "Choose Product", true);  // true for modal
-                addProductDialog.setSize(1180, 780);
+                addProductDialog.setSize(1180, 830);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 addProductDialog.setResizable(false);
-                addProductDialog.add(new SelectingProduct_Component(addProductDialog, header_Component));
+
+                SelectingProduct_Component selectingProduct_Component = new SelectingProduct_Component(addProductDialog, header_Component);
+                selectingProduct_Component.setBorder(new LineBorder(Color.GRAY, 2));
+                addProductDialog.setUndecorated(true);
+
+                addProductDialog.add(selectingProduct_Component);
 
                 addProductDialog.setVisible(true);
             }

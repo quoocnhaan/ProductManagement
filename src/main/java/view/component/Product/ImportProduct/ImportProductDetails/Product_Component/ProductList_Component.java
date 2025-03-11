@@ -74,103 +74,103 @@ public class ProductList_Component extends javax.swing.JPanel {
 //        revalidate();
     }
 
-    public void saveImportProducts(double totalPrice) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            int totalQuantity = 0;
-            //double totalPrice = 0;
-
-            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
-            GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
-            ProductDAO productDAO = new ProductDAOImp(session);
-            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
-            InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
-
-            Date curDate = new java.sql.Date(System.currentTimeMillis());
-            GoodsReceipt goodsReceipt = goodsReceiptDAO.findByDate(curDate);
-            Inventory inventory = inventoryDAO.findByDate(curDate);
-
-            if (inventory == null) {
-                inventory = new Inventory(curDate, 0, true);
-                inventoryDAO.add(inventory);
-            }
-
-            if (goodsReceipt == null) {
-                // Create a new GoodsReceipt and save it before creating GoodsReceiptDetail
-                goodsReceipt = new GoodsReceipt(curDate, 0, 0, 0, 0, 0, true);
-                goodsReceiptDAO.add(goodsReceipt);  // Save the new GoodsReceipt first
-            }
-
-            for (Product_Component product_Component : list) {
-                Product product = product_Component.getProduct();
-
-                int quantity = Integer.parseInt(product_Component.getQuantity());
-                totalQuantity += quantity;
-
-                double importPrice = product_Component.getImportPriceValue();
-
-                Product existingProduct = productDAO.getByCodeAndPrice(product.getCode(), product.getImportPrice());
-                if (existingProduct != null) {
-                    // Update product quantity
-                    existingProduct.setAmount(existingProduct.getAmount() + quantity);
-                    productDAO.update(existingProduct);
-
-                    InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(existingProduct.getId(), curDate);
-                    if (inventoryDetail == null) {
-                        inventoryDetail = new InventoryDetail(inventory, existingProduct, existingProduct.getImportPrice() * quantity, quantity, quantity, true);
-                        inventoryDetailDAO.add(inventoryDetail);
-                    } else {
-                        inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() + quantity);
-                        inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() + quantity);
-                        inventoryDetail.setPrice(inventoryDetail.getAmountStart() * existingProduct.getImportPrice());
-                    }
-
+//    public void saveImportProducts(double totalPrice) {
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            int totalQuantity = 0;
+//            //double totalPrice = 0;
+//
+//            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
+//            GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
+//            ProductDAO productDAO = new ProductDAOImp(session);
+//            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+//            InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
+//
+//            Date curDate = new java.sql.Date(System.currentTimeMillis());
+//            GoodsReceipt goodsReceipt = goodsReceiptDAO.findByDate(curDate);
+//            Inventory inventory = inventoryDAO.findByDate(curDate);
+//
+//            if (inventory == null) {
+//                inventory = new Inventory(curDate, 0, true);
+//                inventoryDAO.add(inventory);
+//            }
+//
+//            if (goodsReceipt == null) {
+//                // Create a new GoodsReceipt and save it before creating GoodsReceiptDetail
+//                goodsReceipt = new GoodsReceipt(curDate, 0, 0, 0, 0, 0, true);
+//                goodsReceiptDAO.add(goodsReceipt);  // Save the new GoodsReceipt first
+//            }
+//
+//            for (Product_Component product_Component : list) {
+//                Product product = product_Component.getProduct();
+//
+//                int quantity = Integer.parseInt(product_Component.getQuantity());
+//                totalQuantity += quantity;
+//
+//                double importPrice = product_Component.getImportPriceValue();
+//
+//                Product existingProduct = productDAO.getByCodeAndPrice(product.getCode(), product.getImportPrice());
+//                if (existingProduct != null) {
+//                    // Update product quantity
+//                    existingProduct.setAmount(existingProduct.getAmount() + quantity);
+//                    productDAO.update(existingProduct);
+//
+//                    InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(existingProduct.getId(), curDate);
+//                    if (inventoryDetail == null) {
+//                        inventoryDetail = new InventoryDetail(inventory, existingProduct, existingProduct.getImportPrice() * quantity, quantity, quantity, true);
+//                        inventoryDetailDAO.add(inventoryDetail);
+//                    } else {
+//                        inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() + quantity);
+//                        inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() + quantity);
+//                        inventoryDetail.setPrice(inventoryDetail.getAmountStart() * existingProduct.getImportPrice());
+//                    }
+//
+////                    GoodsReceiptDetail goodsReceiptDetail = goodsReceiptDetailDAO.findByProduct(existingProduct.getId(), curDate);
+////                    goodsReceiptDetail.setAmount(goodsReceiptDetail.getAmount() + quantity);
+////                    goodsReceiptDetail.setTotal(goodsReceiptDetail.getAmount() * importPrice);
 //                    GoodsReceiptDetail goodsReceiptDetail = goodsReceiptDetailDAO.findByProduct(existingProduct.getId(), curDate);
-//                    goodsReceiptDetail.setAmount(goodsReceiptDetail.getAmount() + quantity);
-//                    goodsReceiptDetail.setTotal(goodsReceiptDetail.getAmount() * importPrice);
-                    GoodsReceiptDetail goodsReceiptDetail = goodsReceiptDetailDAO.findByProduct(existingProduct.getId(), curDate);
-                    if (goodsReceiptDetail == null) {
-                        // If no existing GoodsReceiptDetail is found, create a new one
-                        goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, existingProduct, quantity, importPrice * quantity, true);
-                        goodsReceiptDetailDAO.add(goodsReceiptDetail);
-                    } else {
-                        // If it exists, update the amount and total
-                        goodsReceiptDetail.setAmount(goodsReceiptDetail.getAmount() + quantity);
-                        goodsReceiptDetail.setTotal(goodsReceiptDetail.getAmount() * importPrice);
-                        goodsReceiptDetailDAO.update(goodsReceiptDetail);
-                    }
-
-                    goodsReceiptDetailDAO.add(goodsReceiptDetail);
-
-                } else {
-                    product.setAmount(quantity);
-                    productDAO.add(product);
-
-                    InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(product.getId(), curDate);
-                    if (inventoryDetail == null) {
-                        inventoryDetail = new InventoryDetail(inventory, product, product.getImportPrice() * quantity, quantity, quantity, true);
-                        inventoryDetailDAO.add(inventoryDetail);
-                    } else {
-                        inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() + quantity);
-                        inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() + quantity);
-                        inventoryDetail.setPrice(inventoryDetail.getAmountStart() * product.getImportPrice());
-                    }
-                    GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, quantity, importPrice * quantity, true);
-                    goodsReceiptDetailDAO.add(goodsReceiptDetail);
-                }
-            }
-
-            // Update the GoodsReceipt with the total quantity and price after looping through all products
-            goodsReceipt.setAmount(goodsReceipt.getAmount() + totalQuantity);
-            goodsReceipt.setTotalPrices(goodsReceipt.getTotalPrices() + totalPrice);
-            goodsReceiptDAO.update(goodsReceipt);  // Update the existing GoodsReceipt
-
-            inventory.setAmount(inventory.getAmount() + totalQuantity);
-            inventoryDAO.update(inventory);
-
-        } catch (Exception e) {
-            System.out.println(e + getClass().getName());
-        }
-    }
+//                    if (goodsReceiptDetail == null) {
+//                        // If no existing GoodsReceiptDetail is found, create a new one
+//                        goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, existingProduct, quantity, importPrice * quantity, true);
+//                        goodsReceiptDetailDAO.add(goodsReceiptDetail);
+//                    } else {
+//                        // If it exists, update the amount and total
+//                        goodsReceiptDetail.setAmount(goodsReceiptDetail.getAmount() + quantity);
+//                        goodsReceiptDetail.setTotal(goodsReceiptDetail.getAmount() * importPrice);
+//                        goodsReceiptDetailDAO.update(goodsReceiptDetail);
+//                    }
+//
+//                    goodsReceiptDetailDAO.add(goodsReceiptDetail);
+//
+//                } else {
+//                    product.setAmount(quantity);
+//                    productDAO.add(product);
+//
+//                    InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(product.getId(), curDate);
+//                    if (inventoryDetail == null) {
+//                        inventoryDetail = new InventoryDetail(inventory, product, product.getImportPrice() * quantity, quantity, quantity, true);
+//                        inventoryDetailDAO.add(inventoryDetail);
+//                    } else {
+//                        inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() + quantity);
+//                        inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() + quantity);
+//                        inventoryDetail.setPrice(inventoryDetail.getAmountStart() * product.getImportPrice());
+//                    }
+//                    GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, quantity, importPrice * quantity, true);
+//                    goodsReceiptDetailDAO.add(goodsReceiptDetail);
+//                }
+//            }
+//
+//            // Update the GoodsReceipt with the total quantity and price after looping through all products
+//            goodsReceipt.setAmount(goodsReceipt.getAmount() + totalQuantity);
+//            goodsReceipt.setTotalPrices(goodsReceipt.getTotalPrices() + totalPrice);
+//            goodsReceiptDAO.update(goodsReceipt);  // Update the existing GoodsReceipt
+//
+//            inventory.setAmount(inventory.getAmount() + totalQuantity);
+//            inventoryDAO.update(inventory);
+//
+//        } catch (Exception e) {
+//            System.out.println(e + getClass().getName());
+//        }
+//    }
 
     void updateTotal(double quantityValue) {
         parent.updateTotal(quantityValue);
@@ -234,9 +234,6 @@ public class ProductList_Component extends javax.swing.JPanel {
                         inventoryDetail.setPrice(inventoryDetail.getAmountStart() * existingProduct.getImportPrice());
                     }
 
-//                    GoodsReceiptDetail goodsReceiptDetail = goodsReceiptDetailDAO.findByProduct(existingProduct.getId(), curDate);
-//                    goodsReceiptDetail.setAmount(goodsReceiptDetail.getAmount() + quantity);
-//                    goodsReceiptDetail.setTotal(goodsReceiptDetail.getAmount() * importPrice);
                     GoodsReceiptDetail goodsReceiptDetail = goodsReceiptDetailDAO.findByProduct(existingProduct.getId(), curDate);
                     if (goodsReceiptDetail == null) {
                         // If no existing GoodsReceiptDetail is found, create a new one

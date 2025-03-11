@@ -123,7 +123,6 @@ public class DeleteDialog_Component extends javax.swing.JPanel {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         parent.deleteSelectedItems();
-
         if (dialog != null) {
             dialog.dispose();
         }
