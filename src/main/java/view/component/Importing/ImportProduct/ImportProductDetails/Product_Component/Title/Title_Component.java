@@ -43,7 +43,7 @@ public class Title_Component extends javax.swing.JPanel {
 
     private void addComponents() {
         add(new ProductNameTitle_Component());
-        String[] titles = {"Quantity", "Import Price", "Total Price"};
+        String[] titles = {"Quantity", "Import Price", "Total Price", "Paid"};
         for (int i = 0; i < titles.length; i++) {
             add(new SubTitle_Component(titles[i]));
         }

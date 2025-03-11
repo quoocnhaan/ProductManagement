@@ -268,7 +268,7 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Transfer data successfully!");
 
                     } catch (Exception exception) {
-                        exception.printStackTrace();  // Handle exception
+                        System.out.println(exception + getClass().getName());
                     }
                 } else {
                     System.out.println("Transfer canceled by the user.");

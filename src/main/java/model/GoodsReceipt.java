@@ -42,20 +42,32 @@ public class GoodsReceipt {
     @Column(name = "total_prices", nullable = false)
     private double totalPrices;
 
+    @Column(name = "total_status", nullable = false)
+    private boolean paymentStatus;
+
     @Column(nullable = false)
     private boolean status;
 
     public GoodsReceipt() {
     }
 
-    public GoodsReceipt(Date date, int amount, double discount, double delivertyFee, double otherDiscount, double totalPrices, boolean status) {
+    public GoodsReceipt(Date date, int amount, double discount, double delivertyFee, double otherDiscount, double totalPrices, boolean paymentStatus, boolean status) {
         this.date = date;
         this.amount = amount;
         this.discount = discount;
         this.delivertyFee = delivertyFee;
         this.otherDiscount = otherDiscount;
         this.totalPrices = totalPrices;
+        this.paymentStatus = paymentStatus;
         this.status = status;
+    }
+
+    public boolean isPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(boolean paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public double getDiscount() {

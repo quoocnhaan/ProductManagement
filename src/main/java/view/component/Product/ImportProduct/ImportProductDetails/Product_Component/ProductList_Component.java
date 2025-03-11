@@ -171,7 +171,6 @@ public class ProductList_Component extends javax.swing.JPanel {
 //            System.out.println(e + getClass().getName());
 //        }
 //    }
-
     void updateTotal(double quantityValue) {
         parent.updateTotal(quantityValue);
     }
@@ -187,6 +186,7 @@ public class ProductList_Component extends javax.swing.JPanel {
     public void saveImportProducts(double totalPrice, double discount, double deliveryFee, double otherDiscount) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             int totalQuantity = 0;
+            double totalPaidPrice = 0;
             //double totalPrice = 0;
 
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
@@ -206,7 +206,7 @@ public class ProductList_Component extends javax.swing.JPanel {
 
             if (goodsReceipt == null) {
                 // Create a new GoodsReceipt and save it before creating GoodsReceiptDetail
-                goodsReceipt = new GoodsReceipt(curDate, 0, 0, 0, 0, 0, true);
+                goodsReceipt = new GoodsReceipt(curDate, 0, 0, 0, 0, 0, false, true);
                 goodsReceiptDAO.add(goodsReceipt);  // Save the new GoodsReceipt first
             }
 
@@ -215,6 +215,9 @@ public class ProductList_Component extends javax.swing.JPanel {
 
                 int quantity = Integer.parseInt(product_Component.getQuantity());
                 totalQuantity += quantity;
+
+                double paid = product_Component.getPaid();
+                totalPaidPrice += paid;
 
                 double importPrice = product_Component.getImportPriceValue();
 
@@ -237,12 +240,13 @@ public class ProductList_Component extends javax.swing.JPanel {
                     GoodsReceiptDetail goodsReceiptDetail = goodsReceiptDetailDAO.findByProduct(existingProduct.getId(), curDate);
                     if (goodsReceiptDetail == null) {
                         // If no existing GoodsReceiptDetail is found, create a new one
-                        goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, existingProduct, quantity, importPrice * quantity, true);
+                        goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, existingProduct, quantity, importPrice * quantity, paid, true);
                         goodsReceiptDetailDAO.add(goodsReceiptDetail);
                     } else {
                         // If it exists, update the amount and total
                         goodsReceiptDetail.setAmount(goodsReceiptDetail.getAmount() + quantity);
                         goodsReceiptDetail.setTotal(goodsReceiptDetail.getAmount() * importPrice);
+                        goodsReceiptDetail.setPaid(goodsReceiptDetail.getPaid() + paid);
                         goodsReceiptDetailDAO.update(goodsReceiptDetail);
                     }
 
@@ -261,7 +265,7 @@ public class ProductList_Component extends javax.swing.JPanel {
                         inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() + quantity);
                         inventoryDetail.setPrice(inventoryDetail.getAmountStart() * product.getImportPrice());
                     }
-                    GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, quantity, importPrice * quantity, true);
+                    GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, quantity, importPrice * quantity, paid, true);
                     goodsReceiptDetailDAO.add(goodsReceiptDetail);
                 }
             }
@@ -272,6 +276,8 @@ public class ProductList_Component extends javax.swing.JPanel {
             goodsReceipt.setOtherDiscount(goodsReceipt.getOtherDiscount() + otherDiscount);
             goodsReceipt.setAmount(goodsReceipt.getAmount() + totalQuantity);
             goodsReceipt.setTotalPrices(goodsReceipt.getTotalPrices() + totalPrice);
+            goodsReceipt.setPaymentStatus((totalPaidPrice + deliveryFee) == totalPrice);
+
             goodsReceiptDAO.update(goodsReceipt);  // Update the existing GoodsReceipt
 
             inventory.setAmount(inventory.getAmount() + totalQuantity);

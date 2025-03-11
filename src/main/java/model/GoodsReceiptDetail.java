@@ -40,18 +40,31 @@ public class GoodsReceiptDetail {
     private double total;
 
     @Column(nullable = false)
+    private double paid;
+
+    @Column(nullable = false)
     private boolean status;
 
     public GoodsReceiptDetail() {
     }
 
-    public GoodsReceiptDetail(GoodsReceipt goodsReceipt, Product product, int amount, double total, boolean status) {
+    public GoodsReceiptDetail(GoodsReceipt goodsReceipt, Product product, int amount, double total, double paid, boolean status) {
         this.goodsReceipt = goodsReceipt;
         this.product = product;
         this.amount = amount;
         this.total = total;
+        this.paid = paid;
         this.status = status;
     }
+
+    public double getPaid() {
+        return paid;
+    }
+
+    public void setPaid(double paid) {
+        this.paid = paid;
+    }
+
 
     public int getId() {
         return id;

@@ -98,6 +98,12 @@ public class ImportProductContent_Component extends javax.swing.JPanel {
     public void updateImportProducts(GoodsReceipt goodsReceipt, double deliveryFree, double discount, double otherDiscount, double totalPrice) {
         orderProductPage_Component.updateImportProducts(goodsReceipt, deliveryFree, discount, otherDiscount, totalPrice);
     }
+
+    void updateBalance(double paid) {
+        parent.updateBalance(paid);
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

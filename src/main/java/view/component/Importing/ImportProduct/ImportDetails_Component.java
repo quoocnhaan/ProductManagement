@@ -82,6 +82,10 @@ public class ImportDetails_Component extends javax.swing.JPanel {
         importProductContent_Component.updateImportProducts(goodsReceipt, importSumary_Component.getDeliveryFee(), importSumary_Component.getDiscount(), importSumary_Component.getOtherDiscount(), importSumary_Component.getTotalPrice());
     }
 
+    public void updateBalance(double paid) {
+        importSumary_Component.updateBalance(paid);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

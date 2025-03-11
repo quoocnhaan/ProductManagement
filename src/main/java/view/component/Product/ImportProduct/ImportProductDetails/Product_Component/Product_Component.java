@@ -9,12 +9,11 @@ import controller.Session.SharedData;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import javax.swing.JButton;
 import model.Product;
 import view.component.Product.ImportProduct.ImportProductDetails.Product_Component.Feature.OneFeature_Component;
+import view.component.Product.ImportProduct.ImportProductDetails.Product_Component.Feature.Pay_Component;
 import view.component.Product.ImportProduct.ImportProductDetails.Product_Component.Feature.ProductName_Component;
 import view.component.Product.ImportProduct.ImportProductDetails.Product_Component.Feature.QuantityFeature_Component;
 import view.component.Product.ImportProduct.ImportProductDetails.Product_Component.Feature.SubFeature_Component;
@@ -29,6 +28,7 @@ public class Product_Component extends javax.swing.JPanel {
     private Product product;
     private QuantityFeature_Component quantity;
     private SubFeature_Component price;
+    private Pay_Component paid;
     private OneFeature_Component total;
     private ProductList_Component parent;
     private double totalValue;
@@ -93,6 +93,9 @@ public class Product_Component extends javax.swing.JPanel {
         total = new OneFeature_Component(product.getImportPrice());
         add(total);
 
+        paid = new Pay_Component(this);
+        add(paid);
+
         deleteBtn = new JButton();
         add(deleteBtn);
     }
@@ -112,7 +115,7 @@ public class Product_Component extends javax.swing.JPanel {
                         }
                     }
                 }
-            }          
+            }
         });
     }
 
@@ -134,6 +137,10 @@ public class Product_Component extends javax.swing.JPanel {
         return quantity.getQuantity();
     }
 
+    public double getPaid() {
+        return paid.getPaid();
+    }
+
     public double getImportPriceValue() {
         return product.getImportPrice();
     }
@@ -147,6 +154,10 @@ public class Product_Component extends javax.swing.JPanel {
 
     public double getTotalValue() {
         return totalValue;
+    }
+
+    public void updateBalance(double paid) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

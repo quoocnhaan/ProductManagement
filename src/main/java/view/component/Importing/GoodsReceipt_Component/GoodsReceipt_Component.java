@@ -123,10 +123,18 @@ public class GoodsReceipt_Component extends javax.swing.JPanel {
         features.add(goodsReceipt.getDate() + "");
         features.add(goodsReceipt.getAmount() + "");
         features.add(formatPrice(goodsReceipt.getTotalPrices()));
-        features.add("True");
+
+        String paymentStatus = goodsReceipt.isPaymentStatus() ? "Complete" : "Not Complete";
+
+        features.add(paymentStatus);
 
         for (int i = 0; i < features.size(); i++) {
-            SubFeature_Component subFeature = new SubFeature_Component(features.get(i));
+            SubFeature_Component subFeature = null;
+            if (i == features.size() - 1) {
+                subFeature = new SubFeature_Component(features.get(i), goodsReceipt.isPaymentStatus());
+            } else {
+                subFeature = new SubFeature_Component(features.get(i));
+            }
 
             subFeature.addMouseListener(new MouseAdapter() {
                 @Override
@@ -190,10 +198,9 @@ public class GoodsReceipt_Component extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog addProductDialog = new JDialog((Frame) null, "Edit Product", true);  // true for modal
-                addProductDialog.setSize(1250, 850);
+                addProductDialog.setSize(1350, 850);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
-                addProductDialog.setResizable(false);
                 //addProductDialog.add(new EditProduct_Component(parent, goodsReceipt, addProductDialog));
 
                 ImportDetailsPage_Component importDetailsPage_Component = new ImportDetailsPage_Component(parent, goodsReceipt, addProductDialog);

@@ -13,6 +13,7 @@ import java.util.Iterator;
 import javax.swing.JButton;
 import model.Product;
 import view.component.Importing.ImportProduct.ImportProductDetails.Product_Component.Feature.OneFeature_Component;
+import view.component.Importing.ImportProduct.ImportProductDetails.Product_Component.Feature.Pay_Component;
 import view.component.Importing.ImportProduct.ImportProductDetails.Product_Component.Feature.ProductName_Component;
 import view.component.Importing.ImportProduct.ImportProductDetails.Product_Component.Feature.QuantityFeature_Component;
 import view.component.Importing.ImportProduct.ImportProductDetails.Product_Component.Feature.SubFeature_Component;
@@ -28,6 +29,7 @@ public class Product_Component extends javax.swing.JPanel {
     private QuantityFeature_Component quantity;
     private SubFeature_Component price;
     private OneFeature_Component total;
+    private Pay_Component paid;
     private ProductList_Component parent;
     private double totalValue;
 
@@ -41,12 +43,12 @@ public class Product_Component extends javax.swing.JPanel {
         addEvents();
     }
 
-    public Product_Component(Product product, ProductList_Component parent, int amount) {
+    public Product_Component(Product product, ProductList_Component parent, int amount, double paidValue) {
         initComponents();
         this.parent = parent;
         this.product = product;
         setLayout(new FlowLayout(FlowLayout.LEFT, 15, 0));
-        addComponents(product, amount);
+        addComponents(product, amount, paidValue);
         customComponents();
         addEvents();
     }
@@ -144,14 +146,16 @@ public class Product_Component extends javax.swing.JPanel {
         return quantity.getQuantity();
     }
 
+    public double getPaid() {
+        return paid.getPaid();
+    }
+
     public double getImportPriceValue() {
         return product.getImportPrice();
     }
 
     public void updateTotal(int quantityValue) {
         double newTotal = price.getData() * quantityValue;
-        System.out.println("new total: " + newTotal);
-        System.out.println("total: " + totalValue);
         total.updateTotal(newTotal);
         parent.updateTotal(newTotal - totalValue);
         totalValue = newTotal;
@@ -161,7 +165,7 @@ public class Product_Component extends javax.swing.JPanel {
         return totalValue;
     }
 
-    private void addComponents(Product product, int amount) {
+    private void addComponents(Product product, int amount, double paidValue) {
 
         ProductName_Component productName = new ProductName_Component(product.getName(), product.getType(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
 
@@ -175,12 +179,20 @@ public class Product_Component extends javax.swing.JPanel {
         quantity = new QuantityFeature_Component(this, amount);
         quantity.setMaximumQuantity(100);
 
+        paid = new Pay_Component(this, paidValue);
+
         add(quantity);
         add(price);
         add(total);
+        add(paid);
 
         deleteBtn = new JButton();
         add(deleteBtn);
+
+    }
+
+    public void updateBalance(double paid) {
+        parent.updateBalance(paid);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

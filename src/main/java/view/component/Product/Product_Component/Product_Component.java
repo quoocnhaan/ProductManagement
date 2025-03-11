@@ -4,7 +4,13 @@
  */
 package view.component.Product.Product_Component;
 
+import controller.DAO.InventoryDAO;
+import controller.DAO.InventoryDetailDAO;
+import controller.DAO.ProductDAO;
 import controller.DAO.Product_SelectedDAO;
+import controller.DAOImp.InventoryDAOImp;
+import controller.DAOImp.InventoryDetailDAOImp;
+import controller.DAOImp.ProductDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
 import controller.Functional.Functional;
 import controller.Session.SharedData;
@@ -18,7 +24,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -40,7 +48,7 @@ import view.component.Product.ProductPage_Component;
  * @author PC
  */
 public class Product_Component extends javax.swing.JPanel {
-    
+
     private CustomCheckbox customCheckbox;
     private IconButton editBtn;
     private Pagination_Component parent;
@@ -48,7 +56,7 @@ public class Product_Component extends javax.swing.JPanel {
     private Product product;
     private boolean isChoosing;
     private Color mainColor = Color.WHITE;
-    
+
     public Product_Component(Product product, Pagination_Component parent, boolean isChoosing) {
         initComponents();
         this.parent = parent;
@@ -109,95 +117,37 @@ public class Product_Component extends javax.swing.JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // open detail
     }//GEN-LAST:event_formMouseClicked
-    
+
     private void addComponents(Product product) {
-        
+
         boolean isAvailble = product.getProductStatus();
-        
+
         customCheckbox = new CustomCheckbox(true);
-        
+
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            
+
             Product_SelectedDAO product_SelectedDAO = new Product_SelectedDAOImp(session);
-            
+
+            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+
+            Date date = Date.valueOf(LocalDate.now());
+
             Product_Selected product_Selected = product_SelectedDAO.findByProduct(product);
-            
+
             if (product_Selected != null) {
                 customCheckbox.setSelected(product_Selected.isStatus());
             }
-            
-        } catch (Exception e) {
-            System.out.println(e + getClass().getName());
-        }
-        
-        add(customCheckbox);
-        
-        ProductName_Component productName = new ProductName_Component(product.getName(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
-        
-        productName.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent evt) {
-                changeColor(true);
-            }
-            
-            @Override
-            public void mouseExited(MouseEvent evt) {
-                if (customCheckbox.isSelected()) {
-                    changeColor(true);
-                } else {
-                    changeColor(false);
-                }
-            }
-            
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                //open view detail
-            }
-        });
-        add(productName);
-        
-        List<String> features = new ArrayList<>();
-        //"Brand", "Quantity", "Sale Price", "Discount", "Type", "Gender"
 
-        features.add(product.getBrand().getName());
-        features.add(product.getAmount() + "");
-        features.add(formatPrice(product.getPrice()));
-        features.add(product.getDiscount() + "");
-        
-        String typeString = "";
-        int typeValue = product.getType();
-        if (typeValue == 1) {
-            typeString = "10ml";
-        } else if (typeValue == 2) {
-            typeString = "20ml";
-        } else if (typeValue == 3) {
-            typeString = "30ml";
-        } else if (typeValue == 4) {
-            typeString = "Full";
-        }
-        
-        features.add(typeString);
-        
-        String genderString = "";
-        int genderValue = product.getGender();
-        if (genderValue == 1) {
-            genderString = "Men";
-        } else if (genderValue == 2) {
-            genderString = "Women";
-        } else if (genderValue == 3) {
-            genderString = "Unisex";
-        }
-        features.add(genderString);
-        
-        for (int i = 0; i < features.size(); i++) {
-            SubFeature_Component subFeature = new SubFeature_Component(features.get(i));
-            
-            subFeature.addMouseListener(new MouseAdapter() {
+            add(customCheckbox);
+
+            ProductName_Component productName = new ProductName_Component(product.getName(), product.getCode(), Functional.convertByteArrayToIcon(product.getImg()));
+
+            productName.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent evt) {
                     changeColor(true);
                 }
-                
+
                 @Override
                 public void mouseExited(MouseEvent evt) {
                     if (customCheckbox.isSelected()) {
@@ -206,32 +156,88 @@ public class Product_Component extends javax.swing.JPanel {
                         changeColor(false);
                     }
                 }
-                
+
                 @Override
                 public void mouseClicked(MouseEvent evt) {
                     //open view detail
                 }
             });
-            
-            add(subFeature);
-            
+            add(productName);
+
+            int openingQuantity = inventoryDAO.getOpeningInventory(product, date);
+
+            List<String> features = new ArrayList<>();
+            //"Brand", "Opening Quantity", "Quantity", "Sale Price", "Discount", "Type"
+
+            features.add(product.getBrand().getName());
+
+            features.add(openingQuantity + "");
+
+            features.add(product.getAmount() + "");
+
+            features.add(formatPrice(product.getPrice()));
+
+            features.add(product.getDiscount() + "");
+
+            String typeString = "";
+            int typeValue = product.getType();
+            if (typeValue == 1) {
+                typeString = "10ml";
+            } else if (typeValue == 2) {
+                typeString = "20ml";
+            } else if (typeValue == 3) {
+                typeString = "30ml";
+            } else if (typeValue == 4) {
+                typeString = "Full";
+            }
+
+            features.add(typeString);
+
+            for (int i = 0; i < features.size(); i++) {
+                SubFeature_Component subFeature = null;
+                if (i == 2) {
+                    subFeature = new SubFeature_Component(features.get(i), isAvailble);
+                } else {
+                    subFeature = new SubFeature_Component(features.get(i));
+                }
+
+                subFeature.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseEntered(MouseEvent evt) {
+                        changeColor(true);
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent evt) {
+                        if (customCheckbox.isSelected()) {
+                            changeColor(true);
+                        } else {
+                            changeColor(false);
+                        }
+                    }
+
+                    @Override
+                    public void mouseClicked(MouseEvent evt) {
+                        //open view detail
+                    }
+                });
+
+                add(subFeature);
+
+            }
+
+            ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
+            editBtn = new IconButton("Edit", icon, false);
+
+            if (!isChoosing) {
+                add(editBtn);
+            }
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
         }
-        
-        ImageIcon icon = new ImageIcon(getClass().getResource("/icon/pencil.png"));
-        editBtn = new IconButton("Edit", icon, false);
-        if (!isAvailble) {
-            editBtn.changeOutOfStockColor(!isAvailble);
-        }
-        if (!isChoosing) {
-            add(editBtn);
-        }
-        
-        if (!isAvailble) {
-            mainColor = new Color(255, 207, 207);
-            changeOutOfStockColor();
-        }
+
     }
-    
+
     public void changeColor(boolean isInside) {
         Color newColor = isInside ? Functional.adjustColorBrightness(mainColor, 0.97f) : mainColor;
 
@@ -246,7 +252,7 @@ public class Product_Component extends javax.swing.JPanel {
         // Repaint the panel to ensure the new background is applied
         repaint();
     }
-    
+
     public void changeOutOfStockColor() {
         // Change the background of the Product_Component
         setBackground(mainColor);
@@ -259,13 +265,13 @@ public class Product_Component extends javax.swing.JPanel {
         // Repaint the panel to ensure the new background is applied
         repaint();
     }
-    
+
     public void changeStatusCheckbox(boolean isCheck) {
         customCheckbox.setSelected(isCheck);
     }
-    
+
     private void addEvents() {
-        
+
         Product product = this.product;
         customCheckbox.addItemListener(new ItemListener() {
             @Override
@@ -286,11 +292,11 @@ public class Product_Component extends javax.swing.JPanel {
                     } catch (Exception exception) {
                         System.out.println(exception + getClass().getName());
                     }
-                    
+
                     if (customCheckbox.isFocusOwner()) {
                         productPage_Component.checkStatusSelectAllCheckbox();
                     }
-                    
+
                 } else if (e.getStateChange() == ItemEvent.DESELECTED) {
                     formMouseExited();
                     SharedData.selectedAmount--;
@@ -315,7 +321,7 @@ public class Product_Component extends javax.swing.JPanel {
                 productPage_Component.checkStatusEditButton();
             }
         });
-        
+
         editBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -325,37 +331,37 @@ public class Product_Component extends javax.swing.JPanel {
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 addProductDialog.setResizable(false);
                 addProductDialog.add(new EditProduct_Component(parent, product, addProductDialog));
-                
+
                 addProductDialog.setVisible(true);
             }
         });
-        
+
     }
-    
+
     private void formMouseEntered() {
         changeColor(true);
     }
-    
+
     private void formMouseExited() {
         changeColor(false);
     }
-    
+
     public void changeStatusEditBtn(boolean b) {
         editBtn.setEnabled(b);
     }
-    
+
     public boolean isSelected() {
         return customCheckbox.isSelected();
     }
-    
+
     public void setProductPage_Component(ProductPage_Component productPage_Component) {
         this.productPage_Component = productPage_Component;
     }
-    
+
     public Product getProduct() {
         return product;
     }
-    
+
     private String formatPrice(double priceValue) {
         if (priceValue == 0) {
             return "0";

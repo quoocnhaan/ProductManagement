@@ -54,7 +54,7 @@ public class Title_Component extends javax.swing.JPanel {
         customCheckbox = new CustomCheckbox(false);
         add(customCheckbox);
         add(new ProductNameTitle_Component());
-        String[] titles = {"Brand", "Quantity", "Sale Price", "Discount", "Type", "Gender"};
+        String[] titles = {"Brand", "S-Quantity", "E-Quantity", "Sale Price", "Discount", "Type"};
         for (int i = 0; i < 6; i++) {
             add(new SubTitle_Component(titles[i]));
         }

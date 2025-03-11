@@ -156,7 +156,6 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
 //    void saveImportProducts(double totalPrice, double discount, double deliveryFee, double otherDiscount) {
 //        productList_Component.saveImportProducts(totalPrice, discount, deliveryFee, otherDiscount);
 //    }
-
     public void updateTotal(double price) {
         parent.updateTotal(price);
     }
@@ -214,6 +213,10 @@ public class ImportProductPage_Component extends javax.swing.JPanel {
 
     public void updateImportProducts(GoodsReceipt goodsReceipt, double deliveryFree, double discount, double otherDiscount, double totalPrice) {
         productList_Component.updateImportProducts(goodsReceipt, deliveryFree, discount, otherDiscount, totalPrice);
+    }
+
+    public void updateBalance(double paid) {
+        parent.updateBalance(paid);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

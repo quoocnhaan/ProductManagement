@@ -4,6 +4,10 @@
  */
 package view.component.Importing.Feature;
 
+import controller.Functional.Functional;
+import java.awt.Color;
+import java.awt.Font;
+
 /**
  *
  * @author PC
@@ -15,6 +19,17 @@ public class SubFeature_Component extends javax.swing.JPanel {
      */
     public SubFeature_Component(String text) {
         initComponents();
+        this.feature.setText(text);
+    }
+
+    public SubFeature_Component(String text, boolean isComplete) {
+        initComponents();
+        feature.setFont(new Font("Roboto", Font.BOLD, 15));
+        if (isComplete) {
+            feature.setForeground(Functional.adjustColorBrightness(Color.green, 0.4f));
+        } else {
+            feature.setForeground(Color.red);
+        }
         this.feature.setText(text);
     }
 

@@ -547,6 +547,7 @@ public class AddProduct_Component extends javax.swing.JPanel {
                 brand.addItem(item.getName());
             }
         } catch (Exception e) {
+            System.out.println(e + getClass().getName());
         }
         String text = "<html>Please upload an image with a resolution of 180x180 or close to it for the best image quality.</html>";
         jLabel14.setText(text);

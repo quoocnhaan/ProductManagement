@@ -35,6 +35,8 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
     private double subtotalValue;
     private double totalValue;
+    private double paidValue;
+    private double balanceValue;
 
     private String prevDiscount;
     private String prevDeliveryFee;
@@ -84,6 +86,10 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         discount = new javax.swing.JTextField();
         deliveryFee = new javax.swing.JTextField();
         otherDiscount = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        paid = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        balance = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -165,6 +171,22 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         otherDiscount.setText("0");
         otherDiscount.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
+        jLabel7.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("Paid");
+
+        paid.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        paid.setForeground(new java.awt.Color(0, 0, 0));
+        paid.setText("0");
+
+        jLabel8.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("Balance");
+
+        balance.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        balance.setForeground(new java.awt.Color(0, 0, 0));
+        balance.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -173,13 +195,13 @@ public class ImportSumary_Component extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(balance))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(discount, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(total))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -194,7 +216,15 @@ public class ImportSumary_Component extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(accept, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(deliveryFee, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(otherDiscount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(otherDiscount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(total, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(paid, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -221,11 +251,19 @@ public class ImportSumary_Component extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(otherDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(total))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(paid))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(balance))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -252,6 +290,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accept;
+    private javax.swing.JLabel balance;
     private javax.swing.JButton cancel;
     private javax.swing.JTextField deliveryFee;
     private javax.swing.JTextField discount;
@@ -261,7 +300,10 @@ public class ImportSumary_Component extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField otherDiscount;
+    private javax.swing.JLabel paid;
     private javax.swing.JLabel subtotal;
     private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
@@ -437,6 +479,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         double total = subtotalValue * (1 - discountValue / 100) + deliveryFeeValue - otherDiscountValue;
         totalValue = total;
         this.total.setText(formatPrice(total));
+
     }
 
     public double getTotalPrice() {
@@ -455,6 +498,14 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         return otherDiscountValue;
     }
 
+    public double getTotalPaid() {
+        return paidValue;
+    }
+
+    public double getBalance() {
+        return balanceValue;
+    }
+
     private void initData() {
         discountValue = goodsReceipt.getDiscount();
         discount.setText(formatPrice(discountValue));
@@ -464,5 +515,14 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
         otherDiscountValue = goodsReceipt.getOtherDiscount();
         otherDiscount.setText(formatPrice(otherDiscountValue));
+
+        paidValue = deliveryFeeValue;
+    }
+
+    void updateBalance(double paid) {
+        paidValue += paid;
+        balanceValue = totalValue - paidValue;
+        this.paid.setText(formatPrice(paidValue));
+        balance.setText(formatPrice(balanceValue));
     }
 }

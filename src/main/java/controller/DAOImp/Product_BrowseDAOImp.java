@@ -6,9 +6,7 @@ package controller.DAOImp;
 
 import controller.DAO.Product_BrowseDAO;
 import java.util.List;
-import model.Bills;
 import model.Product_Browsed;
-import model.Product_Selected;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;

@@ -16,7 +16,6 @@ import controller.DAOImp.InventoryDetailDAOImp;
 import controller.DAOImp.ProductDAOImp;
 import controller.Session.SharedData;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,17 +34,17 @@ import view.component.Importing.ImportProduct.ImportProductDetails.ImportProduct
  * @author PC
  */
 public class ProductList_Component extends javax.swing.JPanel {
-    
+
     private List<Product_Component> list = new ArrayList<>();
     private ImportProductPage_Component parent;
     private GoodsReceipt goodsReceipt;
-    
+
     public ProductList_Component(ImportProductPage_Component parent) {
         initComponents();
         this.parent = parent;
         setLayout(new GridLayout(0, 1, 0, 10));
     }
-    
+
     public ProductList_Component(ImportProductPage_Component parent, GoodsReceipt goodsReceipt) {
         initComponents();
         this.parent = parent;
@@ -84,11 +83,11 @@ public class ProductList_Component extends javax.swing.JPanel {
 //        repaint();
 //        revalidate();
     }
-    
+
     void updateTotal(double quantityValue) {
         parent.updateTotal(quantityValue);
     }
-    
+
     public void removeProduct(Product_Component product_Component) {
         list.remove(product_Component);
         System.out.println("remove " + product_Component.getProduct().getName() + " from list");
@@ -97,45 +96,45 @@ public class ProductList_Component extends javax.swing.JPanel {
         revalidate();
         parent.updateTotal(-product_Component.getTotalValue());
     }
-    
+
     private void initData() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
         List<GoodsReceiptDetail> list = goodsReceiptDetailDAO.findAllByGoodsReceipt(goodsReceipt);
-        
+
         for (GoodsReceiptDetail goodsReceiptDetail : list) {
-            addNewProduct(goodsReceiptDetail.getProduct(), goodsReceiptDetail.getAmount());
+            addNewProduct(goodsReceiptDetail.getProduct(), goodsReceiptDetail.getAmount(), goodsReceiptDetail.getPaid());
             SharedData.browsedProduct.add(goodsReceiptDetail.getProduct());
         }
         session.close();
     }
-    
-    private void addNewProduct(Product product, int amount) {
-        Product_Component product_Component = new Product_Component(product, this, amount);
+
+    private void addNewProduct(Product product, int amount, double paid) {
+        Product_Component product_Component = new Product_Component(product, this, amount, paid);
         list.add(product_Component);
         add(product_Component);
         repaint();
         revalidate();
     }
-    
+
     public void updateImportProducts(GoodsReceipt goodsReceipt, double deliveryFree, double discount, double otherDiscount, double totalPrice) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             int quantity = 0;
-            int inventoryQuantity = 0;
-            
+            double totalPaid = 0;
+
             Date today = Date.valueOf(LocalDate.now());
-            
+
             ProductDAO productDAO = new ProductDAOImp(session);
-            
+
             GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
-            
+
             InventoryDAO inventoryDAO = new InventoryDAOImp(session);
             InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
-            
+
             Inventory inventory = inventoryDAO.findByDate(today);
-            
+
             List<GoodsReceiptDetail> details = goodsReceiptDetailDAO.findAllByGoodsReceipt(goodsReceipt);
             //InventoryDetail inventoryDetail = null;
 
@@ -146,19 +145,29 @@ public class ProductList_Component extends javax.swing.JPanel {
 
                     //if product in list already existed in GoodsReceipt -> it means we update some value
                     if (detail.getProduct().getId() == product_Component.getProduct().getId()) {
+                        double paid = product_Component.getPaid();
+                        totalPaid += paid;
+
                         int amount = Integer.parseInt(product_Component.getQuantity());
                         quantity += amount;
+
                         int diff = detail.getAmount() - amount;
-                        inventoryQuantity += diff;
                         detail.setAmount(amount);
+                        detail.setPaid(paid);
                         detail.setTotal(detail.getProduct().getImportPrice() * amount);
-                        
+
                         int prevAmount = detail.getProduct().getAmount();
-                        detail.getProduct().setAmount(prevAmount - diff);
+                        int newQuantity = prevAmount - diff;
+                        if (newQuantity == 0) {
+                            detail.getProduct().setAmount(0);
+                            detail.getProduct().setProductStatus(false);
+                        } else {
+                            detail.getProduct().setAmount(prevAmount - diff);
+                        }
 
                         // Get the existing inventory detail for the product and update it
                         InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(detail.getProduct().getId(), today);
-                        
+
                         if (inventoryDetail != null) {
                             inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() - diff);
                             inventoryDetail.setAmountStart(inventoryDetail.getAmountStart() - diff);
@@ -172,7 +181,9 @@ public class ProductList_Component extends javax.swing.JPanel {
                 //if product in list did not exist in GoodsReceipt -> we create a new product
                 int newQuantity = Integer.parseInt(product_Component.getQuantity());
                 quantity += newQuantity;
-                inventoryQuantity -= newQuantity; // because new products are added in database -> inventory amount has been increased
+
+                double paid = product_Component.getPaid();
+                totalPaid += paid;
 
                 Product existingpPoduct = productDAO.getByCodeAndPrice(product_Component.getProduct().getCode(), product_Component.getImportPriceValue());
 
@@ -180,14 +191,14 @@ public class ProductList_Component extends javax.swing.JPanel {
                 if (existingpPoduct != null) {
                     existingpPoduct.setAmount(existingpPoduct.getAmount() + newQuantity);
                     productDAO.update(existingpPoduct);
-                    
+
                     InventoryDetail existingInventoryDetail = inventoryDetailDAO.findByProduct(existingpPoduct.getId(), today);
                     existingInventoryDetail.setAmountEnd(existingInventoryDetail.getAmountEnd() + newQuantity);
                     existingInventoryDetail.setAmountStart(existingInventoryDetail.getAmountStart() + newQuantity);
                     existingInventoryDetail.setPrice(existingInventoryDetail.getAmountEnd() * product_Component.getImportPriceValue());
                     inventoryDetailDAO.update(existingInventoryDetail);
-                    
-                    GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, existingpPoduct, newQuantity, newQuantity * existingpPoduct.getImportPrice(), true);
+
+                    GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, existingpPoduct, newQuantity, newQuantity * existingpPoduct.getImportPrice(), paid, true);
                     goodsReceiptDetailDAO.add(goodsReceiptDetail);
 
                     // if we create a new product in GoodsReceipt but this product did not exist in the databse -> create a new product
@@ -195,7 +206,7 @@ public class ProductList_Component extends javax.swing.JPanel {
                     Product product = product_Component.getProduct();
                     product.setAmount(newQuantity);
                     productDAO.add(product);
-                    
+
                     InventoryDetail newInventoryDetail = new InventoryDetail();
                     newInventoryDetail.setAmountEnd(newQuantity);
                     newInventoryDetail.setAmountStart(newQuantity);
@@ -204,10 +215,10 @@ public class ProductList_Component extends javax.swing.JPanel {
                     newInventoryDetail.setInventory(inventory);
                     newInventoryDetail.setStatus(true);
                     inventoryDetailDAO.add(newInventoryDetail);
-                    
-                    GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, newQuantity, newQuantity * product.getImportPrice(), true);
+
+                    GoodsReceiptDetail goodsReceiptDetail = new GoodsReceiptDetail(goodsReceipt, product, newQuantity, newQuantity * product.getImportPrice(), paid, true);
                     goodsReceiptDetailDAO.add(goodsReceiptDetail);
-                    
+
                 }
             }
 
@@ -218,10 +229,16 @@ public class ProductList_Component extends javax.swing.JPanel {
                     if (prod.getId() == detail.getProduct().getId()) {
                         System.out.println("delete " + prod.getName() + " from Importing");
                         int amount = SharedData.deletedProductInImport.get(prod);
-                        inventoryQuantity += amount;
-                        
+
                         int prevAmount = detail.getProduct().getAmount();
-                        detail.getProduct().setAmount(prevAmount - amount);
+                        int newQuantity = prevAmount - amount;
+
+                        if (newQuantity == 0) {
+                            detail.getProduct().setAmount(0);
+                            detail.getProduct().setProductStatus(false);
+                        } else {
+                            detail.getProduct().setAmount(prevAmount - amount);
+                        }
 
                         // Delete the inventory detail if it exists
                         InventoryDetail newInventoryDetail = inventoryDetailDAO.findByProduct(detail.getProduct().getId(), today);
@@ -244,18 +261,23 @@ public class ProductList_Component extends javax.swing.JPanel {
 
             // Update the goods receipt
             GoodsReceipt curGoodsReceipt = goodsReceiptDAO.get(goodsReceipt.getId());
-            
+
             curGoodsReceipt.setAmount(quantity);
             curGoodsReceipt.setDelivertyFee(deliveryFree);
             curGoodsReceipt.setDiscount(discount);
             curGoodsReceipt.setOtherDiscount(otherDiscount);
             curGoodsReceipt.setTotalPrices(totalPrice);
-            
+            curGoodsReceipt.setPaymentStatus((totalPaid + deliveryFree) == totalPrice);
+
             goodsReceiptDAO.update(curGoodsReceipt);
             SharedData.deletedProductInImport.clear();
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
+    }
+
+    void updateBalance(double paid) {
+        parent.updateBalance(paid);
     }
 }
 
