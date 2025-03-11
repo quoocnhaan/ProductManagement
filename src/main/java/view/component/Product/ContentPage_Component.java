@@ -59,6 +59,14 @@ public class ContentPage_Component extends javax.swing.JPanel {
         header_Component.updateData();
     }
 
+    public void resetSearchOption() {
+        dataTable_Component.resetSearchOption();
+    }
+
+    public void resetPageWhenCloseImport() {
+        dataTable_Component.resetPageWhenCloseImport();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

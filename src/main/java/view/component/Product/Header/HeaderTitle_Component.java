@@ -31,6 +31,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 import model.Inventory;
 import model.InventoryDetail;
 import model.Product;
@@ -116,26 +117,24 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
 
     private void addEvents() {
         HeaderTitle_Component headerTitle_Component = this;
-
         createBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Create a JDialog for the popup
-                             
-                Functional.clearDataTemp();
-                
+
                 JDialog addProductDialog = new JDialog((Frame) null, "Import Product", true);  // true for modal
                 addProductDialog.setSize(1280, 730);
                 addProductDialog.setResizable(false);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
+                addProductDialog.setResizable(false);
+                addProductDialog.setUndecorated(true);
+                //addProductDialog.add(new ImportDetailsPage_Component(addProductDialog, headerTitle_Component));
+                ImportDetailsPage_Component importDetailsPage_Component = new ImportDetailsPage_Component(addProductDialog, headerTitle_Component);
 
-                addProductDialog.add(new ImportDetailsPage_Component(addProductDialog, headerTitle_Component));
-
+                importDetailsPage_Component.setBorder(new LineBorder(Color.GRAY, 2));
+                addProductDialog.add(importDetailsPage_Component);
                 addProductDialog.setVisible(true);
-
-                SharedData.browsedProduct.clear();
-                parent.resetDataWhenAdded();
             }
         });
 
@@ -280,6 +279,10 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
 
     public void resetDataWhenAdded() {
         parent.resetDataWhenAdded();
+    }
+
+    public void resetPageWhenCloseImport() {
+        parent.resetPageWhenCloseImport();
     }
 
 

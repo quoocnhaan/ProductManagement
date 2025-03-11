@@ -16,10 +16,12 @@ public class DataTable_Component extends javax.swing.JPanel {
     private ButtonGroupPanel card;
     private PaginationWithSearchBar paginationWithSearchBar;
     private ContentPage_Component parent;
+    private boolean isChoosing;
 
     public DataTable_Component(ContentPage_Component parent, boolean isChoosing) {
         initComponents();
         this.parent = parent;
+        this.isChoosing = isChoosing;
         setLayout(new BorderLayout(0, 10));
         List<String> buttonLabels = List.of("All", "In stock", "Out of stock");
         card = new ButtonGroupPanel(buttonLabels, this);
@@ -68,6 +70,23 @@ public class DataTable_Component extends javax.swing.JPanel {
         if (parent != null) {
             parent.updateData();
         }
+    }
+
+    void resetSearchOption() {
+        paginationWithSearchBar.resetSearchOptions();
+    }
+
+    void resetPageWhenCloseImport() {
+        removeAll();
+        List<String> buttonLabels = List.of("All", "In stock", "Out of stock");
+        card = new ButtonGroupPanel(buttonLabels, this);
+        paginationWithSearchBar = new PaginationWithSearchBar(this, isChoosing);
+
+        add(card, BorderLayout.NORTH);
+        add(paginationWithSearchBar, BorderLayout.CENTER);
+        
+        validate();
+        repaint();
     }
 
 

@@ -94,7 +94,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Order Summary");
+        jLabel1.setText("Importing Summary");
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(131, 131, 131));
@@ -186,7 +186,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
                             .addComponent(jLabel5)
                             .addComponent(jLabel4)
                             .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(subtotal, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()

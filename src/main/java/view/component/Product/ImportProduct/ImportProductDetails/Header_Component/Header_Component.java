@@ -34,7 +34,6 @@ public class Header_Component extends javax.swing.JPanel {
         this.parent = parent;
         setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         initData();
-        customComponents();
         addEvents();
         addComponents();
     }
@@ -62,10 +61,6 @@ public class Header_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void customComponents() {
-
-    }
-
     private void addComponents() {
         add(browseBtn);
         add(create);
@@ -89,7 +84,6 @@ public class Header_Component extends javax.swing.JPanel {
                 addProductDialog.add(new SelectingProduct_Component(addProductDialog, header_Component));
 
                 addProductDialog.setVisible(true);
-                Functional.clearDataTemp();
             }
         });
         create.addActionListener(new ActionListener() {

@@ -61,9 +61,12 @@ public class ImportDetailsPage_Component extends javax.swing.JPanel {
 
     public void close() {
         if (dialog != null) {
-            SharedData.browsedProduct.clear();
             dialog.dispose();
         }
+    }
+
+    void resetPageWhenCloseImport() {
+        parent.resetPageWhenCloseImport();
     }
 
 

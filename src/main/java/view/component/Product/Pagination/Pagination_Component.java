@@ -8,6 +8,7 @@ import controller.DAO.InventoryDAO;
 import controller.DAO.Product_SelectedDAO;
 import controller.DAOImp.InventoryDAOImp;
 import controller.DAOImp.Product_SelectedDAOImp;
+import controller.Functional.Functional;
 import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -77,6 +78,11 @@ public class Pagination_Component extends javax.swing.JPanel {
         initComponents();
         this.parent = parent;
         this.isChoosing = isChoosing;
+        
+        SharedData.selectedAmount = 0;
+        SharedData.beingSelected = false;
+        Functional.clearDataTemp();
+        
         setLayout(new BorderLayout());
         initMyComponents();
         customMyComponents();
@@ -347,6 +353,7 @@ public class Pagination_Component extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentPage = 1;
+                System.out.println("clicked !!");
                 if (checkbox.isSelected()) {
                     SharedData.beingSelected = true;
                     fetchDataInSelectedProduct();
@@ -540,8 +547,6 @@ public class Pagination_Component extends javax.swing.JPanel {
     public void setToday(Date sqlDate) {
         today = sqlDate;
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

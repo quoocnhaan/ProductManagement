@@ -20,11 +20,12 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     private SearchBarPanel searchBarPanel;
     private Pagination_Component pagination_Component;
     private DataTable_Component parent;
+    private boolean isChoosing;
 
     public PaginationWithSearchBar(DataTable_Component parent, boolean isChoosing) {
         initComponents();
         this.parent = parent;
-
+        this.isChoosing = isChoosing;
         setLayout(new BorderLayout(0, 15));
 
         searchBarPanel = new SearchBarPanel(this, isChoosing);
@@ -156,8 +157,6 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
         pagination_Component.setToday(sqlDate);
         pagination_Component.updateData();
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

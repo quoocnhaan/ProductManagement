@@ -54,12 +54,19 @@ public class Header_Component extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     public void resetDataWhenAdded() {
-        parent.resetDataWhenAdded();
-        
+        parent.resetDataWhenAdded(); 
+    }
+    
+    public void resetSearchOption() {
+        parent.resetSearchOption();
     }
 
     public void updateData() {
         card_Component.updateData();
+    }
+
+    public void resetPageWhenCloseImport() {
+        parent.resetPageWhenCloseImport();
     }
 
 

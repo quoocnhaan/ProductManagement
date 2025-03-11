@@ -289,14 +289,13 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
     public void resetSearchOptions() {
         searchSuggestion_Component.reset();
-
         isProgrammaticChange = true;
         date.setDate(Date.valueOf(LocalDate.now()));
         isProgrammaticChange = false;
-
         filter_Component.reset();
         filterBtn.changeColor(false);
         sortPopup.reset();
+
         parent.reset();
     }
 
@@ -324,6 +323,18 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
     public void updateSearchData() {
         searchSuggestion_Component.updateSearchData();
+    }
+
+    public void resetSearchOptionsWhenCloseImport() {
+        searchSuggestion_Component.reset();
+        isProgrammaticChange = true;
+        date.setDate(Date.valueOf(LocalDate.now()));
+        isProgrammaticChange = false;
+        deleteBtn.setEnabled(false);
+        filter_Component.reset();
+        filterBtn.changeColor(false);
+        sortPopup.reset();
+        parent.reset();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

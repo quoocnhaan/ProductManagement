@@ -22,15 +22,15 @@ public class UpdateDatabase {
 
     public static void main(String[] args) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            Date date = Date.valueOf(LocalDate.now());
-
-            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
-            ProductDAO productDAO = new ProductDAOImp(session);
-            
-            Product product = productDAO.get(88);
-
-            System.out.println(inventoryDAO.getOpeningInventory(product, date));
+//
+//            Date date = Date.valueOf(LocalDate.now());
+//
+//            InventoryDAO inventoryDAO = new InventoryDAOImp(session);
+//            ProductDAO productDAO = new ProductDAOImp(session);
+//            
+//            Product product = productDAO.get(88);
+//
+//            System.out.println(inventoryDAO.getOpeningInventory(product, date));
 
         } catch (Exception e) {
             
