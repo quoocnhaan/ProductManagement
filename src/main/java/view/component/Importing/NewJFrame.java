@@ -21,7 +21,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         setLayout(new BorderLayout());
-        add(new DataTable_Component());
+        add(new ContentPage_Component());
         setLocationRelativeTo(null);
         addWindowListener(new WindowAdapter() {
             @Override

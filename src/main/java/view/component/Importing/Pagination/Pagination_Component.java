@@ -20,7 +20,6 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -55,6 +54,7 @@ public class Pagination_Component extends javax.swing.JPanel {
     private PaginationWithSearchBar parent;
 
     private String sort;
+    private String status = "All";
 
     public Pagination_Component(PaginationWithSearchBar parent) {
         initComponents();
@@ -239,7 +239,7 @@ public class Pagination_Component extends javax.swing.JPanel {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
 
-            List<GoodsReceipt> list = goodsReceiptDAO.findByFilter(sort);
+            List<GoodsReceipt> list = goodsReceiptDAO.findByFilter(sort, status);
 
             for (GoodsReceipt goodsReceipt : list) {
                 products.add(new GoodsReceipt_Component(goodsReceipt, this));
@@ -322,7 +322,6 @@ public class Pagination_Component extends javax.swing.JPanel {
     }
 
     public void resetDataWhenAdded() {
-
         // if date is null -> fetch by sort
         // else -> fetch by date
         if (today == null) {
@@ -386,6 +385,10 @@ public class Pagination_Component extends javax.swing.JPanel {
         computePages();
         updateProductPages();
         updatePaginationControls();
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

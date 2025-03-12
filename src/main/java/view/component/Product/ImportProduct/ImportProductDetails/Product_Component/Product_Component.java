@@ -157,7 +157,7 @@ public class Product_Component extends javax.swing.JPanel {
     }
 
     public void updateBalance(double paid) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        parent.updateBalance(paid);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

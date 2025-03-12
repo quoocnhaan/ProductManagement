@@ -5,7 +5,7 @@
 package view.component.Importing.Header;
 
 import java.awt.BorderLayout;
-import view.component.Importing.DataTable_Component;
+import view.component.Importing.ContentPage_Component;
 
 /**
  *
@@ -13,11 +13,11 @@ import view.component.Importing.DataTable_Component;
  */
 public class Header_Component extends javax.swing.JPanel {
 
-    private DataTable_Component parent;
+    private ContentPage_Component parent;
     private HeaderTitle_Component headerTitle_Component;
     private Card_Component card_Component;
 
-    public Header_Component(DataTable_Component parent) {
+    public Header_Component(ContentPage_Component parent) {
         initComponents();
         setLayout(new BorderLayout());
 

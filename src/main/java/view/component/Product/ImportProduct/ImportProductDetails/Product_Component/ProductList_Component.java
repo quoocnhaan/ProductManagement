@@ -15,7 +15,6 @@ import controller.DAOImp.InventoryDAOImp;
 import controller.DAOImp.InventoryDetailDAOImp;
 import controller.DAOImp.ProductDAOImp;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -286,6 +285,10 @@ public class ProductList_Component extends javax.swing.JPanel {
         } catch (Exception e) {
             System.out.println(e + getClass().getName());
         }
+    }
+
+    void updateBalance(double paid) {
+        parent.updateBalance(paid);
     }
 
 

@@ -75,7 +75,7 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     }
 
     public void resetSearchOptions() {
-        searchBarPanel.resetSearchOptions();       
+        searchBarPanel.resetSearchOptions();
     }
 
     public void updateData() {
@@ -87,6 +87,11 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     public void sortByDate(Date sqlDate) {
         pagination_Component.setToday(sqlDate);
         pagination_Component.updateDataByDate();
+    }
+
+    void sortByStatus(String status) {
+        pagination_Component.setStatus(status);
+        pagination_Component.updateDataBySort();
     }
 
 

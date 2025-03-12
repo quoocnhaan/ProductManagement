@@ -100,18 +100,23 @@ public class GoodsReceiptDAOImp implements GoodsReceiptDAO {
     }
 
     @Override
-    public List<GoodsReceipt> findByFilter(String sort) {
+    public List<GoodsReceipt> findByFilter(String sort, String status) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            StringBuilder queryString = new StringBuilder("FROM GoodsReceipt");
+            StringBuilder queryString = new StringBuilder("FROM GoodsReceipt gr");
+
+            // Only add the paymentStatus filter if the status is not "All"
+            if (!"All".equalsIgnoreCase(status)) {
+                queryString.append(" WHERE gr.paymentStatus = :status");
+            }
 
             // Add sorting logic based on the "sort" parameter
             if (sort != null && !sort.isEmpty()) {
                 switch (sort) {
                     case "Price Low to High":
-                        queryString.append(" ORDER BY totalPrices ASC");
+                        queryString.append(" ORDER BY gr.totalPrices ASC");
                         break;
                     case "Price High to Low":
-                        queryString.append(" ORDER BY totalPrices DESC");
+                        queryString.append(" ORDER BY gr.totalPrices DESC");
                         break;
                     // Add other cases if needed
                     default:
@@ -119,7 +124,16 @@ public class GoodsReceiptDAOImp implements GoodsReceiptDAO {
                         break;
                 }
             }
+
+            // Create the query
             Query<GoodsReceipt> query = session.createQuery(queryString.toString(), GoodsReceipt.class);
+
+            // Set the status parameter only if status is not "All"
+            if (!"All".equalsIgnoreCase(status)) {
+                Boolean paymentStatus = "Complete".equalsIgnoreCase(status) ? true : false;
+                query.setParameter("status", paymentStatus); // Set parameter for Complete/Not Complete
+            }
+
             return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
