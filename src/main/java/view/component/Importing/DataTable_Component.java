@@ -5,6 +5,7 @@
 package view.component.Importing;
 
 import java.awt.BorderLayout;
+import java.util.List;
 import view.component.Importing.Header.Header_Component;
 
 /**
@@ -13,16 +14,19 @@ import view.component.Importing.Header.Header_Component;
  */
 public class DataTable_Component extends javax.swing.JPanel {
 
-    private Header_Component header_Component;
+    private ButtonGroupPanel card;
     private PaginationWithSearchBar paginationWithSearchBar;
+    private ContentPage_Component parent;
 
-    public DataTable_Component() {
+    public DataTable_Component(ContentPage_Component parent) {
         initComponents();
         setLayout(new BorderLayout(0, 20));
-        header_Component = new Header_Component(this);
+        List<String> buttonLabels = List.of("All", "Complete", "Not Complete");
+        card = new ButtonGroupPanel(buttonLabels, this);
         paginationWithSearchBar = new PaginationWithSearchBar(this);
+        this.parent = parent;
 
-        add(header_Component, BorderLayout.NORTH);
+        add(card, BorderLayout.NORTH);
         add(paginationWithSearchBar, BorderLayout.CENTER);
     }
 
@@ -54,7 +58,11 @@ public class DataTable_Component extends javax.swing.JPanel {
     }
 
     void updateData() {
-        header_Component.updateData();
+        parent.updateData();
+    }
+
+    void transferData(String status) {
+        paginationWithSearchBar.sortByStatus(status);
     }
 
 

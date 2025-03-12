@@ -31,6 +31,8 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
     private double subtotalValue;
     private double totalValue;
+    private double paidValue;
+    private double balanceValue;
 
     private String prevDiscount;
     private String prevDeliveryFee;
@@ -478,5 +480,12 @@ public class ImportSumary_Component extends javax.swing.JPanel {
 
     public double getOtherDiscount() {
         return otherDiscountValue;
+    }
+
+    public void updateBalance(double paid) {
+        paidValue += paid;
+        balanceValue = totalValue - paidValue;
+        this.paid.setText(formatPrice(paidValue));
+        balance.setText(formatPrice(balanceValue));
     }
 }

@@ -13,6 +13,7 @@ view\component\Importing\GoodsReceipt_Component\GoodsReceipt_Component$4.class
 view\component\Importing\ImportProduct\ImportProductDetails\Product_Component\Feature\QuantityFeature_Component$1.class
 view\component\Order\OrderDetails\OrderOtherConent\DeliveryAddress_Component$3.class
 view\component\Importing\ImportProduct\ImportProductDetails\Product_Component\Title\Title_Component.class
+view\component\Importing\ButtonGroupPanel.class
 model\BillsDetail.class
 view\component\Product\ImportProduct\ImportSumary_Component$2.class
 view\component\Product\NewJFrame$2.class
@@ -198,6 +199,7 @@ view\component\Order\OrderDetails\OderProductDetails\OrderProductPage_Component.
 view\component\Product\SearchSuggestion\SearchSuggestion_Component$1.class
 view\component\Product\SelectingProduct\SelectingProduct_Component.class
 view\component\Product\SearchSuggestion\Search_Item$3.class
+view\component\Importing\ContentPage_Component.class
 view\component\Product\Title\ProductNameTitle_Component.class
 view\component\Product\DataTable_Component.class
 view\component\Btn\NewJFrame.class
