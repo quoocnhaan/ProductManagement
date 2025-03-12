@@ -37,7 +37,6 @@ view\component\Order\OrderDetails\OderProductDetails\Header_Component\Header_Com
 view\component\Product\ImportProduct\ImportProductDetails\Product_Component\Product_Component.class
 view\component\Importing\AddingProduct\AddProduct_Component$10.class
 view\component\Product\AddingProduct\AddProduct_Component.class
-view\component\Navigation\NewJFrame.class
 view\component\Product\ImportProduct\ImportProductDetails\Product_Component\Product_Component$2.class
 controller\Enum\Status.class
 view\component\Importing\DataTable_Component.class
@@ -154,7 +153,6 @@ view\component\Btn\RoundedButton.class
 view\component\Product\Sort\SortPopup$1.class
 view\component\Product\Pagination\Pagination_Component$4.class
 controller\DAO\InterfaceDAO.class
-view\component\Navigation\NewJFrame$1.class
 model\Brand.class
 view\component\Importing\AddingProduct\AddNewProduct_Test.class
 view\component\Importing\AddingProduct\NewJFrame$1.class

@@ -5,12 +5,15 @@
 package view.component.Importing.Header;
 
 import controller.DAO.GoodsReceiptDAO;
+import controller.DAO.GoodsReceiptDetailDAO;
 import controller.DAOImp.GoodsReceiptDAOImp;
+import controller.DAOImp.GoodsReceiptDetailDAOImp;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.text.DecimalFormat;
 import java.util.List;
 import model.GoodsReceipt;
+import model.GoodsReceiptDetail;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.CustomComponent.RoundedCard;
@@ -24,9 +27,11 @@ public class Card_Component extends javax.swing.JPanel {
     private RoundedCard total;
     private RoundedCard totalPrice;
     private RoundedCard quantity;
+    private RoundedCard totalPaid;
     private int totalValue = 0;
     private int quantityValue = 0;
     private double totalPriceValue = 0;
+    private double totalPaidValue = 0;
 
     public Card_Component() {
         setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
@@ -62,17 +67,27 @@ public class Card_Component extends javax.swing.JPanel {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
+            GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
 
             List<GoodsReceipt> list = goodsReceiptDAO.getAll();
 
             for (GoodsReceipt goodsReceipt : list) {
+                List<GoodsReceiptDetail> details = goodsReceiptDetailDAO.findAllByGoodsReceipt(goodsReceipt);
+                for (GoodsReceiptDetail detail : details) {
+                    totalPaidValue += detail.getPaid();
+                }
                 totalPriceValue += goodsReceipt.getTotalPrices();
                 quantityValue += goodsReceipt.getAmount();
+                totalPaidValue += goodsReceipt.getDelivertyFee();
             }
             totalValue = list.size();
 
             total = new RoundedCard("Total Importing", totalValue + "");
-            totalPrice = new RoundedCard("Total Importing Price", formatPrice(totalPriceValue));
+
+            totalPrice = new RoundedCard("Total Importing Price", formatPrice(totalPriceValue) + " VNĐ");
+
+            totalPaid = new RoundedCard("Total Importing Paid", formatPrice(totalPaidValue) + " VNĐ");
+
             quantity = new RoundedCard("Total Quantity", quantityValue + "");
 
         } catch (Exception e) {
@@ -83,6 +98,7 @@ public class Card_Component extends javax.swing.JPanel {
     private void addComponents() {
         add(total);
         add(totalPrice);
+        add(totalPaid);
         add(quantity);
     }
 
@@ -94,15 +110,22 @@ public class Card_Component extends javax.swing.JPanel {
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
 
             List<GoodsReceipt> list = goodsReceiptDAO.getAll();
+            GoodsReceiptDetailDAO goodsReceiptDetailDAO = new GoodsReceiptDetailDAOImp(session);
 
             for (GoodsReceipt goodsReceipt : list) {
+                List<GoodsReceiptDetail> details = goodsReceiptDetailDAO.findAllByGoodsReceipt(goodsReceipt);
+                for (GoodsReceiptDetail detail : details) {
+                    totalPaidValue += detail.getPaid();
+                }
                 totalPriceValue += goodsReceipt.getTotalPrices();
                 quantityValue += goodsReceipt.getAmount();
+                totalPaidValue += goodsReceipt.getDelivertyFee();
             }
 
             totalValue = list.size();
             total.updateValue(totalValue);
             totalPrice.updateValue(totalPriceValue);
+            totalPaid.updateValue(totalPaidValue);
             quantity.updateValue(quantityValue);
 
         } catch (Exception e) {

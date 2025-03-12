@@ -123,7 +123,7 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                 // Create a JDialog for the popup
 
                 JDialog addProductDialog = new JDialog((Frame) null, "Import Product", true);  // true for modal
-                addProductDialog.setSize(1280, 730);
+                addProductDialog.setSize(1350, 730);
                 addProductDialog.setResizable(false);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen

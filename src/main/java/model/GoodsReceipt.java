@@ -42,7 +42,7 @@ public class GoodsReceipt {
     @Column(name = "total_prices", nullable = false)
     private double totalPrices;
 
-    @Column(name = "total_status", nullable = false)
+    @Column(name = "payment_status", nullable = false)
     private boolean paymentStatus;
 
     @Column(nullable = false)

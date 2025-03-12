@@ -44,6 +44,7 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         initComponents();
         totalValue = 0;
         subtotalValue = 0;
+        paidValue = 0;
         this.parent = parent;
         customComponents();
         addEvents();
@@ -366,6 +367,9 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         double total = ((subtotalValue + deliveryFeeValue) * (1 - discountValue / 100)) - otherDiscountValue;
         totalValue = total;
         this.total.setText(formatPrice(total));
+
+        balanceValue = totalValue - paidValue;
+        balance.setText(formatPrice(balanceValue));
     }
 
     private void addEvents() {
@@ -464,6 +468,9 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         double total = (subtotalValue * (1 - discountValue / 100)) + deliveryFeeValue - otherDiscountValue;
         totalValue = total;
         this.total.setText(formatPrice(total));
+
+        balanceValue = totalValue - paidValue;
+        balance.setText(formatPrice(balanceValue));
     }
 
     public double getTotalPrice() {

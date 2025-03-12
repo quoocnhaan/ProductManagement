@@ -6,14 +6,23 @@ package view.component.Navigation;
 
 import controller.DAO.NavigationItemDAO;
 import controller.DAOImp.NavigationItemDAOImp;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import model.NavigationItem;
 import org.hibernate.Session;
 import util.HibernateUtil;
+import view.component.MainFrame.MainContent_Component;
 
 /**
  *
@@ -26,12 +35,14 @@ public class Navigation extends javax.swing.JPanel {
      */
     private List<Navigation_Component> navItems = new ArrayList<>();
     private Navigation_Component selectedItem; // Track the currently selected item
+    private MainContent_Component parent;
 
-    public Navigation() {
+    public Navigation(MainContent_Component parent) {
         initComponents();
+        this.parent = parent;
         setLayout();
         addComponents();
-
+        System.out.println("helloo");
     }
 
     /**
@@ -43,7 +54,7 @@ public class Navigation extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(250, 250, 250));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -57,40 +68,67 @@ public class Navigation extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+//    private void setLayout() {
+//        //setLayout(new FlowLayout(FlowLayout.LEFT, 15, 15));
+//        //setLayout(new GridLayout(0, 1, 15, 15));
+//        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//    }
     private void setLayout() {
-        setLayout(new FlowLayout(FlowLayout.LEFT, 15, 15));
+        // Use GridBagLayout to control spacing and gaps between components
+        setLayout(new GridBagLayout());
     }
 
     private void addComponents() {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; // Set all components in the first column
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Make components stretch horizontally
+        gbc.insets = new Insets(15, 10, 15, 10); // Add vertical gaps between components (top, left, bottom, right)
+        gbc.anchor = GridBagConstraints.NORTHWEST; // Align components to the top-left corner
+        gbc.weightx = 1.0; // Allow horizontal expansion
+        gbc.weighty = 0; // Do not stretch components vertically
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             NavigationItemDAO navigationItemDAO = new NavigationItemDAOImp(session);
-            List<NavigationItem> navigationItem = navigationItemDAO.getAll();
+            List<NavigationItem> navigationItems = navigationItemDAO.getAll();
 
-            for (int i = 0; i < navigationItem.size(); i++) {
-                Navigation_Component navigation_Component = new Navigation_Component(navigationItem.get(i));
+            // Add each navigation item to the panel
+            for (int i = 0; i < navigationItems.size(); i++) {
+                Navigation_Component navigationComponent = new Navigation_Component(navigationItems.get(i));
 
-                navItems.add(navigation_Component);
+                navItems.add(navigationComponent);
+
+                // Set the first item as the selected item initially
                 if (i == 0) {
-                    setSelectedItem(navigation_Component);
+                    setSelectedItem(navigationComponent);
                 }
-            }
 
-            // Add mouse listeners to each item for selection
-            for (Navigation_Component item : navItems) {
-                item.addMouseListener(new MouseAdapter() {
+                // Add mouse listener for selection
+                navigationComponent.addMouseListener(new MouseAdapter() {
                     @Override
-                    public void mouseClicked(MouseEvent e) {
-                        setSelectedItem(item); // Set clicked item as selected
+                    public void mousePressed(MouseEvent e) {
+                        setSelectedItem(navigationComponent);
+                        parent.showContent(navigationComponent.getName());
                     }
                 });
-                add(item); // Add item to the panel
+
+                // Set the row (gridy) for each item
+                gbc.gridy = i;
+                add(navigationComponent, gbc); // Add component to the panel with spacing constraints
             }
 
-        } catch (Exception e) {
-        }
+            // Add an empty component at the end to push everything up
+            gbc.gridy = navigationItems.size();
+            gbc.weighty = 1.0; // Make the last item take up remaining vertical space
+            add(Box.createGlue(), gbc); // Add invisible component to force the rest upwards
 
+            // Refresh the panel UI after adding components
+            revalidate();
+            repaint();
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e + " in " + getClass().getName());
+        }
     }
 
     public void setSelectedItem(Navigation_Component item) {
@@ -98,7 +136,6 @@ public class Navigation extends javax.swing.JPanel {
         if (selectedItem != null) {
             selectedItem.setSelected(false);
         }
-
         // Select the new item
         selectedItem = item;
         selectedItem.setSelected(true);

@@ -5,10 +5,14 @@
 package view.component.Navigation;
 
 import controller.Functional.Functional;
+import controller.Session.SharedData;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import model.NavigationItem;
 
@@ -24,10 +28,12 @@ public class Navigation_Component extends javax.swing.JPanel {
     private boolean isMouseInside = false;
     private boolean isSelected = false;
     ImageIcon foscusingIcon, exitedIcon;
+    private String pageName;
 
     public Navigation_Component(NavigationItem navigationItem) {
         initComponents();
         initData(navigationItem);
+        pageName = navigationItem.getName();
     }
 
     @Override
@@ -38,12 +44,14 @@ public class Navigation_Component extends javax.swing.JPanel {
         // Set radiant gradient if mouse is inside the panel, otherwise set white background
         if (isMouseInside || isSelected) {
             GradientPaint gradient = new GradientPaint(0, 0, new Color(153, 102, 255), getWidth(), getHeight(), new Color(177, 156, 217));
-            g2d.setPaint(gradient);
+            g2d.setPaint(SharedData.mainColor);
             name.setForeground(Color.WHITE);
+            name.setFont(new Font("Roboto", Font.PLAIN, 15));
             icon.setIcon(Functional.scaleImg(icon, foscusingIcon));
         } else {
-            g2d.setColor(Color.WHITE); // White background when mouse is outside
+            g2d.setColor(new Color(250, 250, 250)); // White background when mouse is outside
             name.setForeground(Color.BLACK);
+            name.setFont(new Font("Roboto", Font.PLAIN, 14));
             icon.setIcon(Functional.scaleImg(icon, exitedIcon));
         }
 
@@ -55,7 +63,9 @@ public class Navigation_Component extends javax.swing.JPanel {
     protected void paintBorder(Graphics g) {
         if (isMouseInside || isSelected) {
             // Optional: Draw a border around the panel
-            g.setColor(new Color(177, 156, 217));
+            //g.setColor(new Color(177, 156, 217));
+            g.setColor(SharedData.mainColor);
+
             g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20); // Rounded border
         } else {
             g.setColor(Color.white);
@@ -74,8 +84,11 @@ public class Navigation_Component extends javax.swing.JPanel {
         icon = new javax.swing.JLabel();
         name = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(250, 250, 250));
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        setMaximumSize(new java.awt.Dimension(154, 50));
+        setMinimumSize(new java.awt.Dimension(154, 50));
+        setPreferredSize(new java.awt.Dimension(154, 50));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 formMouseEntered(evt);
@@ -87,7 +100,7 @@ public class Navigation_Component extends javax.swing.JPanel {
 
         icon.setSize(25, 25);
 
-        name.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        name.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         name.setForeground(new java.awt.Color(0, 0, 0));
         name.setText("Product");
 
@@ -96,20 +109,20 @@ public class Navigation_Component extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                .addGap(9, 9, 9))
+                .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(icon, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -140,5 +153,9 @@ public class Navigation_Component extends javax.swing.JPanel {
     public void setSelected(boolean selected) {
         isSelected = selected;
         repaint();
+    }
+
+    public String getName() {
+        return pageName;
     }
 }

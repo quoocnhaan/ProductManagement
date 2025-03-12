@@ -81,7 +81,7 @@ public class RoundedCard extends JPanel {
     }
 
     public void updateValue(double totalValue) {
-        contentLabel.setText(formatPrice(totalValue));
+        contentLabel.setText(formatPrice(totalValue) + " VNĐ");
     }
 
     private String formatPrice(double priceValue) {

@@ -163,6 +163,7 @@ public class ProductList_Component extends javax.swing.JPanel {
                             detail.getProduct().setProductStatus(false);
                         } else {
                             detail.getProduct().setAmount(prevAmount - diff);
+                            detail.getProduct().setProductStatus(true);
                         }
 
                         // Get the existing inventory detail for the product and update it
@@ -238,6 +239,7 @@ public class ProductList_Component extends javax.swing.JPanel {
                             detail.getProduct().setProductStatus(false);
                         } else {
                             detail.getProduct().setAmount(prevAmount - amount);
+                            detail.getProduct().setProductStatus(true);
                         }
 
                         // Delete the inventory detail if it exists

@@ -480,6 +480,9 @@ public class ImportSumary_Component extends javax.swing.JPanel {
         totalValue = total;
         this.total.setText(formatPrice(total));
 
+        balanceValue = totalValue - paidValue;
+        balance.setText(formatPrice(balanceValue));
+
     }
 
     public double getTotalPrice() {

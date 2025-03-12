@@ -428,108 +428,104 @@ public class AddProduct_Component extends javax.swing.JPanel {
     }
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        int option = JOptionPane.showConfirmDialog(this, "Do you want to save ?", "Confirm", JOptionPane.YES_NO_OPTION);
-        if (option == JOptionPane.YES_OPTION) {
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                BrandDAO brandDAO = new BrandDAOImp(session);
 
-                // Validate product name
-                String productName = name.getText().trim();
-                if (productName == null || productName.isEmpty() || productName.equals("Enter Product Name")) {
-                    JOptionPane.showMessageDialog(this, "Please enter a valid Product Name!");
-                    return;
-                }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            BrandDAO brandDAO = new BrandDAOImp(session);
 
-                // Validate product code
-                String productCode = code.getText().trim();
-                if (productCode == null || productCode.isEmpty() || productCode.equals("Enter Product Code")) {
-                    JOptionPane.showMessageDialog(this, "Please enter a valid Product Code!");
-                    return;
-                }
-
-                // Validate brand
-                String brandString = this.brand.getSelectedItem() != null ? this.brand.getSelectedItem().toString() : "";
-                if (brandString.isBlank()) {
-                    JOptionPane.showMessageDialog(this, "Please select a valid Product Brand!");
-                    return;
-                }
-
-                Brand brand = brandDAO.getByName(brandString);
-                if (brand == null) {
-                    brand = new Brand(brandString, true);
-                    brandDAO.add(brand);
-                }
-
-                // Validate price
-                double salePriceValue;
-                try {
-                    salePriceValue = Double.parseDouble(this.salePrice.getText().replace(",", ""));
-                    if (salePriceValue <= 0) {
-                        throw new NumberFormatException();
-                    }
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Please enter a valid Price!");
-                    return;
-                }
-
-                // Validate type selection
-                int type = this.type.getSelectedIndex() + 1;
-                if (type <= 0) {
-                    JOptionPane.showMessageDialog(this, "Please select a valid Product Type!");
-                    return;
-                }
-
-                // Validate gender selection
-                int gender = this.gender.getSelectedIndex() + 1;
-                if (gender <= 0) {
-                    JOptionPane.showMessageDialog(this, "Please select a valid Gender!");
-                    return;
-                }
-
-                // Validate description
-                String description = this.description.getText().trim();
-                if (description == null || description.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Please enter a valid Product Description!");
-                    return;
-                }
-
-                // Validate image
-                ImageIcon newImg = (ImageIcon) img.getIcon();
-                byte[] imgByte = Functional.convertIconToByteArray(newImg);
-                if (imgByte == null || imgByte.length == 0) {
-                    JOptionPane.showMessageDialog(this, "Please upload a valid image!");
-                    return;
-                }
-
-                double importPriceValue;
-                try {
-                    importPriceValue = Double.parseDouble(this.importPrice.getText().replace(",", ""));
-                    if (importPriceValue <= 0) {
-                        throw new NumberFormatException();
-                    }
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Please enter a valid Price!");
-                    return;
-                }
-
-                Product newProduct = new Product(productName, productCode, brand, 0, gender, imgByte, salePriceValue, importPriceValue, description, 100, true, type, true);
-                parent.transferData(newProduct);
-
-                close();
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Invalid Input! Please check your data and try again.");
-                JOptionPane.showMessageDialog(this, e);
+            // Validate product name
+            String productName = name.getText().trim();
+            if (productName == null || productName.isEmpty() || productName.equals("Enter Product Name")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid Product Name!");
+                return;
             }
+
+            // Validate product code
+            String productCode = code.getText().trim();
+            if (productCode == null || productCode.isEmpty() || productCode.equals("Enter Product Code")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid Product Code!");
+                return;
+            }
+
+            // Validate brand
+            String brandString = this.brand.getSelectedItem() != null ? this.brand.getSelectedItem().toString() : "";
+            if (brandString.isBlank()) {
+                JOptionPane.showMessageDialog(this, "Please select a valid Product Brand!");
+                return;
+            }
+
+            Brand brand = brandDAO.getByName(brandString);
+            if (brand == null) {
+                brand = new Brand(brandString, true);
+                brandDAO.add(brand);
+            }
+
+            // Validate price
+            double salePriceValue;
+            try {
+                salePriceValue = Double.parseDouble(this.salePrice.getText().replace(",", ""));
+                if (salePriceValue <= 0) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid Price!");
+                return;
+            }
+
+            // Validate type selection
+            int type = this.type.getSelectedIndex() + 1;
+            if (type <= 0) {
+                JOptionPane.showMessageDialog(this, "Please select a valid Product Type!");
+                return;
+            }
+
+            // Validate gender selection
+            int gender = this.gender.getSelectedIndex() + 1;
+            if (gender <= 0) {
+                JOptionPane.showMessageDialog(this, "Please select a valid Gender!");
+                return;
+            }
+
+            // Validate description
+            String description = this.description.getText().trim();
+            if (description == null || description.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid Product Description!");
+                return;
+            }
+
+            // Validate image
+            ImageIcon newImg = (ImageIcon) img.getIcon();
+            byte[] imgByte = Functional.convertIconToByteArray(newImg);
+            if (imgByte == null || imgByte.length == 0) {
+                JOptionPane.showMessageDialog(this, "Please upload a valid image!");
+                return;
+            }
+
+            double importPriceValue;
+            try {
+                importPriceValue = Double.parseDouble(this.importPrice.getText().replace(",", ""));
+                if (importPriceValue <= 0) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid Price!");
+                return;
+            }
+
+            Product newProduct = new Product(productName, productCode, brand, 0, gender, imgByte, salePriceValue, importPriceValue, description, 100, true, type, true);
+            parent.transferData(newProduct);
+
+            close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Invalid Input! Please check your data and try again.");
+            JOptionPane.showMessageDialog(this, e);
         }
+
     }
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {
-        int option = JOptionPane.showConfirmDialog(this, "Do you want to cancel?", "Confirm", JOptionPane.YES_NO_OPTION);
+        close();
 
-        if (option == JOptionPane.YES_OPTION) {
-            close();
-        }
     }
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {
