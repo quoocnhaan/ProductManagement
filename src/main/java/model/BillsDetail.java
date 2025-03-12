@@ -41,12 +41,6 @@ public class BillsDetail {
     @Column(nullable = false)
     private double prices;
 
-    @Column(name = "discount_percent")
-    private double discountPercent;
-    
-    @Column(name = "discount_cash")
-    private double discountCash;
-
     @Column(nullable = false)
     private double total;
 
@@ -56,13 +50,11 @@ public class BillsDetail {
     public BillsDetail() {
     }
 
-    public BillsDetail(Bills bill, Product product, int amount, double prices, double discountPercent, double discountCash, double total, boolean status) {
+    public BillsDetail(Bills bill, Product product, int amount, double prices, double total, boolean status) {
         this.bill = bill;
         this.product = product;
         this.amount = amount;
         this.prices = prices;
-        this.discountPercent = discountPercent;
-        this.discountCash = discountCash;
         this.total = total;
         this.status = status;
     }
@@ -105,22 +97,6 @@ public class BillsDetail {
 
     public void setPrices(double prices) {
         this.prices = prices;
-    }
-
-    public double getDiscountPercent() {
-        return discountPercent;
-    }
-
-    public void setDiscountPercent(double discountPercent) {
-        this.discountPercent = discountPercent;
-    }
-
-    public double getDiscountCash() {
-        return discountCash;
-    }
-
-    public void setDiscountCash(double discountCash) {
-        this.discountCash = discountCash;
     }
 
     public double getTotal() {

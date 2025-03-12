@@ -24,4 +24,6 @@ public interface InventoryDAO extends InterfaceDAO<Inventory> {
     List<Product> getAllProducts(Date date);
     
     int getOpeningInventory(Product product, Date date);
+    
+    Inventory findClosestPastInventory(Date today);
 }

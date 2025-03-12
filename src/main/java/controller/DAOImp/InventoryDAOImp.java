@@ -458,4 +458,14 @@ public class InventoryDAOImp implements InventoryDAO {
         // Return the list of products
         return query.uniqueResult().getAmountStart();
     }
+
+    @Override
+    public Inventory findClosestPastInventory(Date today) {
+        Query<Inventory> query = session.createQuery(
+                "FROM Inventory WHERE date < :today ORDER BY date DESC", Inventory.class);
+        query.setParameter("today", today);
+        query.setMaxResults(1);  // Get the closest past date
+        return query.uniqueResult();  // Return the closest past inventory or null if none found
+    }
+
 }

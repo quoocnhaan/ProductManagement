@@ -4,12 +4,15 @@
  */
 package controller.DAO;
 
+import java.sql.Date;
 import model.BillsPerDay;
 
 /**
  *
  * @author PC
  */
-public interface BillsPerDayDAO extends InterfaceDAO<BillsPerDay>{
-    
+public interface BillsPerDayDAO extends InterfaceDAO<BillsPerDay> {
+
+    BillsPerDay findByDate(Date date);
+
 }

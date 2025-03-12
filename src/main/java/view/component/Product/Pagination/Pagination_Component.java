@@ -79,6 +79,8 @@ public class Pagination_Component extends javax.swing.JPanel {
         this.parent = parent;
         this.isChoosing = isChoosing;
 
+        System.out.println("van kiet");
+
         SharedData.selectedAmount = 0;
         SharedData.beingSelected = false;
         Functional.clearDataTemp();
@@ -295,6 +297,8 @@ public class Pagination_Component extends javax.swing.JPanel {
 
         if (isChoosing) {
             productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status, SharedData.browsedProduct);
+            System.out.println("hello nghia");
+            System.out.println("size: " + productList.size());
         } else {
             productList = inventoryDAO.findByFiter(today, name_Search, brands_Search, price_Search, gender_Search, type_Search, sort, status);
         }

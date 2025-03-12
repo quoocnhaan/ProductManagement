@@ -4,11 +4,14 @@
  */
 package view.component.Order.OrderDetails;
 
-import view.component.Order.OrderDetails.OrderOtherConent.OrderSumary_Component;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
-import view.component.Order.OrderDetails.OderProductDetails.OrderProductContent_Component;
+import model.Address;
+import model.Bills;
+import model.Customer;
+import model.GoodsReceipt;
+import model.OrderHistory;
+import view.component.Order.OrderDetails.OrderDetailContent.OrderProductContent_Component;
 
 /**
  *
@@ -16,17 +19,36 @@ import view.component.Order.OrderDetails.OderProductDetails.OrderProductContent_
  */
 public class OrderDetailsSouth_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form OrderDetailsSouth_Component
-     */
-    public OrderDetailsSouth_Component() {
+    private OrderProductContent_Component importProductContent_Component;
+    private OrderSumary_Component importSumary_Component;
+    private OrderDetailsPage_Component parent;
+
+    public OrderDetailsSouth_Component(OrderDetailsPage_Component parent) {
         initComponents();
 
-        setLayout(new BorderLayout(35, 0));
-        setBorder(new EmptyBorder(30, 35, 40, 35));
-        add(new OrderProductContent_Component(), BorderLayout.CENTER);
-        add(new OrderSumary_Component(), BorderLayout.EAST);
+        this.parent = parent;
+        setLayout(new BorderLayout(20, 0));
+        setBorder(new EmptyBorder(15, 15, 15, 15));
 
+        importSumary_Component = new OrderSumary_Component(this);
+        importProductContent_Component = new OrderProductContent_Component(this);
+
+        add(importSumary_Component, BorderLayout.EAST);
+        add(importProductContent_Component, BorderLayout.CENTER);
+    }
+
+    public OrderDetailsSouth_Component(OrderDetailsPage_Component parent, Bills bills) {
+        initComponents();
+
+        this.parent = parent;
+        setLayout(new BorderLayout(20, 0));
+        setBorder(new EmptyBorder(15, 15, 15, 15));
+
+        importSumary_Component = new OrderSumary_Component(this, bills);
+        importProductContent_Component = new OrderProductContent_Component(this, bills);
+
+        add(importSumary_Component, BorderLayout.EAST);
+        add(importProductContent_Component, BorderLayout.CENTER);
     }
 
     /**
@@ -51,6 +73,18 @@ public class OrderDetailsSouth_Component extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    public void updateSumaryData(double price) {
+        importSumary_Component.updateSumaryData(price);
+    }
+
+    public void updateTotal(double price) {
+        importSumary_Component.updateTotal(price);
+    }
+
+    void updateImportProducts(Bills bills, Customer customer, Address address, OrderHistory orderHistory) {
+        importProductContent_Component.updateImportProducts(bills, customer, address, orderHistory, importSumary_Component.getDeliveryFee(), importSumary_Component.getTotalPaid(),importSumary_Component.getDiscount(), importSumary_Component.getOtherDiscount(), importSumary_Component.getTotalPrice());
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,12 +4,15 @@
  */
 package view.component.Order.OrderDetails.OrderOtherConent;
 
-import controller.Session.SharedData;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 
 /**
@@ -22,6 +25,11 @@ public class OrderHistory_Component extends javax.swing.JPanel {
     Color fg = new Color(153, 153, 153);
     ImageIcon clickIcon = new ImageIcon(getClass().getResource("/icon/dotc.png"));
     ImageIcon unclickIcon = new ImageIcon(getClass().getResource("/icon/dot.png"));
+
+    private Date paidDate;
+    private Date packedDate;
+    private Date shippedDate;
+    private Date deliveredDate;
 
     public OrderHistory_Component() {
         initComponents();
@@ -193,24 +201,23 @@ public class OrderHistory_Component extends javax.swing.JPanel {
     }
 
     private void addEvents() {
-
         paid.addActionListener(e -> {
             if (paid.isSelected()) {
                 if (paid.getIcon() instanceof ImageIcon) {
                     paid.setIcon(clickIcon);
-
                     paid.revalidate();
                     paid.repaint();
                 }
                 paid.setForeground(new Color(90, 21, 220));
+                addData(paidText, paidDate);
                 paidText.setForeground(fg);
             } else {
                 if (paid.getIcon() instanceof ImageIcon) {
                     paid.setIcon(unclickIcon);
-
                     paid.revalidate();
                     paid.repaint();
                 }
+                removeData(paidText, paidDate);
                 paid.setForeground(unSelected);
                 paidText.setForeground(Color.white);
             }
@@ -220,19 +227,19 @@ public class OrderHistory_Component extends javax.swing.JPanel {
             if (packed.isSelected()) {
                 if (packed.getIcon() instanceof ImageIcon) {
                     packed.setIcon(clickIcon);
-
                     packed.revalidate();
                     packed.repaint();
                 }
+                addData(packedText, packedDate);
                 packed.setForeground(new Color(90, 21, 220));
                 packedText.setForeground(fg);
             } else {
                 if (packed.getIcon() instanceof ImageIcon) {
                     packed.setIcon(unclickIcon);
-
                     packed.revalidate();
                     packed.repaint();
                 }
+                removeData(packedText, packedDate);
                 packed.setForeground(unSelected);
                 packedText.setForeground(Color.white);
             }
@@ -242,19 +249,19 @@ public class OrderHistory_Component extends javax.swing.JPanel {
             if (shipped.isSelected()) {
                 if (shipped.getIcon() instanceof ImageIcon) {
                     shipped.setIcon(clickIcon);
-
                     shipped.revalidate();
                     shipped.repaint();
                 }
+                addData(shippedText, shippedDate);
                 shipped.setForeground(new Color(90, 21, 220));
                 shippedText.setForeground(fg);
             } else {
                 if (shipped.getIcon() instanceof ImageIcon) {
                     shipped.setIcon(unclickIcon);
-
                     shipped.revalidate();
                     shipped.repaint();
                 }
+                removeData(shippedText, shippedDate);
                 shipped.setForeground(unSelected);
                 shippedText.setForeground(Color.white);
             }
@@ -264,19 +271,19 @@ public class OrderHistory_Component extends javax.swing.JPanel {
             if (delivered.isSelected()) {
                 if (delivered.getIcon() instanceof ImageIcon) {
                     delivered.setIcon(clickIcon);
-
                     delivered.revalidate();
                     delivered.repaint();
                 }
+                addData(deliveredText, deliveredDate);
                 delivered.setForeground(new Color(90, 21, 220));
                 deliveredText.setForeground(fg);
             } else {
                 if (delivered.getIcon() instanceof ImageIcon) {
                     delivered.setIcon(unclickIcon);
-
                     delivered.revalidate();
                     delivered.repaint();
                 }
+                removeData(deliveredText, deliveredDate);
                 delivered.setForeground(unSelected);
                 deliveredText.setForeground(Color.white);
             }
@@ -303,5 +310,34 @@ public class OrderHistory_Component extends javax.swing.JPanel {
 
         // Draw the vertical line from yStart to yEnd at position x
         g2d.drawLine(x, yStart, x, yEnd);
+    }
+
+    private void addData(JLabel text, Date date) {
+        Date today = Date.valueOf(LocalDate.now());
+        date = today;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = dateFormat.format(today);
+        text.setText(formattedDate);
+    }
+
+    private void removeData(JLabel text, Date date) {
+        date = null;
+        text.setText("");
+    }
+
+    public Date getPaidDate() {
+        return paidDate;
+    }
+
+    public Date getShippedDate() {
+        return shippedDate;
+    }
+
+    public Date getPackedDate() {
+        return packedDate;
+    }
+
+    public Date getDeliveredDate() {
+        return deliveredDate;
     }
 }

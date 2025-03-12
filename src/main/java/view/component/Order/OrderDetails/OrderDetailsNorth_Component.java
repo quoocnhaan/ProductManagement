@@ -8,7 +8,12 @@ import view.component.Order.OrderDetails.OrderOtherConent.OrderHistory_Component
 import view.component.Order.OrderDetails.OrderOtherConent.DeliveryAddress_Component;
 import view.component.Order.OrderDetails.OrderOtherConent.CustomerDetails_Component;
 import java.awt.FlowLayout;
+import java.sql.Date;
 import javax.swing.border.EmptyBorder;
+import model.Address;
+import model.Bills;
+import model.Customer;
+import model.OrderHistory;
 
 /**
  *
@@ -16,17 +21,42 @@ import javax.swing.border.EmptyBorder;
  */
 public class OrderDetailsNorth_Component extends javax.swing.JPanel {
 
-    /**
-     * Creates new form OrderDetailsNorth_Component
-     */
-    public OrderDetailsNorth_Component() {
+    private CustomerDetails_Component customerDetails_Component;
+    private DeliveryAddress_Component deliveryAddress_Component;
+    private OrderHistory_Component orderHistory_Component;
+    private Bills bills;
+
+    private OrderDetailsPage_Component parent;
+
+    public OrderDetailsNorth_Component(OrderDetailsPage_Component parent, Bills bills) {
         initComponents();
+        this.parent = parent;
+        this.bills = bills;
         setLayout(new FlowLayout(FlowLayout.LEFT, 35, 0));
         setBorder(new EmptyBorder(20, 0, 0, 0));
-        add(new CustomerDetails_Component());
-        add(new DeliveryAddress_Component());
-        add(new OrderHistory_Component());
 
+        customerDetails_Component = new CustomerDetails_Component();
+        deliveryAddress_Component = new DeliveryAddress_Component();
+        orderHistory_Component = new OrderHistory_Component();
+
+        add(customerDetails_Component);
+        add(deliveryAddress_Component);
+        add(orderHistory_Component);
+    }
+
+    public OrderDetailsNorth_Component(OrderDetailsPage_Component parent) {
+        initComponents();
+        this.parent = parent;
+        setLayout(new FlowLayout(FlowLayout.LEFT, 35, 0));
+        setBorder(new EmptyBorder(20, 0, 0, 0));
+
+        customerDetails_Component = new CustomerDetails_Component();
+        deliveryAddress_Component = new DeliveryAddress_Component();
+        orderHistory_Component = new OrderHistory_Component();
+
+        add(customerDetails_Component);
+        add(deliveryAddress_Component);
+        add(orderHistory_Component);
     }
 
     /**
@@ -52,6 +82,27 @@ public class OrderDetailsNorth_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public Customer getCustomer() {
+        String name = customerDetails_Component.getCustomerName();
+        String phone = customerDetails_Component.getCustomerPhone();
+        return new Customer(name, phone, true);
+    }
+
+    public Address getAddress() {
+        String address = deliveryAddress_Component.getAddressLine();
+        String distric = deliveryAddress_Component.getDistrict();
+        String city = deliveryAddress_Component.getCity();
+        String flat = deliveryAddress_Component.getFlatName();
+        return new Address(address, distric, city, flat);
+    }
+
+    public OrderHistory getOrderHistory() {
+        Date paidDate = orderHistory_Component.getPaidDate();
+        Date packedDate = orderHistory_Component.getPackedDate();
+        Date shippedDate = orderHistory_Component.getShippedDate();
+        Date deliveredDate = orderHistory_Component.getDeliveredDate();
+        return new OrderHistory(paidDate, packedDate, shippedDate, deliveredDate);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

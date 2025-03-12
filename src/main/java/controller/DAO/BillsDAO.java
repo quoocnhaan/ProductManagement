@@ -4,12 +4,18 @@
  */
 package controller.DAO;
 
+import java.util.List;
 import model.Bills;
+import model.BillsPerDay;
 
 /**
  *
  * @author PC
  */
-public interface BillsDAO extends InterfaceDAO<Bills>{
-    
+public interface BillsDAO extends InterfaceDAO<Bills> {
+
+    List<Bills> findByBillsPerDay(BillsPerDay billsPerDay);
+
+    List<Bills> findByFilter(BillsPerDay billsPerDay, String sort, String paymentStatus, List<String> oderStatus);
+
 }

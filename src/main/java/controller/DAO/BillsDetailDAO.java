@@ -4,6 +4,8 @@
  */
 package controller.DAO;
 
+import java.util.List;
+import model.Bills;
 import model.BillsDetail;
 
 /**
@@ -11,5 +13,5 @@ import model.BillsDetail;
  * @author PC
  */
 public interface BillsDetailDAO extends InterfaceDAO<BillsDetail>{
-    
+    List<BillsDetail> findAllByBill(Bills bills);
 }

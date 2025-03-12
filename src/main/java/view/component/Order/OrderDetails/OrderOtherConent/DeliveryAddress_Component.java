@@ -276,4 +276,20 @@ public class DeliveryAddress_Component extends javax.swing.JPanel {
         textField.setBackground(Color.WHITE); // Ensure the background stays white
         textField.setDisabledTextColor(Color.BLACK); // Ensure the text is visible when disabled
     }
+
+    public String getAddressLine() {
+        return address.getText();
+    }
+
+    public String getDistrict() {
+        return district.getText();
+    }
+
+    public String getCity() {
+        return city.getText();
+    }
+
+    public String getFlatName() {
+        return flat.getText();
+    }
 }

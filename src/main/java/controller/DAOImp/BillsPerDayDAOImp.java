@@ -5,6 +5,7 @@
 package controller.DAOImp;
 
 import controller.DAO.BillsPerDayDAO;
+import java.sql.Date;
 import java.util.List;
 import model.BillsPerDay;
 import org.hibernate.Session;
@@ -80,5 +81,19 @@ public class BillsPerDayDAOImp implements BillsPerDayDAO {
     public List<BillsPerDay> getAll() {
         Query<BillsPerDay> query = session.createQuery("FROM BillsPerDay", BillsPerDay.class);
         return query.list();
+    }
+
+    @Override
+    public BillsPerDay findByDate(Date date) {
+        String hql = "FROM BillsPerDay b WHERE b.date = :date";
+
+        // Create the query
+        Query<BillsPerDay> query = session.createQuery(hql, BillsPerDay.class);
+
+        // Set the parameter for the Product
+        query.setParameter("date", date);
+
+        // Get the single result (assuming there's only one matching entry due to the @OneToOne relationship)
+        return query.uniqueResult();
     }
 }

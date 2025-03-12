@@ -6,6 +6,7 @@ package controller.DAOImp;
 
 import controller.DAO.BillsDetailDAO;
 import java.util.List;
+import model.Bills;
 import model.BillsDetail;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,8 +16,7 @@ import org.hibernate.query.Query;
  *
  * @author PC
  */
-public class BillsDetailDAOImp implements BillsDetailDAO{
-
+public class BillsDetailDAOImp implements BillsDetailDAO {
 
     private Session session;
 
@@ -82,5 +82,12 @@ public class BillsDetailDAOImp implements BillsDetailDAO{
         Query<BillsDetail> query = session.createQuery("FROM BillsDetail", BillsDetail.class);
         return query.list();
     }
-    
+
+    @Override
+    public List<BillsDetail> findAllByBill(Bills bills) {
+        Query<BillsDetail> query = session.createQuery("FROM BillsDetail WHERE bills = :bills", BillsDetail.class);
+        query.setParameter("bills", bills);
+        return query.getResultList();
+    }
+
 }

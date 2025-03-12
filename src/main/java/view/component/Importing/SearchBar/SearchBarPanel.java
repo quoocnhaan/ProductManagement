@@ -182,6 +182,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
         isProgrammaticChange = true;
         date.setDate(null);
         isProgrammaticChange = false;
+        sortPopup.reset();
     }
 
     public void changeColorOfSortBtn(boolean b) {

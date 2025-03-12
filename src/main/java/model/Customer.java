@@ -15,7 +15,6 @@ import javax.persistence.Table;
  *
  * @author PC
  */
-
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -27,11 +26,20 @@ public class Customer {
     @Column(nullable = false)
     private String name;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "total_payment", nullable = false)
-    private double totalPayment;
+    @Column(name = "address_line")
+    private String addressLine;
+
+    @Column(name = "disctrict")
+    private String disctrict;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "flat_name")
+    private String flatName;
 
     @Column(nullable = false)
     private boolean status;
@@ -39,11 +47,46 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String phoneNumber, double totalPayment, boolean status) {
+    public Customer(String name, String phoneNumber, boolean status) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.totalPayment = totalPayment;
+        this.addressLine = addressLine;
+        this.disctrict = disctrict;
+        this.city = city;
+        this.flatName = flatName;
         this.status = status;
+    }
+
+    public String getAddressLine() {
+        return addressLine;
+    }
+
+    public void setAddressLine(String addressLine) {
+        this.addressLine = addressLine;
+    }
+
+    public String getDisctrict() {
+        return disctrict;
+    }
+
+    public void setDisctrict(String disctrict) {
+        this.disctrict = disctrict;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getFlatName() {
+        return flatName;
+    }
+
+    public void setFlatName(String flatName) {
+        this.flatName = flatName;
     }
 
     public int getId() {
@@ -70,14 +113,6 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public double getTotalPayment() {
-        return totalPayment;
-    }
-
-    public void setTotalPayment(double totalPayment) {
-        this.totalPayment = totalPayment;
-    }
-
     public boolean isStatus() {
         return status;
     }
@@ -87,4 +122,3 @@ public class Customer {
     }
 
 }
-
