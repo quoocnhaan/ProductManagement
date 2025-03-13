@@ -67,6 +67,9 @@ Contributor(s):
         <mapping class="model.NavigationItem"/>
         <mapping class="model.Brand"/>
         <mapping class="model.Product_Browsed"/>
+        <mapping class="model.Wishes"/>
+        <mapping class="model.Images"/>
+
 
     </session-factory>
 </hibernate-configuration>

@@ -12,7 +12,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>view.component.Product.NewJFrame</mainClass>
+              <mainClass>view.component.MainFrame.MainFrame</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -29,7 +29,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>view.component.Product.NewJFrame</mainClass>
+                  <mainClass>view.component.MainFrame.MainFrame</mainClass>
                 </transformer>
               </transformers>
             </configuration>

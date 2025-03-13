@@ -189,7 +189,7 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
                 // Show a confirmation dialog
                 int result = JOptionPane.showConfirmDialog(
                         null,
-                        "Are you sure you want to transfer the inventory data to the next day?",
+                        "Are you sure you want to transfer the inventory data?",
                         "Confirm Transfer",
                         JOptionPane.YES_NO_OPTION
                 );
@@ -203,72 +203,105 @@ public class HeaderTitle_Component extends javax.swing.JPanel {
 
                         // Fetch today's inventory
                         InventoryDAO inventoryDAO = new InventoryDAOImp(session);
-                        Inventory inventory = inventoryDAO.findByDate(today);
+                        Inventory todayInventory = inventoryDAO.findByDate(today);
 
-                        // Fetch all inventory details for today's inventory
+                        // If no inventory for today, find the closest past inventory and use it for today
+                        if (todayInventory == null) {
+                            todayInventory = inventoryDAO.findClosestPastInventory(today);
+                            if (todayInventory == null) {
+                                JOptionPane.showMessageDialog(null, "No past inventory data available for transfer!");
+                                return;  // Exit if no past data available
+                            }
+
+                            // Transfer closest past inventory to today
+                            Inventory newInventoryForToday = new Inventory();
+                            newInventoryForToday.setDate(today);
+                            newInventoryForToday.setStatus(todayInventory.isStatus());
+                            newInventoryForToday.setAmount(todayInventory.getAmount());
+                            inventoryDAO.add(newInventoryForToday);
+
+                            // Fetch the details of the closest past inventory and transfer to today
+                            InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
+                            List<InventoryDetail> details = inventoryDetailDAO.findDetailsByInventory(todayInventory);
+
+                            for (InventoryDetail detail : details) {
+                                InventoryDetail newDetail = new InventoryDetail();
+                                newDetail.setInventory(newInventoryForToday);
+                                newDetail.setProduct(detail.getProduct());
+                                newDetail.setPrice(detail.getPrice());
+                                newDetail.setAmountStart(detail.getAmountEnd());
+                                newDetail.setAmountEnd(detail.getAmountEnd());
+                                newDetail.setStatus(detail.isStatus());
+                                inventoryDetailDAO.add(newDetail);
+                            }
+
+                            JOptionPane.showMessageDialog(null, "Data transferred to today's inventory successfully!");
+                            return;
+                        }
+
+                        // If today's inventory exists, fetch details and transfer to the next day
                         InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
-                        List<InventoryDetail> details = inventoryDetailDAO.findDetailsByInventory(inventory);
+                        List<InventoryDetail> details = inventoryDetailDAO.findDetailsByInventory(todayInventory);
 
                         int totalAmount = 0;
 
-                        // Compute total amount for today's inventory
+                        // Calculate the total amount from today's inventory details
                         for (InventoryDetail detail : details) {
-                            totalAmount += detail.getAmountEnd();
+                            totalAmount += detail.getAmountEnd();  // Compute total amount
+                            inventoryDetailDAO.update(detail);  // Save any necessary changes to detail
                         }
 
                         // Check if inventory for the next day already exists
                         Inventory nextDayInventory = inventoryDAO.findByDate(nextDayDate);
 
                         if (nextDayInventory != null) {
-                            // Delete all InventoryDetail records for the next day
-                            inventoryDetailDAO.deleteAllByInventory(nextDayInventory);
-
-                            // Update the next day's inventory total amount
-                            nextDayInventory.setAmount(totalAmount);
+                            // Update the next day's inventory if it exists
+                            nextDayInventory.setAmount(totalAmount);  // Update total amount for the next day
                             inventoryDAO.update(nextDayInventory);
 
-                            // Transfer today's InventoryDetail data to the next day
-                            for (InventoryDetail detail : details) {
-                                if (detail.getProduct().isStatus()) {
-                                    InventoryDetail newDetail = new InventoryDetail();
-                                    newDetail.setInventory(nextDayInventory);
-                                    newDetail.setProduct(detail.getProduct());
-                                    newDetail.setPrice(detail.getPrice());
-                                    newDetail.setAmountStart(detail.getAmountEnd());  // Carry over amount_end as amount_start
-                                    newDetail.setAmountEnd(detail.getAmountEnd());  // Initialize amount_end to 0 for the new day
-                                    newDetail.setStatus(detail.isStatus());
+                            // Update existing InventoryDetail records for the next day
+                            List<InventoryDetail> nextDayDetails = inventoryDetailDAO.findDetailsByInventory(nextDayInventory);
 
-                                    inventoryDetailDAO.add(newDetail);  // Save new inventory detail
+                            for (InventoryDetail nextDayDetail : nextDayDetails) {
+                                // Find the corresponding detail from today
+                                for (InventoryDetail detail : details) {
+                                    if (detail.getProduct().equals(nextDayDetail.getProduct())) {
+                                        // Update amount_start with today's amount_end
+                                        nextDayDetail.setAmountStart(detail.getAmountEnd());
+                                        nextDayDetail.setAmountEnd(detail.getAmountEnd());
+                                        nextDayDetail.setPrice(detail.getPrice());  // Carry over price if needed
+                                        nextDayDetail.setStatus(detail.isStatus());  // Carry over status if needed
+                                        inventoryDetailDAO.update(nextDayDetail);  // Save changes to detail
+                                        break;
+                                    }
                                 }
                             }
                         } else {
                             // If the next day's inventory does not exist, create it
                             Inventory newInventory = new Inventory();
                             newInventory.setDate(nextDayDate);
-                            newInventory.setStatus(inventory.isStatus());  // Carry over the same status
+                            newInventory.setStatus(todayInventory.isStatus());  // Carry over the same status
                             newInventory.setAmount(totalAmount);  // Total amount computed above
                             inventoryDAO.add(newInventory);
 
                             // Create new InventoryDetail records for the next day
                             for (InventoryDetail detail : details) {
-                                if (detail.getProduct().isStatus()) {
-                                    InventoryDetail newDetail = new InventoryDetail();
-                                    newDetail.setInventory(newInventory);
-                                    newDetail.setProduct(detail.getProduct());
-                                    newDetail.setPrice(detail.getPrice());
-                                    newDetail.setAmountStart(detail.getAmountEnd());  // Carry over amount_end as amount_start
-                                    newDetail.setAmountEnd(detail.getAmountEnd());  // Initialize amount_end to 0 for the new day
-                                    newDetail.setStatus(detail.isStatus());
+                                InventoryDetail newDetail = new InventoryDetail();
+                                newDetail.setInventory(newInventory);
+                                newDetail.setProduct(detail.getProduct());
+                                newDetail.setPrice(detail.getPrice());
+                                newDetail.setAmountStart(detail.getAmountEnd());  // Carry over amount_end as amount_start
+                                newDetail.setAmountEnd(detail.getAmountEnd());  // Initialize amount_end to 0 for the new day
+                                newDetail.setStatus(detail.isStatus());
 
-                                    inventoryDetailDAO.add(newDetail);  // Save new inventory detail
-                                }
+                                inventoryDetailDAO.add(newDetail);  // Save new inventory detail
                             }
                         }
 
-                        JOptionPane.showMessageDialog(null, "Transfer data successfully!");
+                        JOptionPane.showMessageDialog(null, "Transfer data to the next day successfully!");
 
                     } catch (Exception exception) {
-                        System.out.println(exception + getClass().getName());
+                        exception.printStackTrace();  // Handle exception
                     }
                 } else {
                     System.out.println("Transfer canceled by the user.");

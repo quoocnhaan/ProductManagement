@@ -4,8 +4,21 @@
  */
 package view.component.Home;
 
-import java.awt.FlowLayout;
-import view.component.CustomComponent.RoundedCard;
+import controller.DAO.ImagesDAO;
+import controller.DAO.WishesDAO;
+import controller.DAOImp.ImagesDAOImp;
+import controller.DAOImp.WishesDAOImp;
+import controller.Functional.Functional;
+import java.io.File;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import model.Images;
+import model.Wishes;
+import org.hibernate.Session;
+import util.HibernateUtil;
 
 /**
  *
@@ -13,16 +26,9 @@ import view.component.CustomComponent.RoundedCard;
  */
 public class Home_Component extends javax.swing.JPanel {
 
-    private RoundedCard total;
-    private RoundedCard sold;
-    private RoundedCard inStock;
-    private RoundedCard outStock;
-    private RoundedCard quantity;
-
     public Home_Component() {
         initComponents();
-        addComponents();
-        statics.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        initData();
 
     }
 
@@ -38,16 +44,24 @@ public class Home_Component extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         panelRound2 = new view.component.Home.PanelRound();
         jLabel1 = new javax.swing.JLabel();
-        bestSaleImg = new javax.swing.JLabel();
-        img2 = new javax.swing.JLabel();
-        statics = new javax.swing.JPanel();
-        img1 = new javax.swing.JLabel();
+        aiu = new javax.swing.JLabel();
         panelRound3 = new view.component.Home.PanelRound();
         jLabel3 = new javax.swing.JLabel();
-        bestSaleImg1 = new javax.swing.JLabel();
-        img3 = new javax.swing.JLabel();
+        us = new javax.swing.JLabel();
+        panelRound4 = new view.component.Home.PanelRound();
+        jLabel4 = new javax.swing.JLabel();
+        img1 = new javax.swing.JLabel();
+        panelRound5 = new view.component.Home.PanelRound();
+        jLabel5 = new javax.swing.JLabel();
+        img2 = new javax.swing.JLabel();
+        panelRound1 = new view.component.Home.PanelRound();
+        jLabel6 = new javax.swing.JLabel();
+        wish = new javax.swing.JLabel();
+        panelRound6 = new view.component.Home.PanelRound();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(250, 250, 250));
+        setBackground(new java.awt.Color(249, 249, 249));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -62,9 +76,16 @@ public class Home_Component extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Best Seller Product");
+        jLabel1.setText("Aiuuu");
 
-        bestSaleImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfume4.png"))); // NOI18N
+        aiu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfume4.png"))); // NOI18N
+        aiu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        aiu.setSize(280,280);
+        aiu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                aiuMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
         panelRound2.setLayout(panelRound2Layout);
@@ -74,7 +95,7 @@ public class Home_Component extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(bestSaleImg, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(aiu, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         panelRound2Layout.setVerticalGroup(
@@ -83,26 +104,9 @@ public class Home_Component extends javax.swing.JPanel {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bestSaleImg, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(aiu, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
-
-        img2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfume4.png"))); // NOI18N
-
-        statics.setBackground(new java.awt.Color(250, 250, 250));
-
-        javax.swing.GroupLayout staticsLayout = new javax.swing.GroupLayout(statics);
-        statics.setLayout(staticsLayout);
-        staticsLayout.setHorizontalGroup(
-            staticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1136, Short.MAX_VALUE)
-        );
-        staticsLayout.setVerticalGroup(
-            staticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        img1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfume4.png"))); // NOI18N
 
         panelRound3.setBackground(new java.awt.Color(255, 255, 255));
         panelRound3.setForeground(new java.awt.Color(0, 0, 0));
@@ -113,9 +117,16 @@ public class Home_Component extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Best Seller Product");
+        jLabel3.setText("Us <3");
 
-        bestSaleImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfume4.png"))); // NOI18N
+        us.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/perfume4.png"))); // NOI18N
+        us.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        us.setSize(280,280);
+        us.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                usMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
         panelRound3.setLayout(panelRound3Layout);
@@ -125,7 +136,7 @@ public class Home_Component extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(bestSaleImg1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(us, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         panelRound3Layout.setVerticalGroup(
@@ -134,11 +145,159 @@ public class Home_Component extends javax.swing.JPanel {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bestSaleImg1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(us, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        img3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nike.png"))); // NOI18N
+        panelRound4.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound4.setForeground(new java.awt.Color(0, 0, 0));
+        panelRound4.setRoundBottomLeft(75);
+        panelRound4.setRoundBottomRight(75);
+        panelRound4.setRoundTopLeft(75);
+        panelRound4.setRoundTopRight(75);
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Photo #1");
+
+        img1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        img1.setSize(230,230);
+        img1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                img1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
+        panelRound4.setLayout(panelRound4Layout);
+        panelRound4Layout.setHorizontalGroup(
+            panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound4Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(img1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        panelRound4Layout.setVerticalGroup(
+            panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound4Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(img1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        panelRound5.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound5.setForeground(new java.awt.Color(0, 0, 0));
+        panelRound5.setRoundBottomLeft(75);
+        panelRound5.setRoundBottomRight(75);
+        panelRound5.setRoundTopLeft(75);
+        panelRound5.setRoundTopRight(75);
+
+        jLabel5.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Photo #2");
+
+        img2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        img2.setSize(230,230);
+        img2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                img2MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelRound5Layout = new javax.swing.GroupLayout(panelRound5);
+        panelRound5.setLayout(panelRound5Layout);
+        panelRound5Layout.setHorizontalGroup(
+            panelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound5Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(panelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(img2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelRound5Layout.setVerticalGroup(
+            panelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound5Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(img2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        panelRound1.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound1.setRoundBottomLeft(75);
+        panelRound1.setRoundBottomRight(75);
+        panelRound1.setRoundTopLeft(75);
+        panelRound1.setRoundTopRight(75);
+
+        jLabel6.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Wishes <3");
+
+        wish.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        wish.setForeground(new java.awt.Color(51, 51, 51));
+        wish.setText("This is a quotes");
+
+        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
+        panelRound1.setLayout(panelRound1Layout);
+        panelRound1Layout.setHorizontalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(wish, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelRound1Layout.setVerticalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(wish, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        panelRound6.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound6.setRoundBottomLeft(75);
+        panelRound6.setRoundBottomRight(75);
+        panelRound6.setRoundTopLeft(75);
+        panelRound6.setRoundTopRight(75);
+
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel8.setText("Hong biết trang này để gì nên eiu sẽ để hình của chúng ta. Mỗi ngày ở dưới sẽ có một chúc tương ứng cho eiu đọc nhaaa <3");
+
+        jLabel9.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel9.setText("Chúc eiu nổ đơn đùng đùng");
+
+        javax.swing.GroupLayout panelRound6Layout = new javax.swing.GroupLayout(panelRound6);
+        panelRound6.setLayout(panelRound6Layout);
+        panelRound6Layout.setHorizontalGroup(
+            panelRound6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound6Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(panelRound6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 1050, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+        panelRound6Layout.setVerticalGroup(
+            panelRound6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound6Layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -152,69 +311,216 @@ public class Home_Component extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(statics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelRound6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(62, 62, 62)
+                                        .addGap(85, 85, 85)
                                         .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(img3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                                .addGap(112, 112, 112)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(img1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(img2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(47, Short.MAX_VALUE))
+                                    .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(77, 77, 77)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(panelRound4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(panelRound5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(statics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(18, 18, 18)
+                .addComponent(panelRound6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(img1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(img2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(panelRound5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(54, 54, 54)
-                        .addComponent(img3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(panelRound2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelRound3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78)))
+                .addGap(28, 28, 28))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void img1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_img1MouseClicked
+        JFileChooser fileChooser = new JFileChooser();
+
+        String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "bmp"));
+        fileChooser.setCurrentDirectory(new File(desktopPath));
+
+        int returnValue = fileChooser.showOpenDialog(this);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
+
+            img1.setIcon(Functional.scaleImg(img1, imageIcon));
+
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                ImagesDAO imagesDAO = new ImagesDAOImp(session);
+
+                Images images = imagesDAO.get(1);
+
+                images.setImage1(Functional.convertIconToByteArray(imageIcon));
+                imagesDAO.update(images);
+            } catch (Exception e) {
+                System.out.println(e + getClass().getName());
+            }
+        }
+    }//GEN-LAST:event_img1MouseClicked
+
+    private void img2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_img2MouseClicked
+        JFileChooser fileChooser = new JFileChooser();
+
+        String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "bmp"));
+        fileChooser.setCurrentDirectory(new File(desktopPath));
+
+        int returnValue = fileChooser.showOpenDialog(this);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
+
+            img2.setIcon(Functional.scaleImg(img2, imageIcon));
+
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                ImagesDAO imagesDAO = new ImagesDAOImp(session);
+
+                Images images = imagesDAO.get(1);
+
+                images.setImage2(Functional.convertIconToByteArray(imageIcon));
+                imagesDAO.update(images);
+            } catch (Exception e) {
+                System.out.println(e + getClass().getName());
+            }
+        }
+    }//GEN-LAST:event_img2MouseClicked
+
+    private void usMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usMouseClicked
+        JFileChooser fileChooser = new JFileChooser();
+
+        String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "bmp"));
+        fileChooser.setCurrentDirectory(new File(desktopPath));
+
+        int returnValue = fileChooser.showOpenDialog(this);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
+
+            us.setIcon(Functional.scaleImg(us, imageIcon));
+
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                ImagesDAO imagesDAO = new ImagesDAOImp(session);
+
+                Images images = imagesDAO.get(1);
+
+                images.setUs(Functional.convertIconToByteArray(imageIcon));
+                imagesDAO.update(images);
+            } catch (Exception e) {
+                System.out.println(e + getClass().getName());
+            }
+        }
+    }//GEN-LAST:event_usMouseClicked
+
+    private void aiuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aiuMouseClicked
+        JFileChooser fileChooser = new JFileChooser();
+
+        String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "bmp"));
+        fileChooser.setCurrentDirectory(new File(desktopPath));
+
+        int returnValue = fileChooser.showOpenDialog(this);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+
+            ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
+
+            aiu.setIcon(Functional.scaleImg(aiu, imageIcon));
+
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                ImagesDAO imagesDAO = new ImagesDAOImp(session);
+
+                Images images = imagesDAO.get(1);
+
+                images.setAiu(Functional.convertIconToByteArray(imageIcon));
+                imagesDAO.update(images);
+            } catch (Exception e) {
+                System.out.println(e + getClass().getName());
+            }
+
+        }
+    }//GEN-LAST:event_aiuMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel bestSaleImg;
-    private javax.swing.JLabel bestSaleImg1;
+    private javax.swing.JLabel aiu;
     private javax.swing.JLabel img1;
     private javax.swing.JLabel img2;
-    private javax.swing.JLabel img3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private view.component.Home.PanelRound panelRound1;
     private view.component.Home.PanelRound panelRound2;
     private view.component.Home.PanelRound panelRound3;
-    private javax.swing.JPanel statics;
+    private view.component.Home.PanelRound panelRound4;
+    private view.component.Home.PanelRound panelRound5;
+    private view.component.Home.PanelRound panelRound6;
+    private javax.swing.JLabel us;
+    private javax.swing.JLabel wish;
     // End of variables declaration//GEN-END:variables
 
-    private void addComponents() {
-        total = new RoundedCard("Total Products", 5 + "");
-        sold = new RoundedCard("Products Sold", 5 + "");
-        inStock = new RoundedCard("In-Stock Products", 5 + "");
-        outStock = new RoundedCard("Out-of-Stock Products", 5 + "");
-        quantity = new RoundedCard("Total Quantity", 5 + "");
+    private void initData() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-        statics.add(total);
-        statics.add(sold);
-        statics.add(inStock);
-        statics.add(outStock);
-        statics.add(quantity);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date today = new Date(System.currentTimeMillis()); // This will give the current date
+            String formattedDate = dateFormat.format(today);
+
+            // Get the day-of-year (1 to 365 or 366 for leap year)
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(today);
+            int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+            System.out.println(dayOfYear);
+
+            ImagesDAO imagesDAO = new ImagesDAOImp(session);
+            WishesDAO wishesDAO = new WishesDAOImp(session);
+
+            Images images = imagesDAO.get(1);
+            Wishes wishes = wishesDAO.getByIndex(dayOfYear);
+
+            img1.setIcon(Functional.scaleImg(img1, Functional.convertByteArrayToIcon(images.getImage1())));
+            img2.setIcon(Functional.scaleImg(img2, Functional.convertByteArrayToIcon(images.getImage2())));
+            us.setIcon(Functional.scaleImg(us, Functional.convertByteArrayToIcon(images.getUs())));
+            aiu.setIcon(Functional.scaleImg(aiu, Functional.convertByteArrayToIcon(images.getAiu())));
+
+            wish.setText("<html>" + formattedDate + "<br>" + wishes.getWish() + "</html>");
+
+        } catch (Exception e) {
+            System.out.println(e + getClass().getName());
+        }
     }
 }
