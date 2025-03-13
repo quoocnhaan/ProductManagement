@@ -120,8 +120,6 @@ public class Product_Component extends javax.swing.JPanel {
                         }
                     }
                 }
-                int curQuantity = Integer.parseInt(getQuantity());
-                SharedData.deletedProductInImport.put(product, curQuantity);
             }
         });
     }

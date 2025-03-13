@@ -4,7 +4,6 @@
  */
 package view.component.Importing.ImportProduct;
 
-import controller.Session.SharedData;
 import java.awt.BorderLayout;
 import javax.swing.JDialog;
 import model.GoodsReceipt;

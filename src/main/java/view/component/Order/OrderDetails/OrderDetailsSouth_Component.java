@@ -83,7 +83,11 @@ public class OrderDetailsSouth_Component extends javax.swing.JPanel {
     }
 
     void updateImportProducts(Bills bills, Customer customer, Address address, OrderHistory orderHistory) {
-        importProductContent_Component.updateImportProducts(bills, customer, address, orderHistory, importSumary_Component.getDeliveryFee(), importSumary_Component.getTotalPaid(),importSumary_Component.getDiscount(), importSumary_Component.getOtherDiscount(), importSumary_Component.getTotalPrice());
+        importProductContent_Component.updateImportProducts(bills, customer, address, orderHistory, importSumary_Component.getDeliveryFee(), importSumary_Component.getTotalPaid(), importSumary_Component.getDiscount(), importSumary_Component.getOtherDiscount(), importSumary_Component.getTotalPrice());
+    }
+
+    void unfulfilledOrder(Bills bills, Customer customer, Address address, OrderHistory orderHistory) {
+        importProductContent_Component.unfulfilledOrder(bills, customer, address, orderHistory, importSumary_Component.getDeliveryFee(), importSumary_Component.getTotalPaid(), importSumary_Component.getDiscount(), importSumary_Component.getOtherDiscount(), importSumary_Component.getTotalPrice());
     }
 
 

@@ -85,6 +85,13 @@ public class OrderDetailsPage_Component extends javax.swing.JPanel {
         OrderHistory orderHistory = orderDetailsNorth_Component.getOrderHistory();
         orderDetailsSouth_Component.updateImportProducts(bills, customer, address, orderHistory);
     }
+
+    void unfulfilledOrder(Bills bills) {
+        Customer customer = orderDetailsNorth_Component.getCustomer();
+        Address address = orderDetailsNorth_Component.getAddress();
+        OrderHistory orderHistory = orderDetailsNorth_Component.getOrderHistory();
+        orderDetailsSouth_Component.unfulfilledOrder(bills, customer, address, orderHistory);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
