@@ -39,7 +39,8 @@ import view.component.Importing.GoodsReceipt_Component.GoodsReceipt_Component;
  */
 public class Pagination_Component extends javax.swing.JPanel {
 
-    private Date today = null;
+    private Date fromDate = null;
+    private Date toDate = null;
     private int currentPage = 1;
     private int itemsPerPage = 6;
     private int maxVisiblePages = 3; // Only show 3 page buttons at once
@@ -219,27 +220,29 @@ public class Pagination_Component extends javax.swing.JPanel {
         nextButton = createPageButton("Next >");
     }
 
+//    private void fetchData() {
+//        products.clear();
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
+//
+//            List<GoodsReceipt> list = goodsReceiptDAO.getAll();
+//            for (GoodsReceipt goodsReceipt : list) {
+//                products.add(new GoodsReceipt_Component(goodsReceipt, this));
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println(e + getClass().getName());
+//        }
+//    }
     private void fetchData() {
         products.clear();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
 
-            List<GoodsReceipt> list = goodsReceiptDAO.getAll();
-            for (GoodsReceipt goodsReceipt : list) {
-                products.add(new GoodsReceipt_Component(goodsReceipt, this));
+            List<GoodsReceipt> list = goodsReceiptDAO.findByFilter(fromDate, toDate, sort, status);
+            if (sort == null || sort.isBlank()) {
+                list.sort((b1, b2) -> Integer.compare(b2.getId(), b1.getId()));
             }
-
-        } catch (Exception e) {
-            System.out.println(e + getClass().getName());
-        }
-    }
-
-    private void fetchDataBySort() {
-        products.clear();
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
-
-            List<GoodsReceipt> list = goodsReceiptDAO.findByFilter(sort, status);
 
             for (GoodsReceipt goodsReceipt : list) {
                 products.add(new GoodsReceipt_Component(goodsReceipt, this));
@@ -250,25 +253,24 @@ public class Pagination_Component extends javax.swing.JPanel {
         }
     }
 
-    private void fetchDataByDate() {
-        products.clear();
-        if (today == null) {
-            fetchData();
-            return;
-        }
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
-
-            GoodsReceipt goodsReceipt = goodsReceiptDAO.findByDate(today);
-            if (goodsReceipt != null) {
-                products.add(new GoodsReceipt_Component(goodsReceipt, this));
-            }
-
-        } catch (Exception e) {
-            System.out.println(e + getClass().getName());
-        }
-    }
-
+//    private void fetchDataByDate() {
+//        products.clear();
+//        if (fromDate == null) {
+//            fetchData();
+//            return;
+//        }
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
+//
+//            GoodsReceipt goodsReceipt = goodsReceiptDAO.findByDate(today);
+//            if (goodsReceipt != null) {
+//                products.add(new GoodsReceipt_Component(goodsReceipt, this));
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println(e + getClass().getName());
+//        }
+//    }
     private void computePages() {
         totalPages = (int) Math.ceil((double) products.size() / itemsPerPage);
     }
@@ -324,25 +326,25 @@ public class Pagination_Component extends javax.swing.JPanel {
     public void resetDataWhenAdded() {
         // if date is null -> fetch by sort
         // else -> fetch by date
-        if (today == null) {
-            fetchDataBySort();
-        } else {
-            fetchDataByDate();
-        }
-        //fetchData();
+//        if (today == null) {
+//            fetchDataBySort();
+//        } else {
+//            fetchDataByDate();
+//        }
+        fetchData();
         computePages();
         updateProductPages();
         updatePaginationControls();
     }
 
     public void resetDataWhenEdit() {
-        if (today == null) {
-            fetchDataBySort();
-        } else {
-            fetchDataByDate();
-        }
+//        if (today == null) {
+//            fetchDataBySort();
+//        } else {
+//            fetchDataByDate();
+//        }
 
-        //fetchData();
+        fetchData();
         updatePaginationControls();
         parent.updateData();
     }
@@ -367,26 +369,29 @@ public class Pagination_Component extends javax.swing.JPanel {
         this.sort = sort;
     }
 
-    public void setToday(Date sqlDate) {
-        today = sqlDate;
+    public void setFromDate(Date sqlDate) {
+        fromDate = sqlDate;
     }
 
-    public void updateDataByDate() {
-        currentPage = 1;
-        fetchDataByDate();
-        computePages();
-        updateProductPages();
-        updatePaginationControls();
+    public void setToDate(Date sqlDate) {
+        toDate = sqlDate;
     }
 
-    public void updateDataBySort() {
-        currentPage = 1;
-        fetchDataBySort();
-        computePages();
-        updateProductPages();
-        updatePaginationControls();
-    }
-
+//    public void updateDataByDate() {
+//        currentPage = 1;
+//        fetchDataByDate();
+//        computePages();
+//        updateProductPages();
+//        updatePaginationControls();
+//    }
+//
+//    public void updateDataBySort() {
+//        currentPage = 1;
+//        fetchDataBySort();
+//        computePages();
+//        updateProductPages();
+//        updatePaginationControls();
+//    }
     public void setStatus(String status) {
         this.status = status;
     }

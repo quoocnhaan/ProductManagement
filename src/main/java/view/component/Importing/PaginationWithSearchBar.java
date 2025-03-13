@@ -61,12 +61,12 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
 
     public void sortByPriceLowToHigh() {
         pagination_Component.setSort("Price Low to High");
-        pagination_Component.updateDataBySort();
+        pagination_Component.updateData();
     }
 
     public void sortByPriceHighToLow() {
         pagination_Component.setSort("Price High to Low");
-        pagination_Component.updateDataBySort();
+        pagination_Component.updateData();
     }
 
     public void resetSorting() {
@@ -84,14 +84,19 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
         }
     }
 
-    public void sortByDate(Date sqlDate) {
-        pagination_Component.setToday(sqlDate);
-        pagination_Component.updateDataByDate();
-    }
-
     void sortByStatus(String status) {
         pagination_Component.setStatus(status);
-        pagination_Component.updateDataBySort();
+        pagination_Component.updateData();
+    }
+
+    public void sortByFromDate(Date sqlFromDate) {
+        pagination_Component.setFromDate(sqlFromDate);
+        pagination_Component.updateData();
+    }
+
+    public void sortByToDate(Date sqlDate) {
+        pagination_Component.setToDate(sqlDate);
+        pagination_Component.updateData();
     }
 
 

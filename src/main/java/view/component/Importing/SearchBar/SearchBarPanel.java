@@ -38,7 +38,9 @@ public class SearchBarPanel extends javax.swing.JPanel {
     private PaginationWithSearchBar parent;
     private JPopupMenu popupSort;
     private SortPopup sortPopup;
-    private JDateChooser date;
+    private JDateChooser fromDate;
+    private JDateChooser toDate;
+
     private boolean isChoosing;
     private boolean isProgrammaticChange = false;
 
@@ -95,7 +97,8 @@ public class SearchBarPanel extends javax.swing.JPanel {
         sortPopup = new SortPopup(this);
         popupSort.add(sortPopup);
 
-        date = new JDateChooser();
+        fromDate = new JDateChooser();
+        toDate = new JDateChooser();
 
         popupSort.setBackground(Color.WHITE);
         popupSort.setPreferredSize(new Dimension(200, 200));
@@ -113,14 +116,21 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
         buttonPanel.setBackground(Color.WHITE);
 
-        date.setBackground(Color.white);
-        date.setFont(new Font("Rotobo", Font.PLAIN, 14));
-        date.setDate(null);
-        date.setPreferredSize(new Dimension(150, 35));
+        fromDate.setBackground(Color.white);
+        fromDate.setFont(new Font("Rotobo", Font.PLAIN, 14));
+        fromDate.setDate(null);
+        fromDate.setPreferredSize(new Dimension(150, 35));
+
+        toDate.setBackground(Color.white);
+        toDate.setFont(new Font("Rotobo", Font.PLAIN, 14));
+        toDate.setDate(null);
+        toDate.setEnabled(false);
+        toDate.setPreferredSize(new Dimension(150, 35));
 
         buttonPanel.add(resetBtn);
 
-        buttonPanel.add(date);
+        buttonPanel.add(fromDate);
+        buttonPanel.add(toDate);
 
         buttonPanel.add(sortBtn);
 
@@ -135,7 +145,33 @@ public class SearchBarPanel extends javax.swing.JPanel {
             }
         });
 
-        date.addPropertyChangeListener("date", new PropertyChangeListener() {
+        fromDate.addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("date") && !isProgrammaticChange) {
+                    java.util.Date selectedFromDate = ((com.toedter.calendar.JDateChooser) evt.getSource()).getDate();
+
+                    if (selectedFromDate != null) {
+                        // Convert to java.sql.Date for sorting, or use java.util.Date as needed
+                        java.sql.Date sqlFromDate = new java.sql.Date(selectedFromDate.getTime());
+                        parent.sortByFromDate(sqlFromDate);
+
+                        // Enable toDate and set the minimum selectable date to the selected fromDate
+                        toDate.setEnabled(true);
+                        toDate.setMinSelectableDate(selectedFromDate); // Prevent selecting earlier dates
+
+                    } else {
+                        parent.sortByFromDate(null);
+
+                        // Optionally disable toDate if fromDate is reset
+                        toDate.setEnabled(false);
+                        toDate.setDate(null);  // Clear toDate if fromDate is reset
+                    }
+                }
+            }
+        });
+
+        toDate.addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("date") && !isProgrammaticChange) {
@@ -144,10 +180,10 @@ public class SearchBarPanel extends javax.swing.JPanel {
                     if (selectedDate != null) {
                         java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
                         //SharedData.date = sqlDate;
-                        parent.sortByDate(sqlDate);
+                        parent.sortByToDate(sqlDate);
                     } else {
                         //SharedData.date = null;
-                        parent.sortByDate(null);
+                        parent.sortByToDate(null);
                     }
                 }
             }
@@ -156,7 +192,8 @@ public class SearchBarPanel extends javax.swing.JPanel {
         resetBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                date.setDate(null);
+                fromDate.setDate(null);
+                toDate.setDate(null);
             }
         });
 
@@ -180,7 +217,8 @@ public class SearchBarPanel extends javax.swing.JPanel {
 
     public void resetSearchOptions() {
         isProgrammaticChange = true;
-        date.setDate(null);
+        fromDate.setDate(null);
+        toDate.setDate(null);
         isProgrammaticChange = false;
         sortPopup.reset();
     }

@@ -239,10 +239,13 @@ public class Pagination_Component extends javax.swing.JPanel {
                 billsPerDays = billsPerDayDAO.findByDate(fromDate, toDate);
             }
 
-//            billsPerDays.sort((b1, b2) -> Integer.compare(b2.getId(), b1.getId()));
+            billsPerDays.sort((b1, b2) -> Integer.compare(b2.getId(), b1.getId()));
 
             for (BillsPerDay billsPerDay : billsPerDays) {
                 List<Bills> list = billsDAO.findByFilter(billsPerDay, sort, status, orderStatus);
+                if (sort == null || sort.isBlank()) {
+                    list.sort((b1, b2) -> Integer.compare(b2.getId(), b1.getId()));
+                }
                 for (Bills bills : list) {
                     products.add(new Order_Component(bills, this));
                 }

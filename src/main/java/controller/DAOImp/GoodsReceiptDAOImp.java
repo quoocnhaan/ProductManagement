@@ -100,13 +100,41 @@ public class GoodsReceiptDAOImp implements GoodsReceiptDAO {
     }
 
     @Override
-    public List<GoodsReceipt> findByFilter(String sort, String status) {
+    public List<GoodsReceipt> findByFilter(Date fromDate, Date toDate, String sort, String status) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             StringBuilder queryString = new StringBuilder("FROM GoodsReceipt gr");
 
-            // Only add the paymentStatus filter if the status is not "All"
+            // Add the paymentStatus filter if the status is not "All"
+            boolean hasWhereClause = false;
             if (!"All".equalsIgnoreCase(status)) {
                 queryString.append(" WHERE gr.paymentStatus = :status");
+                hasWhereClause = true;
+            }
+
+            // Add date filtering for fromDate and toDate
+            if (fromDate != null && toDate != null) {
+                if (hasWhereClause) {
+                    queryString.append(" AND");
+                } else {
+                    queryString.append(" WHERE");
+                    hasWhereClause = true;
+                }
+                queryString.append(" gr.date BETWEEN :fromDate AND :toDate");
+            } else if (fromDate != null) {
+                if (hasWhereClause) {
+                    queryString.append(" AND");
+                } else {
+                    queryString.append(" WHERE");
+                    hasWhereClause = true;
+                }
+                queryString.append(" gr.date >= :fromDate");
+            } else if (toDate != null) {
+                if (hasWhereClause) {
+                    queryString.append(" AND");
+                } else {
+                    queryString.append(" WHERE");
+                }
+                queryString.append(" gr.date <= :toDate");
             }
 
             // Add sorting logic based on the "sort" parameter
@@ -118,9 +146,9 @@ public class GoodsReceiptDAOImp implements GoodsReceiptDAO {
                     case "Price High to Low":
                         queryString.append(" ORDER BY gr.totalPrices DESC");
                         break;
-                    // Add other cases if needed
+                    // Add other sorting cases if needed
                     default:
-                        // If sort doesn't match any case, leave the query unchanged
+                        // If no matching sort case, leave query unchanged
                         break;
                 }
             }
@@ -128,10 +156,18 @@ public class GoodsReceiptDAOImp implements GoodsReceiptDAO {
             // Create the query
             Query<GoodsReceipt> query = session.createQuery(queryString.toString(), GoodsReceipt.class);
 
-            // Set the status parameter only if status is not "All"
+            // Set the paymentStatus parameter only if the status is not "All"
             if (!"All".equalsIgnoreCase(status)) {
-                Boolean paymentStatus = "Complete".equalsIgnoreCase(status) ? true : false;
+                Boolean paymentStatus = "Complete".equalsIgnoreCase(status);
                 query.setParameter("status", paymentStatus); // Set parameter for Complete/Not Complete
+            }
+
+            // Set date parameters if provided
+            if (fromDate != null) {
+                query.setParameter("fromDate", fromDate);
+            }
+            if (toDate != null) {
+                query.setParameter("toDate", toDate);
             }
 
             return query.getResultList();

@@ -16,6 +16,6 @@ public interface GoodsReceiptDAO extends InterfaceDAO<GoodsReceipt> {
 
     GoodsReceipt findByDate(Date date);
 
-    List<GoodsReceipt> findByFilter(String sort, String status);
+    List<GoodsReceipt> findByFilter(Date fromDate, Date toDate, String sort, String status);
 
 }
