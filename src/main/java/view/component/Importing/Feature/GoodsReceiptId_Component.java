@@ -15,7 +15,7 @@ public class GoodsReceiptId_Component extends javax.swing.JPanel {
      */
     public GoodsReceiptId_Component(int id) {
         initComponents();
-        this.id.setText("0000" + id);
+        this.id.setText(String.format("#%06d", id));
     }
 
     /**

@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -120,7 +121,10 @@ public class GoodsReceipt_Component extends javax.swing.JPanel {
 
         List<String> features = new ArrayList<>();
 
-        features.add(goodsReceipt.getDate() + "");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = dateFormat.format(goodsReceipt.getDate());
+
+        features.add(formattedDate);
         features.add(goodsReceipt.getAmount() + "");
         features.add(formatPrice(goodsReceipt.getTotalPrices()));
 

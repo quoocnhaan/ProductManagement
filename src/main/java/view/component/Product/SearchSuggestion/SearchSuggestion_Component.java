@@ -162,7 +162,7 @@ public class SearchSuggestion_Component extends javax.swing.JPanel {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // HQL query to search for products with names similar to the search term
-
+                                                                                                        // add isOrdering to this query
             List<Product> products = session.createQuery("FROM Product p WHERE p.name LIKE :search AND p.status IS TRUE", Product.class)
                     .setParameter("search", "%" + search + "%")
                     .setMaxResults(5)

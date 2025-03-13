@@ -5,6 +5,10 @@
 package view.component.MainFrame;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,7 +21,12 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        setTitle("Trinity");
+        setFont(new Font("Roboto", Font.BOLD, 18));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/logo/logo2.png")); // Replace with the path to your icon
+        setIconImage(icon.getImage());
         setLayout(new BorderLayout());
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         add(new MainContent_Component());
     }
 

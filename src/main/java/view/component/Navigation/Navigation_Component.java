@@ -84,7 +84,7 @@ public class Navigation_Component extends javax.swing.JPanel {
         icon = new javax.swing.JLabel();
         name = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(250, 250, 250));
+        setBackground(new java.awt.Color(253, 253, 253));
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         setMaximumSize(new java.awt.Dimension(154, 50));
         setMinimumSize(new java.awt.Dimension(154, 50));

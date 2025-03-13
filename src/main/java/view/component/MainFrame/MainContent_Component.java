@@ -4,9 +4,14 @@
  */
 package view.component.MainFrame;
 
+import controller.Functional.Functional;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.MatteBorder;
 import view.component.Home.Home_Component;
 import view.component.Navigation.Navigation;
 import view.component.Product.ContentPage_Component;
@@ -16,33 +21,37 @@ import view.component.Product.ContentPage_Component;
  * @author PC
  */
 public class MainContent_Component extends javax.swing.JPanel {
-
-    private CardLayout cardLayout; // CardLayout for switching content pages
+    
     private JPanel contentPanel; // Panel that holds different content pages
     private Navigation navigation;
-
+    private JLabel logo;
+    private JPanel nagigationPanel;
+    
     public MainContent_Component() {
         initComponents();
         setLayout(new BorderLayout());
-
+        
+        nagigationPanel = new JPanel();
+        nagigationPanel.setLayout(new BorderLayout());
+        nagigationPanel.setBackground(new Color(253, 253, 253));
+        
         navigation = new Navigation(this);
-
-        add(navigation, BorderLayout.WEST);
-        //add(new ContentPage_Component(), BorderLayout.CENTER);
-
-        cardLayout = new CardLayout();
-        //contentPanel = new JPanel(cardLayout);
+        navigation.setBorder(new MatteBorder(0, 0, 0, 1, new Color(240, 240, 240)));
+        logo = new JLabel();
+        logo.setSize(154, 90);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/logo/logo1.png"));
+        logo.setIcon(Functional.scaleImg(logo, icon));
+        
+        nagigationPanel.add(logo, BorderLayout.NORTH);
+        nagigationPanel.add(navigation, BorderLayout.CENTER);
+        
+        add(nagigationPanel, BorderLayout.WEST);
+        
         contentPanel = new JPanel(new BorderLayout());
-
-        // Add multiple content pages to the card layout
-        //contentPanel.add(new ContentPage_Component(), "Inventory");
-        //contentPanel.add(new view.component.Importing.ContentPage_Component(), "Importing");
+        
         contentPanel.add(new Home_Component());
-
+        
         add(contentPanel, BorderLayout.CENTER);
-
-        //contentPanel.add(new ContentPage3_Component(), "Importing");
-        //contentPanel.add(new ContentPage4_Component(), "Invoice");
     }
 
     /**
@@ -66,9 +75,6 @@ public class MainContent_Component extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-//    public void showContent(String name) {
-//        cardLayout.show(contentPanel, name);
-//    }
     public void showContent(String name) {
         contentPanel.removeAll();
         switch (name) {
