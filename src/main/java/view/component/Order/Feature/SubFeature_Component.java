@@ -26,9 +26,39 @@ public class SubFeature_Component extends javax.swing.JPanel {
         initComponents();
         feature.setFont(new Font("Roboto", Font.BOLD, 15));
         if (changeColor) {
-            feature.setForeground(Functional.adjustColorBrightness(Color.green, 0.4f));
-        } else {
-            feature.setForeground(Color.red);
+            Color statusColor;
+
+            switch (text) {
+                case "Paid":
+                    statusColor = Color.green;
+                    break;
+                case "Unpaid":
+                    statusColor = Color.blue;
+                    break;
+                case "Deposit":
+                    statusColor = Color.orange;
+                    break;
+                case "In Process":
+                    statusColor = Color.orange;
+                    break;
+                case "Cancelled":
+                    statusColor = Color.red;
+                    break;
+                case "Shipped":
+                    statusColor = Color.magenta;
+                    break;
+                case "Packed":
+                    statusColor = Color.pink;
+                    break;
+                case "Delivered":
+                    statusColor = Color.blue;  // Same as "paid"
+                    break;
+                default:
+                    statusColor = Color.black;  // Default to black if status is unknown
+                    break;
+            }
+
+            feature.setForeground(Functional.adjustColorBrightness(statusColor, 0.9f));
         }
         this.feature.setText(text);
     }

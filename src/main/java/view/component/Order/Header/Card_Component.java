@@ -81,6 +81,7 @@ public class Card_Component extends javax.swing.JPanel {
                     revenueValue += bill.getTotal();
                     profitValue += bill.getProfit();
                 } else {
+                    profitValue += bill.getDeposit();
                     cancelledValue++;
                 }
 
@@ -126,6 +127,7 @@ public class Card_Component extends javax.swing.JPanel {
                     revenueValue += bill.getTotal();
                     profitValue += bill.getProfit();
                 } else {
+                    profitValue += bill.getDeposit();
                     cancelledValue++;
                 }
 

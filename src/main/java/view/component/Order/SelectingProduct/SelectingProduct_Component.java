@@ -7,7 +7,7 @@ package view.component.Order.SelectingProduct;
 import java.awt.BorderLayout;
 import javax.swing.JDialog;
 import view.component.Order.OrderDetails.OrderDetailContent.Header_Component.Header_Component;
-import view.component.Product.DataTable_Component;
+import view.component.Product.PaginationWithSearchBar;
 
 /**
  *
@@ -15,7 +15,7 @@ import view.component.Product.DataTable_Component;
  */
 public class SelectingProduct_Component extends javax.swing.JPanel {
 
-    private DataTable_Component dataTable_Component;
+    private PaginationWithSearchBar paginationWithSearchBar;
     private Footer footer;
     private JDialog jDialog;
     private Header_Component parent;
@@ -24,11 +24,11 @@ public class SelectingProduct_Component extends javax.swing.JPanel {
         initComponents();
         this.jDialog = jDialog;
         this.parent = parent;
-        dataTable_Component = new DataTable_Component(null, true);
+        paginationWithSearchBar = new PaginationWithSearchBar(null, false, true);
         footer = new Footer(this);
 
         setLayout(new BorderLayout(0, 15));
-        add(dataTable_Component, BorderLayout.CENTER);
+        add(paginationWithSearchBar, BorderLayout.CENTER);
         add(footer, BorderLayout.SOUTH);
     }
 

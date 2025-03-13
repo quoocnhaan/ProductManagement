@@ -91,7 +91,7 @@ public class Product_Component extends javax.swing.JPanel {
         add(productName);
 
         quantity = new QuantityFeature_Component(this);
-        quantity.setMaximumQuantity(100);
+        quantity.setMaximumQuantity(product.getAmount());
         add(quantity);
 
         price = new SubFeature_Component(product.getPrice(), 0);
@@ -163,20 +163,18 @@ public class Product_Component extends javax.swing.JPanel {
 
         add(productName);
 
-        price = new SubFeature_Component(product.getImportPrice(), 0);
+        price = new SubFeature_Component(product.getPrice(), 0);
 
         totalValue = 0;
-        total = new OneFeature_Component(product.getImportPrice() * amount);
+        total = new OneFeature_Component(product.getPrice() * amount);
 
         quantity = new QuantityFeature_Component(this, amount);
-        quantity.setMaximumQuantity(100);
-
+        
         add(quantity);
         add(price);
         add(total);
 
         deleteBtn = new JButton();
-        add(deleteBtn);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

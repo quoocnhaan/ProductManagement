@@ -85,7 +85,7 @@ public class BillsDetailDAOImp implements BillsDetailDAO {
 
     @Override
     public List<BillsDetail> findAllByBill(Bills bills) {
-        Query<BillsDetail> query = session.createQuery("FROM BillsDetail WHERE bills = :bills", BillsDetail.class);
+        Query<BillsDetail> query = session.createQuery("FROM BillsDetail WHERE bill = :bills", BillsDetail.class);
         query.setParameter("bills", bills);
         return query.getResultList();
     }

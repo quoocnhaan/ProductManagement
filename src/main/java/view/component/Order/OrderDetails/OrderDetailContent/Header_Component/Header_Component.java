@@ -21,13 +21,25 @@ import view.component.Order.SelectingProduct.SelectingProduct_Component;
  * @author PC
  */
 public class Header_Component extends javax.swing.JPanel {
-
+    
     private IconButton browseBtn;
     private OrderProductContent_Component parent;
-
+    private boolean isViewing = false;
+    
     public Header_Component(OrderProductContent_Component parent) {
         initComponents();
         this.parent = parent;
+        setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        initData();
+        customComponents();
+        addEvents();
+        addComponents();
+    }
+    
+    public Header_Component(OrderProductContent_Component parent, boolean b) {
+        initComponents();
+        this.parent = parent;
+        isViewing = b;
         setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         initData();
         customComponents();
@@ -59,17 +71,17 @@ public class Header_Component extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void customComponents() {
-
+        browseBtn.setEnabled(!isViewing);
     }
-
+    
     private void addComponents() {
         add(browseBtn);
     }
-
+    
     private void initData() {
         browseBtn = new IconButton("Browse", new ImageIcon(getClass().getResource("/icon/browse.png")), true);
     }
-
+    
     private void addEvents() {
         Header_Component header_Component = this;
         browseBtn.addActionListener(new ActionListener() {
@@ -85,15 +97,16 @@ public class Header_Component extends javax.swing.JPanel {
                 addProductDialog.setUndecorated(true);
                 //addProductDialog.add(new ImportDetailsPage_Component(addProductDialog, headerTitle_Component));
                 SelectingProduct_Component selectingProduct_Component = new SelectingProduct_Component(addProductDialog, header_Component);
-
+                
                 selectingProduct_Component.setBorder(new LineBorder(Color.GRAY, 2));
                 addProductDialog.add(selectingProduct_Component);
-
+                
                 addProductDialog.setVisible(true);
             }
         });
+        
     }
-
+    
     public void updateDataWhenBrowse() {
         parent.updateDataWhenBrowse();
     }

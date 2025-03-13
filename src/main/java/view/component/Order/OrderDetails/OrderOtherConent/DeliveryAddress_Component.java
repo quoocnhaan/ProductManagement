@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import model.Customer;
 
 /**
  *
@@ -30,6 +31,12 @@ public class DeliveryAddress_Component extends javax.swing.JPanel {
 
     public DeliveryAddress_Component() {
         initComponents();
+        customComponents();
+    }
+
+    public DeliveryAddress_Component(Customer customer) {
+        initComponents();
+        initData(customer);
         customComponents();
     }
 
@@ -109,22 +116,22 @@ public class DeliveryAddress_Component extends javax.swing.JPanel {
 
         address.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         address.setForeground(new java.awt.Color(131, 131, 131));
-        address.setText("Lam Quoc Nhan");
+        address.setText("22 đường 51");
         address.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         district.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         district.setForeground(new java.awt.Color(131, 131, 131));
-        district.setText("Lam Quoc Nhan");
+        district.setText("Bình Tân");
         district.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         city.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         city.setForeground(new java.awt.Color(131, 131, 131));
-        city.setText("Lam Quoc Nhan");
+        city.setText("TP.HCM");
         city.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         flat.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         flat.setForeground(new java.awt.Color(131, 131, 131));
-        flat.setText("Lam Quoc Nhan");
+        flat.setText("None");
         flat.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -175,7 +182,7 @@ public class DeliveryAddress_Component extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(flat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -291,5 +298,17 @@ public class DeliveryAddress_Component extends javax.swing.JPanel {
 
     public String getFlatName() {
         return flat.getText();
+    }
+
+    private void initData(Customer customer) {
+        prevAddress = customer.getAddressLine();
+        prevDistrict = customer.getDisctrict();
+        prevCity = customer.getCity();
+        prevFlat = customer.getFlatName();
+
+        address.setText(prevAddress);
+        district.setText(prevDistrict);
+        city.setText(prevCity);
+        flat.setText(prevFlat);
     }
 }

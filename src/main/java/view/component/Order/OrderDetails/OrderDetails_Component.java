@@ -44,7 +44,7 @@ public class OrderDetails_Component extends javax.swing.JPanel {
         this.bills = bills;
 
         setLayout(new BorderLayout());
-        footer = new Footer(this);
+        footer = new Footer(this, bills.isStatus());
         add(orderDetailsPage_Component);
         add(footer, BorderLayout.SOUTH);
     }

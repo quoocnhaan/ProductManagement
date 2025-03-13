@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -25,7 +26,6 @@ import view.component.Btn.IconButton;
 import view.component.Order.Pagination.Pagination_Component;
 import view.component.Order.Feature.SubFeature_Component;
 import view.component.Order.Feature.BillstId_Component;
-import view.component.Order.OrderDetails.OrderDetailsPage_Component;
 import view.component.Order.OrderDetails.OrderDetails_Component;
 import view.component.Order.ProductPage_Component;
 
@@ -99,6 +99,8 @@ public class Order_Component extends javax.swing.JPanel {
 
     private void addComponents(Bills bills) {
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
         BillstId_Component productName = new BillstId_Component(bills.getId());
 
         productName.addMouseListener(new MouseAdapter() {
@@ -121,7 +123,8 @@ public class Order_Component extends javax.swing.JPanel {
 
         List<String> features = new ArrayList<>();
 
-        features.add(bills.getBillPerDay().getDate() + "");
+        String formattedDate = dateFormat.format(bills.getBillPerDay().getDate());
+        features.add(formattedDate);
         features.add(bills.getCustomer().getName());
         features.add(formatPrice(bills.getTotal()));
         features.add(formatPrice(bills.getProfit()));
@@ -140,7 +143,9 @@ public class Order_Component extends javax.swing.JPanel {
 
         String orderStatus = "";
 
-        if (bills.getDeliveredDate() != null) {
+        if (!bills.isStatus()) {
+            orderStatus = "Cancelled";
+        } else if (bills.getDeliveredDate() != null) {
             orderStatus = "Delivered";
         } else if (bills.getShippedDate() != null) {
             orderStatus = "Shipped";
@@ -154,7 +159,7 @@ public class Order_Component extends javax.swing.JPanel {
 
         for (int i = 0; i < features.size(); i++) {
             SubFeature_Component subFeature = null;
-            if (i == 5 || i == features.size() - 1) {
+            if (i == 5 || i == features.size() - 2 || i == features.size() - 1) {
                 subFeature = new SubFeature_Component(features.get(i), true);
             } else {
                 subFeature = new SubFeature_Component(features.get(i));
@@ -222,7 +227,7 @@ public class Order_Component extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog addProductDialog = new JDialog((Frame) null, "Edit Product", true);  // true for modal
-                addProductDialog.setSize(1350, 850);
+                addProductDialog.setSize(1230, 850);
                 addProductDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);  // Close only the dialog
                 addProductDialog.setLocationRelativeTo(null);  // Center the popup on screen
                 //addProductDialog.add(new EditProduct_Component(parent, goodsReceipt, addProductDialog));

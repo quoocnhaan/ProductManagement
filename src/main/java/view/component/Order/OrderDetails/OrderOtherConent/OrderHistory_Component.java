@@ -25,6 +25,7 @@ public class OrderHistory_Component extends javax.swing.JPanel {
     Color fg = new Color(153, 153, 153);
     ImageIcon clickIcon = new ImageIcon(getClass().getResource("/icon/dotc.png"));
     ImageIcon unclickIcon = new ImageIcon(getClass().getResource("/icon/dot.png"));
+    Date today = Date.valueOf(LocalDate.now());
 
     private Date paidDate;
     private Date packedDate;
@@ -34,6 +35,13 @@ public class OrderHistory_Component extends javax.swing.JPanel {
     public OrderHistory_Component() {
         initComponents();
         customComponents();
+        addEvents();
+    }
+
+    public OrderHistory_Component(Date paidDate, Date packedDate, Date shippedDate, Date deliveredDate) {
+        initComponents();
+        customComponents();
+        initData(paidDate, packedDate, shippedDate, deliveredDate);
         addEvents();
     }
 
@@ -118,26 +126,24 @@ public class OrderHistory_Component extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(paid)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(packed)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(57, 57, 57)
-                                .addComponent(packedText)))
-                        .addComponent(paidText)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(packed)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(shipped)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(57, 57, 57)
-                                .addComponent(shippedText)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(delivered)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(57, 57, 57)
-                                .addComponent(deliveredText)))))
-                .addContainerGap(169, Short.MAX_VALUE))
+                            .addComponent(jLabel1)
+                            .addComponent(paid))
+                        .addContainerGap(171, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(paidText, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(packedText, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(shippedText, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deliveredText, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +215,8 @@ public class OrderHistory_Component extends javax.swing.JPanel {
                     paid.repaint();
                 }
                 paid.setForeground(new Color(90, 21, 220));
-                addData(paidText, paidDate);
+                paidDate = today;
+                addData(paidText);
                 paidText.setForeground(fg);
             } else {
                 if (paid.getIcon() instanceof ImageIcon) {
@@ -217,7 +224,7 @@ public class OrderHistory_Component extends javax.swing.JPanel {
                     paid.revalidate();
                     paid.repaint();
                 }
-                removeData(paidText, paidDate);
+                paidDate = null;
                 paid.setForeground(unSelected);
                 paidText.setForeground(Color.white);
             }
@@ -230,7 +237,8 @@ public class OrderHistory_Component extends javax.swing.JPanel {
                     packed.revalidate();
                     packed.repaint();
                 }
-                addData(packedText, packedDate);
+                addData(packedText);
+                packedDate = today;
                 packed.setForeground(new Color(90, 21, 220));
                 packedText.setForeground(fg);
             } else {
@@ -239,7 +247,7 @@ public class OrderHistory_Component extends javax.swing.JPanel {
                     packed.revalidate();
                     packed.repaint();
                 }
-                removeData(packedText, packedDate);
+                packedDate = null;
                 packed.setForeground(unSelected);
                 packedText.setForeground(Color.white);
             }
@@ -252,7 +260,8 @@ public class OrderHistory_Component extends javax.swing.JPanel {
                     shipped.revalidate();
                     shipped.repaint();
                 }
-                addData(shippedText, shippedDate);
+                shippedDate = today;
+                addData(shippedText);
                 shipped.setForeground(new Color(90, 21, 220));
                 shippedText.setForeground(fg);
             } else {
@@ -261,7 +270,7 @@ public class OrderHistory_Component extends javax.swing.JPanel {
                     shipped.revalidate();
                     shipped.repaint();
                 }
-                removeData(shippedText, shippedDate);
+                shippedDate = null;
                 shipped.setForeground(unSelected);
                 shippedText.setForeground(Color.white);
             }
@@ -274,7 +283,8 @@ public class OrderHistory_Component extends javax.swing.JPanel {
                     delivered.revalidate();
                     delivered.repaint();
                 }
-                addData(deliveredText, deliveredDate);
+                deliveredDate = today;
+                addData(deliveredText);
                 delivered.setForeground(new Color(90, 21, 220));
                 deliveredText.setForeground(fg);
             } else {
@@ -283,7 +293,7 @@ public class OrderHistory_Component extends javax.swing.JPanel {
                     delivered.revalidate();
                     delivered.repaint();
                 }
-                removeData(deliveredText, deliveredDate);
+                deliveredDate = null;
                 delivered.setForeground(unSelected);
                 deliveredText.setForeground(Color.white);
             }
@@ -312,17 +322,10 @@ public class OrderHistory_Component extends javax.swing.JPanel {
         g2d.drawLine(x, yStart, x, yEnd);
     }
 
-    private void addData(JLabel text, Date date) {
-        Date today = Date.valueOf(LocalDate.now());
-        date = today;
+    private void addData(JLabel text) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = dateFormat.format(today);
         text.setText(formattedDate);
-    }
-
-    private void removeData(JLabel text, Date date) {
-        date = null;
-        text.setText("");
     }
 
     public Date getPaidDate() {
@@ -339,5 +342,68 @@ public class OrderHistory_Component extends javax.swing.JPanel {
 
     public Date getDeliveredDate() {
         return deliveredDate;
+    }
+
+    private void initData(Date paidDate, Date packedDate, Date shippedDate, Date deliveredDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        if (paidDate != null) {
+            this.paidDate = paidDate;
+            String formattedDate = dateFormat.format(paidDate);
+            paidText.setForeground(fg);
+            paidText.setText(formattedDate);
+            if (paid.getIcon() instanceof ImageIcon) {
+                paid.setIcon(clickIcon);
+                paid.revalidate();
+                paid.repaint();
+            }
+            paid.setForeground(new Color(90, 21, 220));
+            paid.setSelected(true);
+        }
+
+        if (packedDate != null) {
+            this.packedDate = packedDate;
+            String formattedDate = dateFormat.format(packedDate);
+            packedText.setForeground(fg);
+            packedText.setText(formattedDate);
+            if (packed.getIcon() instanceof ImageIcon) {
+                packed.setIcon(clickIcon);
+                packed.revalidate();
+                packed.repaint();
+            }
+            packed.setForeground(new Color(90, 21, 220));
+            packed.setSelected(true);
+
+        }
+
+        if (shippedDate != null) {
+            this.shippedDate = shippedDate;
+            String formattedDate = dateFormat.format(shippedDate);
+            shippedText.setForeground(fg);
+            shippedText.setText(formattedDate);
+            if (shipped.getIcon() instanceof ImageIcon) {
+                shipped.setIcon(clickIcon);
+                shipped.revalidate();
+                shipped.repaint();
+            }
+            shipped.setForeground(new Color(90, 21, 220));
+            shipped.setSelected(true);
+
+        }
+
+        if (deliveredDate != null) {
+            this.deliveredDate = deliveredDate;
+            String formattedDate = dateFormat.format(deliveredDate);
+            deliveredText.setForeground(fg);
+            deliveredText.setText(formattedDate);
+            if (delivered.getIcon() instanceof ImageIcon) {
+                delivered.setIcon(clickIcon);
+                delivered.revalidate();
+                delivered.repaint();
+            }
+            delivered.setForeground(new Color(90, 21, 220));
+            delivered.setSelected(true);
+
+        }
     }
 }

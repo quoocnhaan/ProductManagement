@@ -8,6 +8,7 @@ import java.awt.Color;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import view.component.Order.OrderDetails.OrderDetailContent.Product_Component.Product_Component;
 
@@ -18,19 +19,20 @@ import view.component.Order.OrderDetails.OrderDetailContent.Product_Component.Pr
 public class QuantityFeature_Component extends javax.swing.JPanel {
 
     private MatteBorder matteBorder = new MatteBorder(0, 0, 1, 0, new Color(60, 63, 65));
+    private EmptyBorder emptyBorder = new EmptyBorder(1, 1, 1, 1);
     private Product_Component parent;
 
     public QuantityFeature_Component(Product_Component parent) {
         initComponents();
         this.parent = parent;
-        customComponents();
+        customComponents(true);
         quantity.setText("1");
     }
 
     public QuantityFeature_Component(Product_Component parent, int amount) {
         initComponents();
         this.parent = parent;
-        customComponents();
+        customComponents(false);
         quantity.setText(amount + "");
         parent.updateTotal(amount);
     }
@@ -76,9 +78,13 @@ public class QuantityFeature_Component extends javax.swing.JPanel {
     private javax.swing.JTextField quantity;
     // End of variables declaration//GEN-END:variables
 
-    private void customComponents() {
-        quantity.setEditable(true);
-        quantity.setBorder(matteBorder);
+    private void customComponents(boolean isEditable) {
+        quantity.setEditable(isEditable);
+        if (isEditable) {
+            quantity.setBorder(matteBorder);
+        } else {
+            quantity.setBorder(emptyBorder);
+        }
         quantity.setBackground(Color.WHITE); // Ensure the background stays white
     }
 

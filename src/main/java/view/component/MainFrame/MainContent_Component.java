@@ -7,6 +7,7 @@ package view.component.MainFrame;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+import view.component.Home.Home_Component;
 import view.component.Navigation.Navigation;
 import view.component.Product.ContentPage_Component;
 
@@ -36,7 +37,7 @@ public class MainContent_Component extends javax.swing.JPanel {
         // Add multiple content pages to the card layout
         //contentPanel.add(new ContentPage_Component(), "Inventory");
         //contentPanel.add(new view.component.Importing.ContentPage_Component(), "Importing");
-        contentPanel.add(new ContentPage_Component());
+        contentPanel.add(new Home_Component());
 
         add(contentPanel, BorderLayout.CENTER);
 
@@ -71,11 +72,17 @@ public class MainContent_Component extends javax.swing.JPanel {
     public void showContent(String name) {
         contentPanel.removeAll();
         switch (name) {
+            case "Home":
+                contentPanel.add(new Home_Component());
+                break;
             case "Inventory":
                 contentPanel.add(new ContentPage_Component());
                 break;
             case "Importing":
                 contentPanel.add(new view.component.Importing.ContentPage_Component());
+                break;
+            case "Order":
+                contentPanel.add(new view.component.Order.ContentPage_Component());
                 break;
             default:
                 break;

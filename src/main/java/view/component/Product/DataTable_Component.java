@@ -25,7 +25,7 @@ public class DataTable_Component extends javax.swing.JPanel {
         setLayout(new BorderLayout(0, 10));
         List<String> buttonLabels = List.of("All", "In stock", "Out of stock");
         card = new ButtonGroupPanel(buttonLabels, this);
-        paginationWithSearchBar = new PaginationWithSearchBar(this, isChoosing);
+        paginationWithSearchBar = new PaginationWithSearchBar(this, isChoosing, false);
 
         add(card, BorderLayout.NORTH);
         add(paginationWithSearchBar, BorderLayout.CENTER);
@@ -80,7 +80,7 @@ public class DataTable_Component extends javax.swing.JPanel {
         removeAll();
         List<String> buttonLabels = List.of("All", "In stock", "Out of stock");
         card = new ButtonGroupPanel(buttonLabels, this);
-        paginationWithSearchBar = new PaginationWithSearchBar(this, isChoosing);
+        paginationWithSearchBar = new PaginationWithSearchBar(this, isChoosing, false);
         add(card, BorderLayout.NORTH);
         add(paginationWithSearchBar, BorderLayout.CENTER);
         validate();

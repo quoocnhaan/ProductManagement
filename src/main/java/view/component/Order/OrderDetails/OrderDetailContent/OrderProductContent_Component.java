@@ -94,7 +94,7 @@ public class OrderProductContent_Component extends javax.swing.JPanel {
     }
 
     private void initData(Bills bills) {
-        header_Component = new Header_Component(this);
+        header_Component = new Header_Component(this, true);
         orderProductPage_Component = new OrderProductPage_Component(this, bills);
     }
 

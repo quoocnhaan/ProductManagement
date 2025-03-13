@@ -47,7 +47,7 @@ public class Title_Component extends javax.swing.JPanel {
 
     private void addComponents() {
         add(new IdTitle_Component());
-        String[] titles = {"Date", "Customer", "Total", "Deposit", "Payment Status", "Status"};
+        String[] titles = {"Date", "Customer", "Total", "Profit", "Payment Status", "Status"};
         for (int i = 0; i < titles.length; i++) {
             add(new SubTitle_Component(titles[i]));
         }

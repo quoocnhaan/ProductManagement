@@ -5,6 +5,7 @@
 package controller.DAO;
 
 import java.sql.Date;
+import java.util.List;
 import model.BillsPerDay;
 
 /**
@@ -14,5 +15,7 @@ import model.BillsPerDay;
 public interface BillsPerDayDAO extends InterfaceDAO<BillsPerDay> {
 
     BillsPerDay findByDate(Date date);
+
+    List<BillsPerDay> findByDate(Date fromDate, Date toDate);
 
 }

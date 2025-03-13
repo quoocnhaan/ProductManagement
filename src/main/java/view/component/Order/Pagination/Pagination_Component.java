@@ -6,10 +6,8 @@ package view.component.Order.Pagination;
 
 import controller.DAO.BillsDAO;
 import controller.DAO.BillsPerDayDAO;
-import controller.DAO.GoodsReceiptDAO;
 import controller.DAOImp.BillsDAOImp;
 import controller.DAOImp.BillsPerDayDAOImp;
-import controller.DAOImp.GoodsReceiptDAOImp;
 import controller.Functional.Functional;
 import controller.Session.SharedData;
 import java.awt.BorderLayout;
@@ -24,7 +22,6 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -33,7 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import model.Bills;
 import model.BillsPerDay;
-import model.GoodsReceipt;
 import org.hibernate.Session;
 import util.HibernateUtil;
 import view.component.Order.PaginationWithSearchBar;
@@ -46,8 +42,8 @@ import view.component.Order.Order_Component.Order_Component;
  */
 public class Pagination_Component extends javax.swing.JPanel {
 
-    private Date today = Date.valueOf(LocalDate.now());
-    ;
+    private Date fromDate = null;
+    private Date toDate = null;
     private int currentPage = 1;
     private int itemsPerPage = 6;
     private int maxVisiblePages = 3; // Only show 3 page buttons at once
@@ -232,18 +228,18 @@ public class Pagination_Component extends javax.swing.JPanel {
     private void fetchData() {
         products.clear();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            GoodsReceiptDAO goodsReceiptDAO = new GoodsReceiptDAOImp(session);
-
             BillsPerDayDAO billsPerDayDAO = new BillsPerDayDAOImp(session);
             BillsDAO billsDAO = new BillsDAOImp(session);
 
             List<BillsPerDay> billsPerDays = new ArrayList<>();
 
-            if (today == null) {
+            if (fromDate == null) {
                 billsPerDays = billsPerDayDAO.getAll();
             } else {
-                billsPerDays.add(billsPerDayDAO.findByDate(today));
+                billsPerDays = billsPerDayDAO.findByDate(fromDate, toDate);
             }
+
+//            billsPerDays.sort((b1, b2) -> Integer.compare(b2.getId(), b1.getId()));
 
             for (BillsPerDay billsPerDay : billsPerDays) {
                 List<Bills> list = billsDAO.findByFilter(billsPerDay, sort, status, orderStatus);
@@ -346,16 +342,20 @@ public class Pagination_Component extends javax.swing.JPanel {
         this.sort = sort;
     }
 
-    public void setToday(Date sqlDate) {
-        today = sqlDate;
-    }
-
     public void setStatus(String status) {
         this.status = status;
     }
 
     public void setOrderStatus(List<String> selectedItems) {
         this.orderStatus = selectedItems;
+    }
+
+    public void setFromDate(Date sqlFromDate) {
+        fromDate = sqlFromDate;
+    }
+
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
     }
 
 

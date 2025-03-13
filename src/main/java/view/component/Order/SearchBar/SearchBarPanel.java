@@ -33,7 +33,7 @@ import view.component.Order.Filter.Filter_Component;
  * @author LENOVO
  */
 public class SearchBarPanel extends javax.swing.JPanel {
-
+    
     private IconButton sortBtn;
     private IconButton resetBtn;
     private IconButton filterBtn;
@@ -42,11 +42,12 @@ public class SearchBarPanel extends javax.swing.JPanel {
     private JPopupMenu popupSort;
     private SortPopup sortPopup;
     private Filter_Component filter_Component;
-    private JDateChooser date;
+    private JDateChooser fromDate;
+    private JDateChooser toDate;
     private boolean isChoosing;
     private boolean isProgrammaticChange = false;
     private List<String> selectedItems;
-
+    
     public SearchBarPanel(PaginationWithSearchBar parent) {
         initComponents();
         this.parent = parent;
@@ -87,57 +88,66 @@ public class SearchBarPanel extends javax.swing.JPanel {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         this.requestFocusInWindow();
     }//GEN-LAST:event_formMouseClicked
-
+    
     private void initMyComponents() {
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
-
+        
         popupSort = new JPopupMenu();
-
+        
         popupSort.setBackground(Color.WHITE);
         popupSort.setPreferredSize(new Dimension(200, 200));
         popupSort.setBorder(new MatteBorder(1, 1, 1, 1, new Color(230, 230, 230)));
-
+        
         sortPopup = new SortPopup(this);
         popupSort.add(sortPopup);
-
-        date = new JDateChooser();
+        
+        fromDate = new JDateChooser();
+        toDate = new JDateChooser();
         filter_Component = new Filter_Component(this);
-
+        
         popupSort.setBackground(Color.WHITE);
         popupSort.setPreferredSize(new Dimension(200, 200));
         popupSort.setBorder(new MatteBorder(1, 1, 1, 1, new Color(230, 230, 230)));
-
+        
         ImageIcon sortIcon = new ImageIcon(getClass().getResource("/icon/sort.png"));
         sortBtn = new IconButton("Sort by", sortIcon, true);
-
+        
         ImageIcon filterIcon = new ImageIcon(getClass().getResource("/icon/filter.png"));
         filterBtn = new IconButton("Filter", filterIcon, true);
-
+        
         ImageIcon resetIcon = new ImageIcon(getClass().getResource("/icon/reload.png"));
         resetBtn = new IconButton("Reset", resetIcon, true);
     }
-
+    
     private void customMyComponents() {
         setBorder(new EmptyBorder(0, 10, 0, 10));
-
+        
         buttonPanel.setBackground(Color.WHITE);
-
-        date.setBackground(Color.white);
-        date.setFont(new Font("Rotobo", Font.PLAIN, 14));
-        date.setDate(null);
-        date.setPreferredSize(new Dimension(150, 35));
-
+        
+        fromDate.setBackground(Color.white);
+        fromDate.setFont(new Font("Rotobo", Font.PLAIN, 14));
+        fromDate.setDate(null);
+        fromDate.setPreferredSize(new Dimension(150, 35));
+        
+        toDate.setBackground(Color.white);
+        toDate.setFont(new Font("Rotobo", Font.PLAIN, 14));
+        toDate.setDate(null);
+        toDate.setEnabled(false);
+        toDate.setPreferredSize(new Dimension(150, 35));
+        
         buttonPanel.add(resetBtn);
-
-        buttonPanel.add(date);
-
+        
+        buttonPanel.add(fromDate);
+        
+        buttonPanel.add(toDate);
+        
         buttonPanel.add(sortBtn);
-
+        
         buttonPanel.add(filterBtn);
-
+        
         add(buttonPanel, BorderLayout.EAST);
     }
-
+    
     private void addEvents() {
         sortBtn.addActionListener(new ActionListener() {
             @Override
@@ -145,7 +155,7 @@ public class SearchBarPanel extends javax.swing.JPanel {
                 popupSort.show(sortBtn, sortBtn.getWidth() - 200, sortBtn.getHeight() + 5);
             }
         });
-
+        
         filterBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -156,13 +166,13 @@ public class SearchBarPanel extends javax.swing.JPanel {
                 addProductDialog.setResizable(false);
                 addProductDialog.setUndecorated(true);
                 filter_Component.setBorder(new LineBorder(Color.GRAY, 2));
-
+                
                 filter_Component.setDialog(addProductDialog);
                 addProductDialog.add(filter_Component);
 
                 // Show the dialog
                 addProductDialog.setVisible(true);
-
+                
                 if (!selectedItems.isEmpty()) {
                     filterBtn.changeColor(true);
                 } else {
@@ -171,8 +181,33 @@ public class SearchBarPanel extends javax.swing.JPanel {
                 transferData(selectedItems);
             }
         });
+        
+        fromDate.addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName().equals("date") && !isProgrammaticChange) {
+                    java.util.Date selectedFromDate = ((com.toedter.calendar.JDateChooser) evt.getSource()).getDate();
+                    
+                    if (selectedFromDate != null) {
+                        // Convert to java.sql.Date for sorting, or use java.util.Date as needed
+                        java.sql.Date sqlFromDate = new java.sql.Date(selectedFromDate.getTime());
+                        parent.sortByFromDate(sqlFromDate);
+                        // Enable toDate and set the minimum selectable date to the selected fromDate
+                        toDate.setEnabled(true);
+                        toDate.setMinSelectableDate(selectedFromDate); // Prevent selecting earlier dates
 
-        date.addPropertyChangeListener("date", new PropertyChangeListener() {
+                    } else {
+                        parent.sortByFromDate(null);
+
+                        // Optionally disable toDate if fromDate is reset
+                        toDate.setEnabled(false);
+                        toDate.setDate(null);  // Clear toDate if fromDate is reset
+                    }
+                }
+            }
+        });
+        
+        toDate.addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("date") && !isProgrammaticChange) {
@@ -180,58 +215,56 @@ public class SearchBarPanel extends javax.swing.JPanel {
                     java.util.Date selectedDate = ((com.toedter.calendar.JDateChooser) evt.getSource()).getDate();
                     if (selectedDate != null) {
                         java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
-                        //SharedData.date = sqlDate;
-                        parent.sortByDate(sqlDate);
+                        parent.sortByToDate(sqlDate);
                     } else {
-                        //SharedData.date = null;
-                        parent.sortByDate(null);
+                        parent.sortByToDate(null);
                     }
                 }
             }
         });
-
+        
         resetBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                date.setDate(null);
+                fromDate.setDate(null);
             }
         });
-
+        
     }
-
+    
     public void closePopup() {
         popupSort.setVisible(false);
     }
-
+    
     public void sortByPriceLowToHigh() {
         parent.sortByPriceLowToHigh();
     }
-
+    
     public void sortByPriceHighToLow() {
         parent.sortByPriceHighToLow();
     }
-
+    
     public void resetSorting() {
         parent.resetSorting();
     }
-
+    
     public void resetSearchOptions() {
         isProgrammaticChange = true;
-        date.setDate(null);
+        fromDate.setDate(null);
         isProgrammaticChange = false;
         sortPopup.reset();
         filter_Component.reset();
         filterBtn.changeColor(false);
     }
-
+    
     public void changeColorOfSortBtn(boolean b) {
         sortBtn.changeColor(b);
     }
-
+    
     public void setData(List<String> selectedItems) {
         this.selectedItems = selectedItems;
     }
-
+    
     private void transferData(List<String> selectedItems) {
         parent.searchByFilter(selectedItems);
     }

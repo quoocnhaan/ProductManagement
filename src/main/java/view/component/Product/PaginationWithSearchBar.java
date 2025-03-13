@@ -22,14 +22,14 @@ public class PaginationWithSearchBar extends javax.swing.JPanel {
     private DataTable_Component parent;
     private boolean isChoosing;
 
-    public PaginationWithSearchBar(DataTable_Component parent, boolean isChoosing) {
+    public PaginationWithSearchBar(DataTable_Component parent, boolean isImporting, boolean isOrdering) {
         initComponents();
         this.parent = parent;
-        this.isChoosing = isChoosing;
+        this.isChoosing = isImporting;
         setLayout(new BorderLayout(0, 15));
 
         searchBarPanel = new SearchBarPanel(this, isChoosing);
-        pagination_Component = new Pagination_Component(this, isChoosing);
+        pagination_Component = new Pagination_Component(this, isImporting, isOrdering);
 
         add(searchBarPanel, BorderLayout.NORTH);
         add(pagination_Component, BorderLayout.CENTER);

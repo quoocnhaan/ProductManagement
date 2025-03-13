@@ -82,24 +82,29 @@ public class ButtonGroupPanel extends JPanel {
         all.addActionListener(e -> {
             if (all.isSelected()) {
                 parent.transferData("All");
+                System.out.println("All");
             }
         });
 
         cancelled.addActionListener(e -> {
             if (cancelled.isSelected()) {
                 parent.transferData("Cancelled");
+                System.out.println("Cancelled");
+
             }
         });
 
         unPaid.addActionListener(e -> {
             if (unPaid.isSelected()) {
                 parent.transferData("Unpaid");
+                System.out.println("Unpaid");
             }
         });
 
         paid.addActionListener(e -> {
-            if (unPaid.isSelected()) {
+            if (paid.isSelected()) {
                 parent.transferData("Paid");
+                System.out.println("Paid");
             }
         });
     }

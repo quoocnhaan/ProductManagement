@@ -78,7 +78,7 @@
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="flat" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="73" max="32767" attributes="0"/>
+              <EmptySpace pref="75" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -195,7 +195,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="83" green="83" red="83" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Lam Quoc Nhan"/>
+        <Property name="text" type="java.lang.String" value="22 &#x111;&#x1b0;&#x1a1;&#x300;ng 51"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
             <EmptyBorder/>
@@ -211,7 +211,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="83" green="83" red="83" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Lam Quoc Nhan"/>
+        <Property name="text" type="java.lang.String" value="Bi&#x300;nh T&#xe2;n"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
             <EmptyBorder/>
@@ -227,7 +227,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="83" green="83" red="83" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Lam Quoc Nhan"/>
+        <Property name="text" type="java.lang.String" value="TP.HCM"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
             <EmptyBorder/>
@@ -243,7 +243,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="83" green="83" red="83" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Lam Quoc Nhan"/>
+        <Property name="text" type="java.lang.String" value="None"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
             <EmptyBorder/>

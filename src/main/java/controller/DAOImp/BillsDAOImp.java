@@ -100,10 +100,10 @@ public class BillsDAOImp implements BillsDAO {
         if (paymentStatus != null && !paymentStatus.isEmpty()) {
             switch (paymentStatus) {
                 case "Paid":
-                    hql.append(" AND b.paidDate IS NOT NULL");
+                    hql.append(" AND b.paidDate IS NOT NULL AND b.status");
                     break;
                 case "Unpaid":
-                    hql.append(" AND b.paidDate IS NULL");
+                    hql.append(" AND b.paidDate IS NULL AND b.status");
                     break;
                 case "Cancelled":
                     hql.append(" AND b.status IS FALSE");

@@ -41,17 +41,17 @@ import view.component.Order.OrderDetails.OrderDetailContent.OrderProductPage_Com
  * @author PC
  */
 public class ProductList_Component extends javax.swing.JPanel {
-    
+
     private List<Product_Component> list = new ArrayList<>();
     private OrderProductPage_Component parent;
     private Bills bills;
-    
+
     public ProductList_Component(OrderProductPage_Component parent) {
         initComponents();
         this.parent = parent;
         setLayout(new GridLayout(0, 1, 0, 10));
     }
-    
+
     public ProductList_Component(OrderProductPage_Component parent, Bills bills) {
         initComponents();
         this.parent = parent;
@@ -90,11 +90,11 @@ public class ProductList_Component extends javax.swing.JPanel {
 //        repaint();
 //        revalidate();
     }
-    
+
     void updateTotal(double quantityValue) {
         parent.updateTotal(quantityValue);
     }
-    
+
     public void removeProduct(Product_Component product_Component) {
         list.remove(product_Component);
         System.out.println("remove " + product_Component.getProduct().getName() + " from list");
@@ -103,20 +103,20 @@ public class ProductList_Component extends javax.swing.JPanel {
         revalidate();
         parent.updateTotal(-product_Component.getTotalValue());
     }
-    
+
     private void initData() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         BillsDetailDAO billsDetailDAO = new BillsDetailDAOImp(session);
-        
+
         List<BillsDetail> billsDetails = billsDetailDAO.findAllByBill(bills);
-        
+
         for (BillsDetail billsDetail : billsDetails) {
             addNewProduct(billsDetail.getProduct(), billsDetail.getAmount());
         }
         session.close();
     }
-    
+
     private void addNewProduct(Product product, int amount) {
         Product_Component product_Component = new Product_Component(product, this, amount);
         list.add(product_Component);
@@ -124,10 +124,10 @@ public class ProductList_Component extends javax.swing.JPanel {
         repaint();
         revalidate();
     }
-    
+
     public void updateImportProducts(Bills bills, Customer customer, Address address, OrderHistory orderHistory, double deliveryFree, double totalPaid, double discount, double otherDiscount, double totalPrice) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         Date today = Date.valueOf(LocalDate.now());
         BillsPerDayDAO billsPerDayDAO = new BillsPerDayDAOImp(session);
         BillsDAO billsDAO = new BillsDAOImp(session);
@@ -136,9 +136,9 @@ public class ProductList_Component extends javax.swing.JPanel {
         InventoryDAO inventoryDAO = new InventoryDAOImp(session);
         InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
         CustomerDAO customerDAO = new CustomerDAOImp(session);
-        
+
         Inventory inventory = inventoryDAO.findByDate(today);
-        
+
         BillsPerDay billsPerDay = billsPerDayDAO.findByDate(today);
         if (billsPerDay == null) {
             billsPerDay = new BillsPerDay(today, 0, 0, true);
@@ -146,16 +146,16 @@ public class ProductList_Component extends javax.swing.JPanel {
 
         // create a new bills
         if (bills == null) {
-            
+
             billsPerDayDAO.add(billsPerDay);
-            
+
             customer.setAddressLine(address.getAddressLine());
             customer.setCity(address.getCity());
             customer.setDisctrict(address.getDusctrict());
             customer.setFlatName(address.getFlatName());
-            
+
             customerDAO.add(customer);
-            
+
             double totalCost = 0;
             int totalAmount = 0;
             bills = new Bills(billsPerDay, totalPrice, 0, totalPaid, orderHistory.getPaidDate(), orderHistory.getPackedDate(), orderHistory.getShippedDate(), orderHistory.getDeliveredDate(), discount, deliveryFree, otherDiscount, customer, true);
@@ -168,12 +168,12 @@ public class ProductList_Component extends javax.swing.JPanel {
                 product.setAmount(product.getAmount() - amount);
                 product.setProductStatus(product.getAmount() != 0);
                 productDAO.update(product);
-                
+
                 InventoryDetail inventoryDetail = inventoryDetailDAO.findByProduct(product.getId(), today);
                 inventoryDetail.setAmountEnd(inventoryDetail.getAmountEnd() - amount);
                 inventoryDetail.setPrice(inventoryDetail.getAmountEnd() * inventoryDetail.getProduct().getPrice());
                 inventoryDetailDAO.update(inventoryDetail);
-                
+
                 BillsDetail billsDetail = new BillsDetail(bills, product_Component.getProduct(), amount, product_Component.getProduct().getPrice(), amount * product_Component.getProduct().getPrice(), true);
                 billsDetailDAO.add(billsDetail);
             }
@@ -182,55 +182,54 @@ public class ProductList_Component extends javax.swing.JPanel {
             billsDAO.update(bills);
             inventory.setAmount(inventory.getAmount() - totalAmount);
             inventoryDAO.update(inventory);
-            
+
         } else {
             if (bills != null) { //save some new infomations for bills
-                
                 Customer newCustomer = new Customer(customer.getName(), customer.getPhoneNumber(), true);
                 newCustomer.setAddressLine(address.getAddressLine());
                 newCustomer.setCity(address.getCity());
                 newCustomer.setDisctrict(address.getDusctrict());
                 newCustomer.setFlatName(address.getFlatName());
-                
+
                 customerDAO.add(newCustomer);
-                
+
                 Bills curBills = billsDAO.get(bills.getId());
                 curBills.setCustomer(newCustomer);
                 curBills.setDeliveredDate(orderHistory.getDeliveredDate());
                 curBills.setPaidDate(orderHistory.getPaidDate());
                 curBills.setPackedDate(orderHistory.getPackedDate());
                 curBills.setShippedDate(orderHistory.getShippedDate());
-                
+
                 curBills.setDelivertyFee(deliveryFree);
                 curBills.setDiscount(discount);
                 curBills.setOtherDiscount(otherDiscount);
                 curBills.setDeposit(totalPaid);
                 curBills.setProfit((totalPrice - curBills.getTotal()) + curBills.getProfit());
                 curBills.setTotal(totalPrice);
-                
-                billsDAO.update(bills);               
+
+                billsDAO.update(curBills);
             }
         }
         billsPerDayDAO.update(billsPerDay);
         session.close();
     }
-    
+
     public void unfulfilledOrder(Bills bills, Customer customer, Address address, OrderHistory orderHistory, double deliveryFee, double totalPaid, double discount, double otherDiscount, double totalPrice) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         Date today = Date.valueOf(LocalDate.now());
-        
+
         BillsPerDayDAO billsPerDayDAO = new BillsPerDayDAOImp(session);
         BillsDAO billsDAO = new BillsDAOImp(session);
         BillsDetailDAO billsDetailDAO = new BillsDetailDAOImp(session);
         ProductDAO productDAO = new ProductDAOImp(session);
         InventoryDAO inventoryDAO = new InventoryDAOImp(session);
         InventoryDetailDAO inventoryDetailDAO = new InventoryDetailDAOImp(session);
-        
+
         BillsPerDay billsPerDay = billsPerDayDAO.get(bills.getBillPerDay().getId());
-        
+
         Inventory inventory = inventoryDAO.findByDate(today);
-        
+
         if (bills != null) {
             // This block is for handling the cancellation of a bill.
             List<BillsDetail> billsDetails = billsDetailDAO.findAllByBill(bills); // Fetch all bill details for the given bill
@@ -258,14 +257,14 @@ public class ProductList_Component extends javax.swing.JPanel {
             // Optionally, you can remove the bill if cancellation means it no longer exists
             billsDAO.delete(bills.getId());  // If you want to remove the bill from the database after cancellation
             billsPerDay.setAmount(billsPerDay.getAmount() - 1);
-            
+
             billsDAO.update(bills);
             billsPerDayDAO.update(billsPerDay);
         }
-        
+
         session.close();
     }
-    
+
 }
 
 

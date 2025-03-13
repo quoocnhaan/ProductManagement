@@ -34,10 +34,10 @@ public class OrderDetailsNorth_Component extends javax.swing.JPanel {
         this.bills = bills;
         setLayout(new FlowLayout(FlowLayout.LEFT, 35, 0));
         setBorder(new EmptyBorder(20, 0, 0, 0));
-
-        customerDetails_Component = new CustomerDetails_Component();
-        deliveryAddress_Component = new DeliveryAddress_Component();
-        orderHistory_Component = new OrderHistory_Component();
+        
+        customerDetails_Component = new CustomerDetails_Component(bills.getCustomer());
+        deliveryAddress_Component = new DeliveryAddress_Component(bills.getCustomer());
+        orderHistory_Component = new OrderHistory_Component(bills.getPaidDate(), bills.getPackedDate(), bills.getShippedDate(), bills.getDeliveredDate());
 
         add(customerDetails_Component);
         add(deliveryAddress_Component);

@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import model.Customer;
 
 /**
  *
@@ -28,6 +29,12 @@ public class CustomerDetails_Component extends javax.swing.JPanel {
 
     public CustomerDetails_Component() {
         initComponents();
+        customComponents();
+    }
+
+    public CustomerDetails_Component(Customer customer) {
+        initComponents();
+        initData(customer);
         customComponents();
     }
 
@@ -232,5 +239,13 @@ public class CustomerDetails_Component extends javax.swing.JPanel {
 
     public String getCustomerPhone() {
         return phone.getText();
+    }
+
+    private void initData(Customer customer) {
+        prevName = customer.getName();
+        prevPhone = customer.getPhoneNumber();
+
+        name.setText(prevName);
+        phone.setText(prevPhone);
     }
 }

@@ -96,4 +96,26 @@ public class BillsPerDayDAOImp implements BillsPerDayDAO {
         // Get the single result (assuming there's only one matching entry due to the @OneToOne relationship)
         return query.uniqueResult();
     }
+
+    @Override
+    public List<BillsPerDay> findByDate(Date fromDate, Date toDate) {
+        String hql;
+        Query<BillsPerDay> query;
+
+        // If toDate is null, only filter by fromDate
+        if (toDate == null) {
+            hql = "FROM BillsPerDay b WHERE b.date >= :fromDate";
+            query = session.createQuery(hql, BillsPerDay.class);
+            query.setParameter("fromDate", fromDate);
+        } else {
+            // Otherwise, filter by the date range
+            hql = "FROM BillsPerDay b WHERE b.date BETWEEN :fromDate AND :toDate";
+            query = session.createQuery(hql, BillsPerDay.class);
+            query.setParameter("fromDate", fromDate);
+            query.setParameter("toDate", toDate);
+        }
+
+        // Return the list of results
+        return query.list();
+    }
 }
