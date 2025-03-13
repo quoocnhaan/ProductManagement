@@ -85,6 +85,11 @@ public class OrderDetails_Component extends javax.swing.JPanel {
         }
     }
 
+    void unfulfilledOrder() {
+        orderDetailsPage_Component.unfulfilledOrder(bills);
+        paginationParent.resetDataWhenEdit();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

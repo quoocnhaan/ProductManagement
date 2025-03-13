@@ -102,6 +102,10 @@ public class OrderProductContent_Component extends javax.swing.JPanel {
         orderProductPage_Component.updateImportProducts(bills, customer, address, orderHistory, deliveryFree, totalPaid, discount, otherDiscount, totalPrice);
     }
 
+    public void unfulfilledOrder(Bills bills, Customer customer, Address address, OrderHistory orderHistory, double deliveryFee, double totalPaid, double discount, double otherDiscount, double totalPrice) {
+        orderProductPage_Component.unfulfilledOrder(bills, customer, address, orderHistory, deliveryFee, totalPaid, discount, otherDiscount, totalPrice);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
